@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\MatingController;
+use App\Http\Controllers\ReptileController;
+use App\Http\Controllers\TypeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EggController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +18,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
+
+Route::get('/egg/create', [EggController::class, 'create'])->name('egg.create');
+
+Route::get('/mating/create', [MatingController::class, 'create'])->name('mating.create');
+
+Route::get('/reptile/create', [ReptileController::class, 'create'])->name('reptile.create');
+
+Route::get('/type/create', [TypeController::class, 'create'])->name('type.create');
+
 
 Route::middleware([
     'auth:sanctum',
