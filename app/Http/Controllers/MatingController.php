@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MatingRequest;
+use App\Models\Mating;
+use App\Models\Reptile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MatingController extends Controller
 {
+    private Mating $mating;
+    private Reptile $reptile;
 
-    public function __construct()
+    public function __construct(Mating $maitng, Reptile $reptile)
     {
+        $this->mating = $maitng;
+        $this->reptile = $reptile;
         parent::__construct('mating');
     }
 
@@ -19,7 +27,9 @@ class MatingController extends Controller
      */
     public function index()
     {
-        //
+        $list = $this->mating
+            ->where('user_id', Auth::id())->get();
+        return view("$this->path.index", compact("list"));
     }
 
     /**
@@ -29,18 +39,27 @@ class MatingController extends Controller
      */
     public function create()
     {
-        return view($this->path.".create");
+        $userId = Auth::id();
+        $maleReptileList = $this->reptile->listByUserId($userId)->conditionGender('m')->pluck('name', 'id');
+        $femaleReptileList = $this->reptile->listByUserId($userId)->conditionGender('w')->pluck('name', 'id');
+
+        return view($this->path.".create", compact('maleReptileList', 'femaleReptileList'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param MatingRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MatingRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $validated['user_id'] = Auth::id();
+        $validated['comment'] = $request->input('comment');
+        $this->mating->create($validated);
+
+        return redirect(route('dashboard'))->with('status', '메이팅을 등록했습니다.');
     }
 
     /**

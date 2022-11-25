@@ -15,9 +15,11 @@ return new class extends Migration
     {
         Schema::create('matings', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('father_id');
-            $table->unsignedBigInteger('mother_id');
-            $table->string('comment');
+            $table->unsignedBigInteger('mather_id');
+            $table->string('comment')->nullable();
+            $table->timestamp('mating_at');
             $table->timestamps();
         });
     }

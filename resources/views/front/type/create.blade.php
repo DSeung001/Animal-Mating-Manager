@@ -1,33 +1,26 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<x-app-layout>
+    <x-jet-validation-errors class="mb-4" />
 
-        <title>Laravel</title>
-        <!-- Fonts -->
-        <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <form method="POST" action="{{route('type.store')}}">
+        @csrf
+        <div>
+            <x-jet-label for="name" value="종류 명칭"/>
+            <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
+                         autofocus/>
+        </div>
+        <div>
+            <x-jet-label for="hatch_day" value="부화 소요 기간(일 기준)"/>
+            <x-jet-input id="hatch_day" class="block mt-1 w-full" type="number" name="hatch_day"
+                         :value="old('hatch_day')" required autofocus/>
+        </div>
+        <div>
+            <x-jet-label for="comment" value="메모"/>
+            <x-jet-input id="comment" class="block mt-1 w-full" type="text" name="comment" :value="old('comment')"
+                         autofocus/>
+        </div>
 
-        <style>
-            body {
-                font-family: 'Nunito', sans-serif;
-            }
-        </style>
-    </head>
-    <body class="antialiased">
-        <ul>
-            <li>
-                <a href="#">종류 등록</a>
-            </li>
-            <li>
-                <a href="#">개체 등록</a>
-            </li>
-            <li>
-                <a href="#">메이팅 등록</a>
-            </li>
-            <li>
-                <a href="#">알 등록</a>
-            </li>
-        </ul>
-    </body>
-</html>
+        <x-jet-button>
+            저장
+        </x-jet-button>
+    </form>
+</x-app-layout>

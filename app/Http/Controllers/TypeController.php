@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TypeRequest;
+use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TypeController extends Controller
 {
+    private Type $type;
 
-    public function __construct()
+    public function __construct(Type $type)
     {
+        $this->type = $type;
         parent::__construct('type');
     }
 
@@ -19,7 +24,8 @@ class TypeController extends Controller
      */
     public function index()
     {
-        //
+        $list = $this->type->where('user_id', Auth::id())->get();
+        return view("$this->path.index", compact("list"));
     }
 
     /**
@@ -29,18 +35,23 @@ class TypeController extends Controller
      */
     public function create()
     {
-        return view($this->path.".create");
+        return view("$this->path.create");
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param TypeRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TypeRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $validated['user_id'] = Auth::id();
+        $validated['comment'] = $request->input('comment');
+        $this->type->create($validated);
+
+        return redirect(route('dashboard'))->with('status', '종류를 등록했습니다.');
     }
 
     /**

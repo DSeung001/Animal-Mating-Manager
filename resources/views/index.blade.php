@@ -15,19 +15,8 @@
         </style>
     </head>
     <body class="antialiased">
-        <ul>
-            <li>
-                <a href="{{route('type.create')}}">종류 등록</a>
-            </li>
-            <li>
-                <a href="{{route('reptile.create')}}">개체 등록</a>
-            </li>
-            <li>
-                <a href="{{route('mating.create')}}">메이팅 등록</a>
-            </li>
-            <li>
-                <a href="{{route('egg.create')}}">알 등록</a>
-            </li>
-        </ul>
+
+
     </body>
+
 </html>

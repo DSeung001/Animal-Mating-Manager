@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('types', function (Blueprint $table) {
             $table->id();
-            $table->string('name',256);
+            $table->unsignedBigInteger('user_id');
+            $table->string('name',128);
             $table->integer('hatch_day');
             $table->string('comment')->nullable();
             $table->timestamps();

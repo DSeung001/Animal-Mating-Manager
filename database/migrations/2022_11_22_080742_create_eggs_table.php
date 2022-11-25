@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('eggs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('mating_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('mating_id')->nullable();
+            $table->string('comment')->nullable();
             $table->enum('is_hatching', ['y','n','w'])->default('w');
             $table->timestamps();
         });

@@ -42,7 +42,18 @@
                 <x-jet-button class="ml-4">
                     {{ __('Log in') }}
                 </x-jet-button>
+
+                <a href="{{url('register')}}">
+                    <x-jet-button class="ml-4" type="button">
+                        회원가입
+                    </x-jet-button>
+                </a>
             </div>
         </form>
     </x-jet-authentication-card>
+
+    [추가예정] <br/>
+    네이버 로그인 <br/>
+    카카오 로그인 <br/>
+    구글 로그인 <br/>
 </x-guest-layout>

@@ -18,17 +18,8 @@ use App\Http\Controllers\EggController;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return redirect(url("login"));
 });
-
-Route::get('/egg/create', [EggController::class, 'create'])->name('egg.create');
-
-Route::get('/mating/create', [MatingController::class, 'create'])->name('mating.create');
-
-Route::get('/reptile/create', [ReptileController::class, 'create'])->name('reptile.create');
-
-Route::get('/type/create', [TypeController::class, 'create'])->name('type.create');
-
 
 Route::middleware([
     'auth:sanctum',
@@ -38,4 +29,10 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::resource('egg', EggController::class);
+
+    Route::resource('mating', MatingController::class);
+    Route::resource('reptile', ReptileController::class);
+    Route::resource('type', TypeController::class);
 });
