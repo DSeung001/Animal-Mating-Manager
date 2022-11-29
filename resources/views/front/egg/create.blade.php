@@ -12,16 +12,34 @@
 
             @include("parts.select-search", ["list"=>$fatherReptileList, "name"=>"fid", "title"=>"부 개체", "searchName"=>"fs"])
         </div>
+        <button type="submit" class="flex items-center justify-center px-4 border-l">
+            <svg class="w-6 h-6 text-gray-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 24 24">
+                <path
+                    d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/>
+            </svg>
+        </button>
     </form>
 
     <br/>
     <hr/>
     <br/>
 
-    <form action="{{route('egg.store')}}">
+    <form action="{{route('egg.store')}}" method="POST">
+
+        <textarea name="comment" rows="4">
+
+        </textarea> <br/>
+
         @csrf
 
-        {{$fatherReptile->name." x ".$matherReptile->name}}
+        {{
+            isset($fatherReptile) ? $fatherReptile->name : "미선택"
+        }}
+        X
+        {{
+            isset($matherReptile) ? $matherReptile->name : "미선택"
+        }}
 
 
         <ul class="pl-5 space-y-3 text-gray-600 list-decimal marker:text-purple-600">

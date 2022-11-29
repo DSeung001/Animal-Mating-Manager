@@ -35,7 +35,7 @@ class EggController extends Controller
     {
         $list = $this->egg->where('user_id', Auth::id())->get();
 
-        return view('$this->path.index', compact('list'));
+        return view("$this->path.index", compact('list'));
     }
 
     /**
@@ -82,7 +82,7 @@ class EggController extends Controller
         $request->flashOnly(['tid', 'ts', 'mid', 'ms', 'fid', 'fs']);
 
         return view($this->path.'.create',
-            compact('typeList', 'matherReptileList', 'fatherReptileList', 'matingList', 'matherReptile', 'fatherReptile')
+            compact('typeList', 'matherReptileList', 'fatherReptileList', 'matingList', 'matherReptile', 'fatherReptile', 'typeId', 'fatherId', 'matherId')
         );
     }
 
@@ -96,6 +96,7 @@ class EggController extends Controller
     {
         $validated = $request->validated();
         $validated['comment'] = $request->input('comment');
+        $validated['user_id'] = Auth::id();
         $this->egg->create($validated);
 
         return redirect(route('dashboard'))->with('status', '알을 등록했습니다.');
