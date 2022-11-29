@@ -19,8 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('type_id');
             $table->unsignedBigInteger('father_id')->nullable();
             $table->unsignedBigInteger('mather_id')->nullable();
-            $table->string('name', 128)->unique();
-            $table->enum('gender', ['m','f','u'])->default('u')->comment('m: 수, w: 암, u: 미구분');
+            $table->string('name', 128);
+            $table->enum('gender', ['m','f','u'])->default('u')->comment('m: 수, f: 암, u: 미구분');
             $table->string('morph', 128);
             $table->timestamp('birth')->nullable();
             $table->timestamps();

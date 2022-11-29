@@ -7,6 +7,7 @@ use App\Models\Reptile;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ReptileController extends Controller
 {
@@ -28,8 +29,25 @@ class ReptileController extends Controller
     public function index()
     {
         $list = $this->reptile
+            ->select(
+                DB::raw("
+                reptiles.id as id,
+                reptiles.name as name,
+                reptiles.morph as morph,
+                reptiles.type_id as type_id,
+                reptiles.gender as gender,
+                reptiles.father_id as father_id,
+                reptiles.mather_id as mather_id,
+                reptiles.birth as birth,
+                f_reptile.name as father_name,
+                m_reptile.name as mather_name,
+                TIMESTAMPDIFF(MONTH, reptiles.birth, now()) as age
+                "))
+            ->leftJoin('reptiles AS f_reptile', 'f_reptile.id', '=', 'reptiles.father_id')
+            ->leftJoin('reptiles AS m_reptile', 'm_reptile.id', '=', 'reptiles.mather_id')
             ->with('type:id,name')
-            ->where('user_id', Auth::id())->get();
+            ->where('reptiles.user_id', Auth::id())->get();
+
         return view("$this->path.index", compact("list"));
     }
 
@@ -43,7 +61,7 @@ class ReptileController extends Controller
         $userId = Auth::id();
         $typeList = $this->type->listByUserId($userId)->pluck('name', 'id');
         $maleReptileList = $this->reptile->listByUserId($userId)->conditionGender('m')->pluck('name', 'id');
-        $femaleReptileList = $this->reptile->listByUserId($userId)->conditionGender('w')->pluck('name', 'id');
+        $femaleReptileList = $this->reptile->listByUserId($userId)->conditionGender('f')->pluck('name', 'id');
 
         return view($this->path . ".create", compact('typeList', 'maleReptileList', 'femaleReptileList'));
     }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +11,20 @@ class Reptile extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    protected function birth(): Attribute
+    {
+        return Attribute::make(
+                get: fn ($value) => date('Y-m-d', strtotime($value))
+            );
+    }
+
+    protected function gender(): Attribute
+    {
+        return Attribute::make(
+          get: fn ($value) => $value == "m" ? "수컷" : ($value == "f" ? "암컷" : "미구분")
+        );
+    }
 
     public function type()
     {
