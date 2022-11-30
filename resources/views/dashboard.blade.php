@@ -10,9 +10,9 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <ul>
                     <li>
-                        - <a href="{{route('type.create')}}">종류 등록</a>
+                        - <a href="{{route('type.create')}}">종 등록</a>
                         <br/>
-                        - <a href="{{route('type.index')}}">종류 리스트</a>
+                        - <a href="{{route('type.index')}}">종 리스트</a>
                     </li>
                     <li>
                         - <a href="{{route('reptile.create')}}">개체 등록</a>

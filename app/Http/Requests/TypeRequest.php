@@ -20,7 +20,7 @@ class TypeRequest extends FormRequest
     public function messages()
     {
         return [
-            "name.required" => "종류 명칭을 입력해주세요.",
+            "name.required" => "종 명칭을 입력해주세요.",
             "name.max" => "128자 이내로 입력해주세요.",
             "hatch_day" => "해칭 소요 기간을 입력해주세요",
         ];

@@ -33,7 +33,8 @@ class EggController extends Controller
      */
     public function index()
     {
-        $list = $this->egg->where('user_id', Auth::id())->get();
+        $list = $this->egg
+            ->where('user_id', Auth::id())->get();
 
         return view("$this->path.index", compact('list'));
     }
@@ -60,7 +61,7 @@ class EggController extends Controller
             ->pluck('name', 'id');
         $matherReptileList = $this->reptile
             ->listByUserId($userId)
-            ->conditionGender('w')
+            ->conditionGender('f')
             ->searchByName($matherSearchString)
             ->pluck('name', 'id');
         $fatherReptileList = $this->reptile

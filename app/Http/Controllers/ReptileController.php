@@ -28,24 +28,25 @@ class ReptileController extends Controller
      */
     public function index()
     {
+        // 부모 아이디로 링크 추가하기
         $list = $this->reptile
             ->select(
                 DB::raw("
-                reptiles.id as id,
-                reptiles.name as name,
-                reptiles.morph as morph,
-                reptiles.type_id as type_id,
-                reptiles.gender as gender,
-                reptiles.father_id as father_id,
-                reptiles.mather_id as mather_id,
-                reptiles.birth as birth,
-                f_reptile.name as father_name,
-                m_reptile.name as mather_name,
-                TIMESTAMPDIFF(MONTH, reptiles.birth, now()) as age
+                reptiles.id AS id,
+                reptiles.name AS name,
+                reptiles.morph AS morph,
+                types.name AS type,
+                reptiles.gender AS gender,
+                reptiles.father_id AS father_id,
+                reptiles.mather_id AS mather_id,
+                reptiles.birth AS birth,
+                f_reptile.name AS father_name,
+                m_reptile.name AS mather_name,
+                TIMESTAMPDIFF(MONTH, reptiles.birth, now()) AS age
                 "))
             ->leftJoin('reptiles AS f_reptile', 'f_reptile.id', '=', 'reptiles.father_id')
             ->leftJoin('reptiles AS m_reptile', 'm_reptile.id', '=', 'reptiles.mather_id')
-            ->with('type:id,name')
+            ->leftJoin('types', 'types.id', '=', 'reptiles.type_id')
             ->where('reptiles.user_id', Auth::id())->get();
 
         return view("$this->path.index", compact("list"));

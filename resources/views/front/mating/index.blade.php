@@ -1,16 +1,9 @@
 <x-app-layout>
-    <ul>
-        @foreach($list as $item)
-            <li>
-                <a href="{{route("mating.edit",$item->id)}}">
-                    {{$item->father_id}} |
-                    {{$item->mather_id}} |
-                    {{$item->comment}} |
-                    {{$item->mating_at}} |
-                    {{$item->create_at}} |
-                    {{$item->updated_at}}
-                </a>
-            </li>
-        @endforeach
-    </ul>
+
+    @include('parts.list', [
+         'title' => '메이팅 이력',
+         'headers' => ['부', '모', '설명', '메이팅일', '작성일', '수정일'],
+         'datas' => ['father_name', 'mather_name', 'comment', 'mating_at', 'created_at', 'updated_at'],
+     ])
+
 </x-app-layout>

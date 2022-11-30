@@ -7,6 +7,7 @@ use App\Models\Mating;
 use App\Models\Reptile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MatingController extends Controller
 {
@@ -28,7 +29,19 @@ class MatingController extends Controller
     public function index()
     {
         $list = $this->mating
-            ->where('user_id', Auth::id())->get();
+            ->select(
+                DB::raw("
+                matings.id AS id,
+                f_reptile.name AS father_name,
+                m_reptile.name AS mather_name,
+                comment,
+                mating_at,
+                matings.created_at AS created_at,
+                matings.updated_at AS updated_at
+            "))
+            ->leftJoin('reptiles AS f_reptile', 'f_reptile.id', '=', 'matings.father_id')
+            ->leftJoin('reptiles AS m_reptile', 'm_reptile.id', '=', 'matings.mather_id')
+            ->where('matings.user_id', Auth::id())->get();
         return view("$this->path.index", compact("list"));
     }
 
@@ -41,7 +54,7 @@ class MatingController extends Controller
     {
         $userId = Auth::id();
         $maleReptileList = $this->reptile->listByUserId($userId)->conditionGender('m')->pluck('name', 'id');
-        $femaleReptileList = $this->reptile->listByUserId($userId)->conditionGender('w')->pluck('name', 'id');
+        $femaleReptileList = $this->reptile->listByUserId($userId)->conditionGender('f')->pluck('name', 'id');
 
         return view($this->path.".create", compact('maleReptileList', 'femaleReptileList'));
     }

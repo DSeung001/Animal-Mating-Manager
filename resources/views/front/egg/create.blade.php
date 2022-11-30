@@ -6,7 +6,7 @@
     {{--  해당 form에서 고른 값도 session으로 --}}
     <form method="GET" action="{{route('egg.create')}}">
         <div class="text-center">
-            @include("parts.select-search", ["list"=>$typeList, "name"=>"tid", "title"=>"종류", "searchName"=>"ts"])
+            @include("parts.select-search", ["list"=>$typeList, "name"=>"tid", "title"=>"종", "searchName"=>"ts"])
 
             @include("parts.select-search", ["list"=>$matherReptileList, "name"=>"mid", "title"=>"모 개체", "searchName"=>"ms"])
 
@@ -27,9 +27,7 @@
 
     <form action="{{route('egg.store')}}" method="POST">
 
-        <textarea name="comment" rows="4">
-
-        </textarea> <br/>
+        <textarea name="comment" rows="4"></textarea> <br/>
 
         @csrf
 
@@ -60,6 +58,9 @@
                     type="radio" id="checkbox_mating_id" value="">
             </li>
         </ul>
+
+        산란일 :
+        <input type="date" name="spawn_at"/>
 
         <x-jet-button class="ml-4">
             저장

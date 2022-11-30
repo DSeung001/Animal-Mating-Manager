@@ -1,8 +1,16 @@
+{{--
+    title : 제목
+    $searchName : 검색 input name 값
+    $list : 검색 리스트
+    $name : 검색 리스트 name 값
+--}}
+
 <div>
     <h3>{{$title}}</h3>
     <div class="flex items-center justify-center">
         <div class="flex border-2 rounded">
-            <input type="text" class="px-4 py-2 w-80" placeholder="Search..." name="{{$searchName}}" value="{{old($searchName)}}">
+            <input type="text" class="px-4 py-2 w-80"
+                   placeholder="Search..." name="{{$searchName}}" value="{{old($searchName)}}">
         </div>
     </div>
 

@@ -4,7 +4,7 @@
     <form method="POST" action="{{route('type.store')}}">
         @csrf
         <div>
-            <x-jet-label for="name" value="종류 명칭"/>
+            <x-jet-label for="name" value="종 명칭"/>
             <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
                          autofocus/>
         </div>

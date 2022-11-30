@@ -10,8 +10,8 @@
         </div>
 
         <div>
-            <x-jet-label for="type" value="종류"/>
-            @include("parts.select", ["name"=>"type_id", "list"=>$typeList, "placeholder"=>"종류를 추가해주세요."])
+            <x-jet-label for="type" value="종"/>
+            @include("parts.select", ["name"=>"type_id", "list"=>$typeList, "placeholder"=>"종을 추가해주세요."])
         </div>
 
         <div>

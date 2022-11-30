@@ -22,7 +22,7 @@ class ReptileRequest extends FormRequest
     public function messages()
     {
         return [
-            "type_id.required" => "종류를 선택해주세요.",
+            "type_id.required" => "종을 선택해주세요.",
             "name.required" => "개체 이름을 입력해주세요.",
             "name.max" => "개체 이름은 최대 128자까지 입력 가능합니다.",
             "gender.required" => "개체 성별를 선택해주세요.",

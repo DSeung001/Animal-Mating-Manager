@@ -13,14 +13,16 @@ class EggRequest extends FormRequest
     public function rules()
     {
         return [
-            "mating_id" => "required",
+            "tid" => "required",
+            "spawn_at" => "required"
         ];
     }
 
     public function messages()
     {
         return [
-            "mating_id.required" => "메이팅을 선택해주세요.",
+            "tid.required" => "종을 선택해주세요.",
+            "spawn_at.required" => "산란일을 선택해주세요"
         ];
     }
 }

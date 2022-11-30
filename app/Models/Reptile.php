@@ -26,11 +26,6 @@ class Reptile extends Model
         );
     }
 
-    public function type()
-    {
-        return $this->belongsTo(Type::class);
-    }
-
     public function scopeListByUserId($query, $userId)
     {
         return $query->select("id", "name")->where("user_id", $userId);

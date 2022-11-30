@@ -51,7 +51,7 @@ class TypeController extends Controller
         $validated['comment'] = $request->input('comment');
         $this->type->create($validated);
 
-        return redirect(route('dashboard'))->with('status', '종류를 등록했습니다.');
+        return redirect(route('dashboard'))->with('status', '종을 등록했습니다.');
     }
 
     /**

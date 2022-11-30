@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('mating_id')->nullable();
             $table->string('comment')->nullable();
             $table->enum('is_hatching', ['y','n','w'])->default('w');
+            $table->timestamp('spawn_at');
             $table->timestamps();
         });
     }
