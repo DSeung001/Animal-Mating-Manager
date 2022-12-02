@@ -1,32 +1,34 @@
 <x-app-layout>
-    <x-jet-validation-errors class="mb-4" />
+    <x-jet-validation-errors class="mb-4"/>
 
-    <form method="POST" action="{{route('mating.store')}}">
+    <h2>
+        메이팅 등록
+    </h2>
+
+    <form id="matingcreate_form" method="POST" action="{{route('mating.store')}}">
         @csrf
 
-        <div>
-            <x-jet-label for="type" value="부 개체"/>
-            @include("parts.select", ["name"=>"father_id", "list"=>$maleReptileList, "placeholder"=>"없음"])
+        <livewire:mating-search
+            :typeList="$typeList"
+            :fatherReptileList="$fatherReptileList"
+            :matherReptileList="$matherReptileList"
+            :matingList="[]"
+        />
+
+
+        @include('parts.textarea')
+
+
+        <div class="px-4">
+            <div class="p-4 bg-white shadow m-auto">
+                <div class="relative">
+                    <input datepicker type="date"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="Select date">
+                </div>
+            </div>
         </div>
 
-        <div>
-            <x-jet-label for="type" value="모 개체"/>
-            @include("parts.select", ["name"=>"mather_id", "list"=>$femaleReptileList, "placeholder"=>"없음"])
-        </div>
-
-        <div>
-            <x-jet-label for="comment" value="메모"/>
-            <x-jet-input id="comment" class="block mt-1 w-full" type="text" name="comment" :value="old('comment')"
-                         autofocus/>
-        </div>
-
-        <div>
-            <x-jet-label for="mating_at" value="메이팅 일" />
-            <x-jet-input id="mating_at" class="block mt-1 w-full" type="date" name="mating_at" :value="old('mating_at') ?? now()->isoFormat('YYYY-MM-DD')" required autofocus/>
-        </div>
-
-        <x-jet-button class="ml-4">
-            저장
-        </x-jet-button>
+        @include('parts.submit', ["formId" => "matingcreate_form"])
     </form>
 </x-app-layout>

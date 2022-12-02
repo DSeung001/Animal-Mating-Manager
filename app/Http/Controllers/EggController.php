@@ -46,24 +46,9 @@ class EggController extends Controller
      */
     public function create(Request $request)
     {
-        $userId = Auth::id();
-
-        $typeList = $this->type
-            ->select('id', 'name')
-            ->listByUserId($userId)
-            ->pluck('name', 'id');
-        $matherReptileList = $this->reptile
-            ->select('id', 'name')
-            ->listByUserId($userId)
-            ->conditionGender('f')
-            ->pluck('name', 'id');
-        $fatherReptileList = $this->reptile
-            ->select('id', 'name')
-            ->listByUserId($userId)
-            ->conditionGender('m')
-            ->pluck('name', 'id');
-
-        $request->flashOnly(['tid', 'ts', 'mid', 'ms', 'fid', 'fs']);
+        $typeList = $this->type->getTypePluck();
+        $matherReptileList = $this->reptile->getFemaleReptilePluck();
+        $fatherReptileList = $this->reptile->getMaleReptilePluck();
 
         return view($this->path.'.create',
             compact('typeList', 'matherReptileList', 'fatherReptileList')

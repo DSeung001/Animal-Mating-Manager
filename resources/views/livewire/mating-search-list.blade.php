@@ -20,6 +20,7 @@
                                 'list' => $fatherReptileList,
                                 'identity' => 'fid',
                                 'default' => '전체',
+                                'selectListener' => 'fatherSelect',
                                 'searchListener' => 'fatherSearch'
                             ])
                         </div>
@@ -31,6 +32,7 @@
                                 'list' => $matherReptileList,
                                 'identity' => 'mid',
                                 'default' => '전체',
+                                'selectListener' => 'matherSelect',
                                 'searchListener' => 'matherSearch'
                         ])
                         </div>
@@ -38,5 +40,15 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="mt-5">
+        @include('parts.list', [
+             'list' => $matingList,
+             'title' => '메이팅 이력',
+             'headers' => ['부', '모', '설명', '메이팅일'],
+             'datas' => ['father_name', 'mather_name', 'comment', 'mating_at'],
+             'selectKey' => 'id'
+         ])
     </div>
 </div>

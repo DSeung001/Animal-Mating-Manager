@@ -31,7 +31,6 @@ Route::middleware([
     })->name('dashboard');
 
     Route::resource('egg', EggController::class);
-
     Route::resource('mating', MatingController::class);
     Route::resource('reptile', ReptileController::class);
     Route::resource('type', TypeController::class);

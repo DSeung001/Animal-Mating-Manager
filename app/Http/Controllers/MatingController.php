@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MatingRequest;
 use App\Models\Mating;
 use App\Models\Reptile;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,11 +14,13 @@ class MatingController extends Controller
 {
     private Mating $mating;
     private Reptile $reptile;
+    private Type $type;
 
-    public function __construct(Mating $maitng, Reptile $reptile)
+    public function __construct(Mating $maitng, Reptile $reptile, Type $type)
     {
         $this->mating = $maitng;
         $this->reptile = $reptile;
+        $this->type = $type;
         parent::__construct('mating');
     }
 
@@ -52,11 +55,11 @@ class MatingController extends Controller
      */
     public function create()
     {
-        $userId = Auth::id();
-        $maleReptileList = $this->reptile->listByUserId($userId)->conditionGender('m')->pluck('name', 'id');
-        $femaleReptileList = $this->reptile->listByUserId($userId)->conditionGender('f')->pluck('name', 'id');
+        $typeList = $this->type->getTypePluck();
+        $matherReptileList = $this->reptile->getFemaleReptilePluck();
+        $fatherReptileList = $this->reptile->getMaleReptilePluck();
 
-        return view($this->path.".create", compact('maleReptileList', 'femaleReptileList'));
+        return view($this->path.".create", compact('typeList', 'fatherReptileList', 'matherReptileList'));
     }
 
     /**

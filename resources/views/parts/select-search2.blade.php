@@ -33,8 +33,13 @@
                        wire:change="{{$searchListener}}($event.target.value)"
                 >
             </div>
-            <button type="button" class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            <button type="button"
+                    class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
                 <span class="sr-only">Search</span>
             </button>
         </div>
@@ -47,7 +52,9 @@
                 <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
                     <input name="{{$identity}}" id="select-search-{{$identity}}-default" type="radio" value=""
                            class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                           @if(isset($selectListener))
                            wire:click="{{$selectListener}}"
+                        @endif
                     >
                     <label for="select-search-{{$identity}}-default"
                            class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300">{{$default}}</label>
@@ -59,7 +66,9 @@
                 <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
                     <input name="{{$identity}}" id="select-search-{{$identity}}-{{$key}}" type="radio" value="{{$key}}"
                            class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                           wire:click="{{$selectListener}}({{$key}})"
+                           @if(isset($selectListener))
+                           wire:click="{{$selectListener}}"
+                        @endif
                     >
                     <label for="select-search-{{$identity}}-{{$key}}"
                            class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300">
@@ -70,9 +79,11 @@
         @empty
             <li>
                 <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                    <input name="{{$identity}}"  id="select-search-{{$identity}}-empty" type="radio" value=""
+                    <input name="{{$identity}}" id="select-search-{{$identity}}-empty" type="radio" value=""
                            class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                           @if(isset($selectListener))
                            wire:click="{{$selectListener}}"
+                        @endif
                     >
                     <label for="select-search-{{$identity}}-empty"
                            class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300">데이터

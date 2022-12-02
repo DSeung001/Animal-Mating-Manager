@@ -2,8 +2,9 @@
     $title : 제목
     $headers : th 텍스트 표시 값
     $datas : td 텍스트 표시 값
-    $list : 데이터 리스트
-    $decorator : 데코레이션 문자 붙이기
+    $list : ul li에 출력 데이터 리스트
+    $decorator : li 데이터에 데코레이션 문자 붙이기
+    $selectKey : radio input을 추가하고, 이에 대한 이름 값
 --}}
 
 <section class="antialiased bg-gray-100 text-gray-600 h-screen px-4">
@@ -25,6 +26,11 @@
                                     <div class="font-semibold text-left">{{$value}}</div>
                                 </th>
                             @endforeach
+                            @if(isset($selectKey))
+                                <th class="p-2 whitespace-nowrap">
+                                    <div class="font-semibold text-left">선택</div>
+                                </th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody class="text-sm divide-y divide-gray-100">
@@ -40,6 +46,16 @@
                                         </div>
                                     </td>
                                 @endforeach
+
+                                @if(isset($selectKey))
+                                    <td class="p-2 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="font-medium text-gray-800">
+                                                <input type="radio" name="{{$selectKey}}" value="{{$item[$selectKey]}}">
+                                            </div>
+                                        </div>
+                                    </td>
+                                @endif
                             </tr>
                         @empty
                             <tr>
