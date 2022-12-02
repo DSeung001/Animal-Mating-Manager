@@ -48,42 +48,25 @@ class EggController extends Controller
     {
         $userId = Auth::id();
 
-        $typeId = $request->input('tid');
-        $typeSearchString = $request->input('ts');
-        $matherId = $request->input('mid');
-        $matherSearchString = $request->input('ms');
-        $fatherId = $request->input('fid');
-        $fatherSearchString = $request->input('fs');
-
         $typeList = $this->type
+            ->select('id', 'name')
             ->listByUserId($userId)
-            ->searchByName($typeSearchString)
             ->pluck('name', 'id');
         $matherReptileList = $this->reptile
+            ->select('id', 'name')
             ->listByUserId($userId)
             ->conditionGender('f')
-            ->searchByName($matherSearchString)
             ->pluck('name', 'id');
         $fatherReptileList = $this->reptile
+            ->select('id', 'name')
             ->listByUserId($userId)
             ->conditionGender('m')
-            ->searchByName($fatherSearchString)
             ->pluck('name', 'id');
-        $matingList = $this->mating
-            ->select('id', 'comment', 'mating_at')
-            ->where('user_id', $userId)
-            ->where('mather_id', $matherId)
-            ->where('father_id', $fatherId)
-            ->get();
-        $matherReptile = $this->reptile
-            ->where('id', $matherId)->first();
-        $fatherReptile = $this->reptile
-            ->where('id', $fatherId)->first();
 
         $request->flashOnly(['tid', 'ts', 'mid', 'ms', 'fid', 'fs']);
 
         return view($this->path.'.create',
-            compact('typeList', 'matherReptileList', 'fatherReptileList', 'matingList', 'matherReptile', 'fatherReptile', 'typeId', 'fatherId', 'matherId')
+            compact('typeList', 'matherReptileList', 'fatherReptileList')
         );
     }
 

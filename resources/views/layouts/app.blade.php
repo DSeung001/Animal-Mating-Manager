@@ -37,10 +37,10 @@
             </main>
         </div>
 
+        <livewire:scripts />
+
         @stack('modals')
         @stack('scripts')
-
-        <livewire:scripts />
 
         <script src="{{asset("js/flowbite.js")}}"></script>
     </body>

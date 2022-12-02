@@ -14,7 +14,7 @@ class ReptileRequest extends FormRequest
         return [
             "type_id" => "required",
             "name" => "required|max:128",
-            "gender" => "required|required_with:m,w,u",
+            "gender" => "required|required_with:m,f,u",
             "morph" => "required|max:128",
         ];
     }

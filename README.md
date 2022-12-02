@@ -5,4 +5,5 @@
 
 ### 참고 리소스 
 - tailwind component : https://tailwindcomponents.com/component/customers-table
-- 내 블로그 : https://seung.tistory.com/ 
+- 내 블로그 : https://seung.tistory.com/
+- 라라벨 풀스텍 프레임워크 : https://laravel-livewire.com/

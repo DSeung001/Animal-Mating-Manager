@@ -38,6 +38,6 @@ class Reptile extends Model
 
     public function scopeSearchByName($query, $searchString)
     {
-        return $query->where("name", "like", "%".$searchString."%");
+        return $query->where("name", "like", "%$searchString%");
     }
 }
