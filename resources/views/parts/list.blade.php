@@ -59,7 +59,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td class="p-2 whitespace-nowrap" colspan="{{count($headers)}}">
+                                <td class="p-2 whitespace-nowrap" colspan="{{ isset($selectKey) ? count($headers) + 1 : count($headers) }}">
                                     <div class="font-medium text-gray-800 text-center">
                                         비어있음
                                     </div>
