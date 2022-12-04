@@ -1,4 +1,8 @@
 <x-app-layout>
+    <x-slot name="header">
+        {{ __('Mating List') }}
+    </x-slot>
+
 
     @include('parts.list', [
          'title' => '메이팅 이력',

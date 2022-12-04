@@ -1,8 +1,8 @@
 <x-app-layout>
 
-    <h2>
-       알 등록
-    </h2>
+    <x-slot name="header">
+        {{ __('Egg Add') }}
+    </x-slot>
 
     <form action="{{route('egg.store')}}" method="post">
         @csrf

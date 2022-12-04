@@ -1,4 +1,9 @@
 <x-app-layout>
+    <x-slot name="header">
+        {{ __('Type Add') }}
+    </x-slot>
+
+
     <x-jet-validation-errors class="mb-4" />
 
     <form method="POST" action="{{route('type.store')}}">

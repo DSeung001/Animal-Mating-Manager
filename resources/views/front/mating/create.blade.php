@@ -1,6 +1,10 @@
 <x-app-layout>
     <x-jet-validation-errors class="mb-4"/>
 
+    <x-slot name="header">
+        {{ __('Mating Add') }}
+    </x-slot>
+
     <h2>
         메이팅 등록
     </h2>

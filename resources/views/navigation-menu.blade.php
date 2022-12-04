@@ -16,10 +16,13 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    @include('parts.menu-dropdown', ['title' => 'Type', 'identity' => 'type', 'menu' => ['Type add' => route('type.create'), 'Type list' => route('type.index')]])
-                    @include('parts.menu-dropdown', ['title' => 'Reptile', 'identity' => 'reptile', 'menu' => ['Reptile add' => route('reptile.create'), 'Reptile list' => route('reptile.index')]])
-                    @include('parts.menu-dropdown', ['title' => 'Mating', 'identity' => 'mating', 'menu' => ['Mating add' => route('mating.create'), 'Mating list' => route('mating.index')]])
-                    @include('parts.menu-dropdown', ['title' => 'Egg', 'identity' => 'Egg', 'menu' => ['Egg add' => route('egg.create'), 'Egg list' => route('egg.index')]])
+                    <a class="align-middle flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 border-b border-gray-100 md:w-auto hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700" href="{{route('dashboard')}}">
+                        Dashboard
+                    </a>
+                    @include('parts.menu-dropdown', ['title' => 'Type', 'identity' => 'type', 'menu' => ['Type Add' => route('type.create'), 'Type List' => route('type.index')]])
+                    @include('parts.menu-dropdown', ['title' => 'Reptile', 'identity' => 'reptile', 'menu' => ['Reptile Add' => route('reptile.create'), 'Reptile List' => route('reptile.index')]])
+                    @include('parts.menu-dropdown', ['title' => 'Mating', 'identity' => 'mating', 'menu' => ['Mating Add' => route('mating.create'), 'Mating List' => route('mating.index')]])
+                    @include('parts.menu-dropdown', ['title' => 'Egg', 'identity' => 'Egg', 'menu' => ['Egg Add' => route('egg.create'), 'Egg List' => route('egg.index')]])
                 </div>
             </div>
 
@@ -145,6 +148,31 @@
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('type.create') }}" :active="request()->routeIs('type.create')">
+                - Type Add
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('type.index') }}" :active="request()->routeIs('type.index')">
+                - Type List
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('reptile.create') }}" :active="request()->routeIs('reptile.create')">
+                - Reptile Add
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('reptile.index') }}" :active="request()->routeIs('reptile.index')">
+                - Reptile List
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('mating.create') }}" :active="request()->routeIs('mating.create')">
+                - Mating Add
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('mating.index') }}" :active="request()->routeIs('mating.index')">
+                - Mating List
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('egg.create') }}" :active="request()->routeIs('egg.create')">
+                - Egg Add
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('egg.index') }}" :active="request()->routeIs('egg.index')">
+                - Egg List
+            </x-jet-responsive-nav-link>
+
         </div>
 
         <!-- Responsive Settings Options -->

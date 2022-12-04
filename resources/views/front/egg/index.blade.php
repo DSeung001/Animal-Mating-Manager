@@ -1,4 +1,8 @@
 <x-app-layout>
+    <x-slot name="header">
+        {{ __('Egg List') }}
+    </x-slot>
+
     <ul>
         @foreach($list as $item)
             <li>

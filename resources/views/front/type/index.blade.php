@@ -1,4 +1,8 @@
 <x-app-layout>
+    <x-slot name="header">
+        {{ __('Type List') }}
+    </x-slot>
+
 
     @include('parts.list', [
         'title' => '종들',

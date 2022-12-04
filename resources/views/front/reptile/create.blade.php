@@ -1,4 +1,10 @@
 <x-app-layout>
+
+    <x-slot name="header">
+        {{ __('Reptile Add') }}
+    </x-slot>
+
+
     <x-jet-validation-errors class="mb-4" />
 
     <form method="POST" action="{{route('reptile.store')}}">
