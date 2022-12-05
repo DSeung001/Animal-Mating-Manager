@@ -75,7 +75,7 @@ class MatingController extends Controller
         $validated['comment'] = $request->input('comment');
         $this->mating->create($validated);
 
-        return redirect(route('dashboard'))->with('status', '메이팅을 등록했습니다.');
+        return redirect(route('mating.index'))->with('status', '메이팅을 등록했습니다.');
     }
 
     /**

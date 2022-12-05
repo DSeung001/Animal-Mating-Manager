@@ -20,6 +20,8 @@
                          'type'=>'date',
                     ])
 
+                @include('parts.textarea')
+
                 @include('parts.submit', ["formId" => "egg-create-form"])
             </form>
         </div>

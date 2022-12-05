@@ -88,7 +88,7 @@ class ReptileController extends Controller
             'birth' => $request->input('birth')
         ]);
 
-        return redirect(route('dashboard'))->with('status', '개체를 등록했습니다.');
+        return redirect(route('reptile.index'))->with('status', '개체를 등록했습니다.');
     }
 
     /**

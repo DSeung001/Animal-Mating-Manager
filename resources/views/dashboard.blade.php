@@ -36,14 +36,4 @@
                 </ul>
             </div>
         </div>
-
-
-    @push('scripts')
-        <script>
-            @if (session('status'))
-            alert("{{ session('status') }}");
-            @endif
-        </script>
-    @endpush
-
 </x-app-layout>

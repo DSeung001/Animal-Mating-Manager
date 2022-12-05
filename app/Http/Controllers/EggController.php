@@ -9,6 +9,7 @@ use App\Models\Reptile;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class EggController extends Controller
 {
@@ -34,7 +35,19 @@ class EggController extends Controller
     public function index()
     {
         $list = $this->egg
-            ->where('user_id', Auth::id())->get();
+            ->select(
+                'spawn_at',
+                DB::raw("DATE_ADD(spawn_at, INTERVAL hatch_day DAY) as estimated_date"),
+                'is_hatching',
+                'types.name as type_name',
+                'f_reptile.name as father_name',
+                'm_reptile.name as mather_name'
+            )
+            ->leftJoin('types', 'types.id', '=', 'type_id')
+            ->leftJoin('matings', 'matings.id', '=', 'mating_id')
+            ->leftJoin('reptiles AS f_reptile', 'f_reptile.id', '=', 'matings.father_id')
+            ->leftJoin('reptiles AS m_reptile', 'm_reptile.id', '=', 'matings.mather_id')
+            ->where('eggs.user_id', Auth::id())->get();
 
         return view("$this->path.index", compact('list'));
     }
@@ -44,7 +57,7 @@ class EggController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
         $typeList = $this->type->getTypePluck();
         $matherReptileList = $this->reptile->getFemaleReptilePluck();
@@ -68,7 +81,7 @@ class EggController extends Controller
         $validated['user_id'] = Auth::id();
         $this->egg->create($validated);
 
-        return redirect(route('dashboard'))->with('status', '알을 등록했습니다.');
+        return redirect(route('egg.index'))->with('status', '알을 등록했습니다.');
     }
 
     /**

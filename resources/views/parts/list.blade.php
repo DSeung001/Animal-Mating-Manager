@@ -4,7 +4,8 @@
     $datas : td 텍스트 표시 값
     $list : ul li에 출력 데이터 리스트
     $decorator : li 데이터에 데코레이션 문자 붙이기
-    $selectKey : radio input (선택 박스)를 추가하고, 이에 대한 이름 값 | option
+    $name : form으로 보낼 이름 값 | option | $listName과 같이 사용
+    $listColumn : radio input (선택 박스)에서 사용할 값의 컬럼명 | option | $name과 같이 사용
     $isWrapper : wrapper 여부 | option
 --}}
 
@@ -28,7 +29,7 @@
                                         <div class="font-semibold text-left">{{$value}}</div>
                                     </th>
                                 @endforeach
-                                @if(isset($selectKey))
+                                @if(isset($listColumn))
                                     <th class="p-2 whitespace-nowrap">
                                         <div class="font-semibold text-left">선택</div>
                                     </th>
@@ -49,12 +50,12 @@
                                         </td>
                                     @endforeach
 
-                                    @if(isset($selectKey))
+                                    @if(isset($listColumn))
                                         <td class="p-2 whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <div class="font-medium text-gray-800">
-                                                    <input type="radio" name="{{$selectKey}}"
-                                                           value="{{$item[$selectKey]}}">
+                                                    <input type="radio" name="{{$name}}"
+                                                           value="{{$item[$listColumn]}}">
                                                 </div>
                                             </div>
                                         </td>
@@ -63,7 +64,7 @@
                             @empty
                                 <tr>
                                     <td class="p-2 whitespace-nowrap"
-                                        colspan="{{ isset($selectKey) ? count($headers) + 1 : count($headers) }}">
+                                        colspan="{{ isset($listColumn) ? count($headers) + 1 : count($headers) }}">
                                         <div class="font-medium text-gray-800 text-center">
                                             비어있음
                                         </div>

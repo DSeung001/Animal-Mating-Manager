@@ -13,6 +13,8 @@ class EggRequest extends FormRequest
     public function rules()
     {
         return [
+            "type_id" => "required",
+            "mating_id" => "required",
             "spawn_at" => "required"
         ];
     }
@@ -20,7 +22,9 @@ class EggRequest extends FormRequest
     public function messages()
     {
         return [
-            "spawn_at.required" => "산란일을 선택해주세요"
+            "type_id.required" => "종을 선택해주세요.",
+            "mating_id.required" => "메이팅을 선택해주세요.",
+            "spawn_at.required" => "산란일을 선택해주세요."
         ];
     }
 }

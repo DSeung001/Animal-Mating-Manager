@@ -39,6 +39,14 @@
             </main>
         </div>
 
+        @push('scripts')
+            <script>
+                @if (session('status'))
+                alert("{{ session('status') }}");
+                @endif
+            </script>
+        @endpush
+
         <livewire:scripts />
 
         @stack('modals')

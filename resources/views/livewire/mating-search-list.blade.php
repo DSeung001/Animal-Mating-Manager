@@ -4,7 +4,7 @@
             'title'=>"종 선택",
             'list' => $typeList,
             'type' => 'radio',
-            'name' => 'typeId',
+            'name' => 'type_id',
             'changeListener' =>  'typeChange'
         ])
 
@@ -37,7 +37,8 @@
          'title' => '메이팅 이력',
          'headers' => ['부', '모', '설명', '메이팅일'],
          'datas' => ['father_name', 'mather_name', 'comment', 'mating_at'],
-         'selectKey' => 'id',
+         'name' => 'mating_id',
+         'listColumn' => 'id',
          'isWrapper' => false
      ])
 </div>
