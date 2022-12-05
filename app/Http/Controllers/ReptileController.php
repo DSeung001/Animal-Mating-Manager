@@ -61,10 +61,10 @@ class ReptileController extends Controller
     {
         $userId = Auth::id();
         $typeList = $this->type->listByUserId($userId)->pluck('name', 'id');
-        $maleReptileList = $this->reptile->listByUserId($userId)->conditionGender('m')->pluck('name', 'id');
-        $femaleReptileList = $this->reptile->listByUserId($userId)->conditionGender('f')->pluck('name', 'id');
+        $fatherReptileList = $this->reptile->listByUserId($userId)->conditionGender('m')->pluck('name', 'id');
+        $matherReptileList = $this->reptile->listByUserId($userId)->conditionGender('f')->pluck('name', 'id');
 
-        return view($this->path . ".create", compact('typeList', 'maleReptileList', 'femaleReptileList'));
+        return view($this->path . ".create", compact('typeList', 'fatherReptileList', 'matherReptileList'));
     }
 
     /**

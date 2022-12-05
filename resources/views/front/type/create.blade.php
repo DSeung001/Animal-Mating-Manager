@@ -3,29 +3,28 @@
         {{ __('Type Add') }}
     </x-slot>
 
-
     <x-jet-validation-errors class="mb-4" />
 
-    <form method="POST" action="{{route('type.store')}}">
-        @csrf
-        <div>
-            <x-jet-label for="name" value="종 명칭"/>
-            <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
-                         autofocus/>
+    <div class="px-4 mt-8 mb-4">
+        <div class="p-4 bg-white shadow m-auto max-w-[1280px]">
+            <form method="POST" action="{{route('type.store')}}">
+                @csrf
+                @include('parts.input', [
+                            'title'=>'종류 명칭',
+                            'name'=>'name',
+                            'type'=>'text',
+                            'placeholder'=> "ex:크레스티드게코"
+                            ])
+                @include('parts.input', [
+                    'title'=>'부화 소요 기간(일 기준)',
+                    'name'=>'hatch_day',
+                    'type'=>'number',
+                    'placeholder'=> '67'
+                    ])
+                @include('parts.textarea')
+                @include('parts.submit')
+            </form>
         </div>
-        <div>
-            <x-jet-label for="hatch_day" value="부화 소요 기간(일 기준)"/>
-            <x-jet-input id="hatch_day" class="block mt-1 w-full" type="number" name="hatch_day"
-                         :value="old('hatch_day')" required autofocus/>
-        </div>
-        <div>
-            <x-jet-label for="comment" value="메모"/>
-            <x-jet-input id="comment" class="block mt-1 w-full" type="text" name="comment" :value="old('comment')"
-                         autofocus/>
-        </div>
+    </div>
 
-        <x-jet-button>
-            저장
-        </x-jet-button>
-    </form>
 </x-app-layout>

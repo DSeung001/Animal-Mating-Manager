@@ -4,8 +4,8 @@
             'title'=>"종 선택",
             'list' => $typeList,
             'type' => 'radio',
-            'name' => 'typeId',
-            'changeListener' =>  'typeChange'
+            'name' => 'tid',
+            'changeListener' =>  'typeChangliste'
         ])
 
         <div class="grid grid-cols-2">
@@ -14,8 +14,7 @@
                     'title' => "부 개체",
                     'list' => $fatherReptileList,
                     'identity' => 'father-reptile',
-                    'default' => '전체',
-                    'selectListener' => 'fatherSelect',
+                    'default' => '미확인',
                     'searchListener' => 'fatherSearch'
                 ])
             </div>
@@ -24,20 +23,10 @@
                     'title' => '모 개체',
                     'list' => $matherReptileList,
                     'identity' => 'mather-reptile',
-                    'default' => '전체',
-                    'selectListener' => 'matherSelect',
+                    'default' => '미확인',
                     'searchListener' => 'matherSearch'
                 ])
             </div>
         </div>
     </div>
-
-    @include('parts.list', [
-         'list' => $matingList,
-         'title' => '메이팅 이력',
-         'headers' => ['부', '모', '설명', '메이팅일'],
-         'datas' => ['father_name', 'mather_name', 'comment', 'mating_at'],
-         'selectKey' => 'id',
-         'isWrapper' => false
-     ])
 </div>

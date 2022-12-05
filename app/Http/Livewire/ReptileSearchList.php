@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class MatingSearch extends Component
+class ReptileSearchList extends Component
 {
     // 뷰 property
     public $typeList, $fatherReptileList, $matherReptileList;
@@ -48,6 +48,6 @@ class MatingSearch extends Component
 
     public function render()
     {
-        return view('livewire.mating-search');
+        return view('livewire.reptile-search-list');
     }
 }

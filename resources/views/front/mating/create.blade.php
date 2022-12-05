@@ -5,27 +5,29 @@
         {{ __('Mating Add') }}
     </x-slot>
 
-    <h2>
-        메이팅 등록
-    </h2>
 
-    <form id="matingcreate_form" method="POST" action="{{route('mating.store')}}">
-        @csrf
+    <div class="px-4 mt-8 mb-4">
+        <div class="p-4 bg-white shadow m-auto max-w-[1280px]">
+            <form id="mating-create-form" method="POST" action="{{route('mating.store')}}">
+                @csrf
 
-        <livewire:mating-search
-            :typeList="$typeList"
-            :fatherReptileList="$fatherReptileList"
-            :matherReptileList="$matherReptileList"
-            :matingList="[]"
-        />
+                <livewire:reptile-search-list
+                    :typeList="$typeList"
+                    :fatherReptileList="$fatherReptileList"
+                    :matherReptileList="$matherReptileList"
+                    :matingList="[]"
+                />
 
+                @include('parts.textarea')
 
-        @include('parts.textarea')
-        @include('parts.date-select')
+                @include('parts.input', [
+                         'title'=>'개체 생일',
+                         'name'=>'birth',
+                         'type'=>'date',
+                         ])
 
-        <div class="pr-4 m-auto max-w-[1280px]">
-            @include('parts.submit', ["formId" => "matingcreate_form"])
+                @include('parts.submit', ["formId" => "reptile-create-form"])
+            </form>
         </div>
-
-    </form>
+    </div>
 </x-app-layout>

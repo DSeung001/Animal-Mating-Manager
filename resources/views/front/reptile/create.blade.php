@@ -5,52 +5,51 @@
     </x-slot>
 
 
-    <x-jet-validation-errors class="mb-4" />
+    <x-jet-validation-errors class="mb-4"/>
 
-    <form method="POST" action="{{route('reptile.store')}}">
-        @csrf
 
-        <div>
-            <x-jet-label for="name" value="개체 이름" />
-            <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus/>
+    <div class="px-4 mt-8 mb-4">
+        <div class="p-4 bg-white shadow m-auto max-w-[1280px]">
+            <form method="POST" action="{{route('reptile.store')}}" id="reptile-create-form">
+                @csrf
+
+                @include('parts.input', [
+                      'title'=>'개체 이름',
+                      'name'=>'name',
+                      'type'=>'text',
+                  ])
+
+                <livewire:reptile-search-list
+                    :typeList="$typeList"
+                    :fatherReptileList="$fatherReptileList"
+                    :matherReptileList="$matherReptileList"
+                    :matingList="[]"
+                />
+
+                @include('parts.checkbox', [
+                    'title'=>"성별 선택",
+                    'list' => ['u' => '미구분', 'm' => '수컷', 'f' => '암컷'],
+                    'type' => 'radio',
+                    'name' => 'tid',
+                    'changeListener' =>  'typeChange'
+                ])
+
+                @include('parts.input', [
+                         'title'=>'개체 모프',
+                         'name'=>'morph',
+                         'type'=>'text',
+                         'placeholder'=> "ex:트익할,릴리"
+                         ])
+
+                @include('parts.input', [
+                         'title'=>'개체 생일',
+                         'name'=>'birth',
+                         'type'=>'date',
+                         ])
+
+                @include('parts.submit', ["formId" => "reptile-create-form"])
+            </form>
         </div>
+    </div>
 
-        <div>
-            <x-jet-label for="type" value="종"/>
-            @include("parts.select", ["name"=>"type_id", "list"=>$typeList, "placeholder"=>"종을 추가해주세요."])
-        </div>
-
-        <div>
-            <x-jet-label for="type" value="부 개체"/>
-            @include("parts.select", ["name"=>"father_id", "list"=>$maleReptileList, "default"=>"알 수 없음"])
-        </div>
-
-        <div>
-            <x-jet-label for="type" value="모 개체"/>
-            @include("parts.select", ["name"=>"mather_id", "list"=>$femaleReptileList, "default"=>"알 수 없음"])
-        </div>
-
-        <div>
-            <x-jet-label for="type" value="성별"/>
-            @include("parts.select", ["name"=>"gender", "list"=>[
-                'm' => '수컷',
-                'f' => '암컷',
-                'u' => '미구분'
-            ]])
-        </div>
-
-        <div>
-            <x-jet-label for="morph" value="개체 모프" />
-            <x-jet-input id="morph" class="block mt-1 w-full" type="text" name="morph" :value="old('morph')" required autofocus/>
-        </div>
-
-        <div>
-            <x-jet-label for="birth" value="개체 생일" />
-            <x-jet-input id="birth" class="block mt-1 w-full" type="date" name="birth" :value="old('birth') ?? now()->isoFormat('YYYY-MM-DD')" required autofocus/>
-        </div>
-
-        <x-jet-button class="ml-4">
-            저장
-        </x-jet-button>
-    </form>
-</x-guest-layout>
+    </x-guest-layout>
