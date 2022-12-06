@@ -24,15 +24,14 @@ class TypeController extends Controller
      */
     public function index(Request $request)
     {
-        /*
-         * 종류명칭 검색만 추가
-         * */
-        $paginate = $request->input('paniate', 10);
+        $name = $request->input('name', '');
+        $paginate = $request->input('paginate', 10);
 
         $list = $this->type
             ->select('id', 'name', 'hatch_day', 'created_at', 'updated_at')
             ->where('user_id', Auth::id())
-            ->paginate($paginate);
+            ->searchByName($name)
+            ->setPaginate($paginate);
         return view("$this->path.index", compact("list"));
     }
 

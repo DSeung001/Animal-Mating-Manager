@@ -28,10 +28,9 @@ class ReptileController extends Controller
      */
     public function index(Request $request)
     {
-        /*
-         *
-         * */
-
+        $name = $request->input('name', '');
+        $typeId = $request->input('type', '');
+        $morph = $request->input('morph', '');
         $paginate = $request->input('paniate', 10);
 
         // 부모 아이디로 링크 추가하기
@@ -54,9 +53,18 @@ class ReptileController extends Controller
             ->leftJoin('reptiles AS m_reptile', 'm_reptile.id', '=', 'reptiles.mather_id')
             ->leftJoin('types', 'types.id', '=', 'reptiles.type_id')
             ->where('reptiles.user_id', Auth::id())
-            ->paginate($paginate);
+            ->where('reptiles.name', 'like', "%$name%")
+            ->where('reptiles.morph', 'like', "%$morph%");
 
-        return view("$this->path.index", compact("list"));
+        if ($typeId != '') {
+            $list = $list->where('reptiles.type_id', $typeId);
+        }
+
+        $list = $list->setPaginate($paginate);
+
+        $typeList = $this->type->getTypePluck();
+
+        return view("$this->path.index", compact("list", "typeList"));
     }
 
     /**

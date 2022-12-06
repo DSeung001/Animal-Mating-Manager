@@ -30,7 +30,7 @@
                     'title'=>"성별 선택",
                     'list' => ['u' => '미구분', 'm' => '수컷', 'f' => '암컷'],
                     'type' => 'radio',
-                    'name' => 'tid',
+                    'name' => 'gender',
                     'changeListener' =>  'typeChange'
                 ])
 

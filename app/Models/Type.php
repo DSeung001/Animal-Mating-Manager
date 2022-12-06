@@ -15,9 +15,15 @@ class Type extends Model
         return $query->select('id','name')->where('user_id', $userId);
     }
 
-    public function scopeSearchByName($query, $searchString)
-    {
+    public function scopeSearchByName($query, $searchString){
         return $query->where("name", "like", "%$searchString%");
+    }
+
+    public function scopeSetPaginate($query, $paginate){
+        if($paginate == 'all'){
+            return $query->get();
+        }
+        return $query->paginate($paginate);
     }
 
     /**

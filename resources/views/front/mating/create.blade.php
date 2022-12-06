@@ -21,7 +21,7 @@
                 @include('parts.textarea')
 
                 @include('parts.input', [
-                         'title'=>'개체 생일',
+                         'title'=>'메이팅 일시',
                          'name'=>'birth',
                          'type'=>'date',
                          ])

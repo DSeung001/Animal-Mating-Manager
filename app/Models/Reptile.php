@@ -42,6 +42,13 @@ class Reptile extends Model
         return $query->where("name", "like", "%$searchString%");
     }
 
+    public function scopeSetPaginate($query, $paginate){
+        if($paginate == 'all'){
+            return $query->get();
+        }
+        return $query->paginate($paginate);
+    }
+
     /**
      * 성별이 암컷인 개체 리스트(pluck: id => name)
      * @return mixed

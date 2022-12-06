@@ -4,7 +4,7 @@
             'title'=>"종 선택",
             'list' => $typeList,
             'type' => 'radio',
-            'name' => 'tid',
+            'name' => 'type_id',
             'changeListener' => 'typeChange'
         ])
 
