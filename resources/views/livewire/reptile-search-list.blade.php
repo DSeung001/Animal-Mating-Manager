@@ -5,7 +5,7 @@
             'list' => $typeList,
             'type' => 'radio',
             'name' => 'tid',
-            'changeListener' =>  'typeChangliste'
+            'changeListener' => 'typeChange'
         ])
 
         <div class="grid grid-cols-2">

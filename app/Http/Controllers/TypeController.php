@@ -22,9 +22,17 @@ class TypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $list = $this->type->where('user_id', Auth::id())->get();
+        /*
+         * 종류명칭 검색만 추가
+         * */
+        $paginate = $request->input('paniate', 10);
+
+        $list = $this->type
+            ->select('id', 'name', 'hatch_day', 'created_at', 'updated_at')
+            ->where('user_id', Auth::id())
+            ->paginate($paginate);
         return view("$this->path.index", compact("list"));
     }
 

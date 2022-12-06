@@ -10,4 +10,5 @@
         'datas' => ['spawn_at', 'estimated_date', 'is_hatching', 'type_name', 'father_name', 'mather_name'],
     ])
 
+    {!! $list->links() !!}
 </x-app-layout>

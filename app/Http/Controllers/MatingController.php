@@ -29,8 +29,10 @@ class MatingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $paginate = $request->input('paniate', 10);
+
         $list = $this->mating
             ->select(
                 DB::raw("
@@ -44,7 +46,9 @@ class MatingController extends Controller
             "))
             ->leftJoin('reptiles AS f_reptile', 'f_reptile.id', '=', 'matings.father_id')
             ->leftJoin('reptiles AS m_reptile', 'm_reptile.id', '=', 'matings.mather_id')
-            ->where('matings.user_id', Auth::id())->get();
+            ->where('matings.user_id', Auth::id())
+            ->paginate($paginate);
+
         return view("$this->path.index", compact("list"));
     }
 

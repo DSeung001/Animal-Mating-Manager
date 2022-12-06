@@ -11,4 +11,5 @@
         'decorator' => ['age' => '개월']
     ])
 
+    {!! $list->links() !!}
 </x-app-layout>

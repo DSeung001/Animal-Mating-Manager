@@ -10,4 +10,5 @@
          'datas' => ['father_name', 'mather_name', 'comment', 'mating_at', 'created_at', 'updated_at'],
      ])
 
+    {!! $list->links() !!}
 </x-app-layout>

@@ -26,8 +26,14 @@ class ReptileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        /*
+         *
+         * */
+
+        $paginate = $request->input('paniate', 10);
+
         // 부모 아이디로 링크 추가하기
         $list = $this->reptile
             ->select(
@@ -47,7 +53,8 @@ class ReptileController extends Controller
             ->leftJoin('reptiles AS f_reptile', 'f_reptile.id', '=', 'reptiles.father_id')
             ->leftJoin('reptiles AS m_reptile', 'm_reptile.id', '=', 'reptiles.mather_id')
             ->leftJoin('types', 'types.id', '=', 'reptiles.type_id')
-            ->where('reptiles.user_id', Auth::id())->get();
+            ->where('reptiles.user_id', Auth::id())
+            ->paginate($paginate);
 
         return view("$this->path.index", compact("list"));
     }
