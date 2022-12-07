@@ -59,7 +59,7 @@ class MatingController extends Controller
         }
         $list = $list->paginate($paginate);
 
-        return view("$this->path.index", compact("list"));
+        return view("$this->path.list", compact("list"));
     }
 
     /**
@@ -100,7 +100,7 @@ class MatingController extends Controller
      */
     public function show($id)
     {
-        //
+        return view("$this->path.show");
     }
 
     /**

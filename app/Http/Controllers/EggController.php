@@ -69,7 +69,7 @@ class EggController extends Controller
         }
         $list = $list->paginate($paginate);
 
-        return view("$this->path.index", compact('list', 'typeList', 'hatchingList'));
+        return view("$this->path.list", compact('list', 'typeList', 'hatchingList'));
     }
 
     /**
@@ -112,7 +112,7 @@ class EggController extends Controller
      */
     public function show($id)
     {
-        //
+        return view("$this->path.show");
     }
 
     /**

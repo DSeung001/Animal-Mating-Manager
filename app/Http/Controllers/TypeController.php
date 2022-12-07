@@ -32,7 +32,7 @@ class TypeController extends Controller
             ->where('user_id', Auth::id())
             ->searchByName($name)
             ->setPaginate($paginate);
-        return view("$this->path.index", compact("list"));
+        return view("$this->path.list", compact("list"));
     }
 
     /**
@@ -69,7 +69,7 @@ class TypeController extends Controller
      */
     public function show($id)
     {
-        //
+        return view("$this->path.show");
     }
 
     /**

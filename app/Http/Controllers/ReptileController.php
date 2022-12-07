@@ -65,7 +65,7 @@ class ReptileController extends Controller
 
         $typeList = $this->type->getTypePluck();
 
-        return view("$this->path.index", compact("list", "typeList"));
+        return view("$this->path.list", compact("list", "typeList"));
     }
 
     /**
@@ -115,7 +115,7 @@ class ReptileController extends Controller
      */
     public function show($id)
     {
-        //
+        return view("$this->path.show");
     }
 
     /**
