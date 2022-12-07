@@ -38,6 +38,7 @@ class MatingController extends Controller
 
         $list = $this->mating
             ->select(
+                'matings.id as id',
                 DB::raw("
                 matings.id AS id,
                 f_reptile.name AS father_name,

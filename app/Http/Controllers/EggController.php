@@ -44,6 +44,7 @@ class EggController extends Controller
 
         $list = $this->egg
             ->select(
+                'eggs.id as id',
                 'spawn_at',
                 DB::raw("DATE_ADD(spawn_at, INTERVAL hatch_day DAY) as estimated_date"),
                 'is_hatching',

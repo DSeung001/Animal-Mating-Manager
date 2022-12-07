@@ -34,6 +34,7 @@
     </x-filter-table-menu>
 
     @include('parts.list', [
+        'showRoute' => 'egg.show',
         'list' => $list,
         'title' => '알',
         'headers' => ['산란일', '예상 부화일', '부화여부', '종', '부', '모'],

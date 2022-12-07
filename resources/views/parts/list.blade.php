@@ -39,7 +39,11 @@
                             <tbody class="text-sm divide-y divide-gray-100">
 
                             @forelse($list as $item)
-                                <tr>
+                                @if(isset($showRoute))
+                                    <tr onclick="location.href='{{route($showRoute, $item->id)}}'" class="cursor-pointer hover:bg-gray-200">
+                                @else
+                                    <tr>
+                                @endif
                                     @foreach($datas as $value)
                                         <td class="p-2 whitespace-nowrap">
                                             <div class="flex items-center">

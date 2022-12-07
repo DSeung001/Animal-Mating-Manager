@@ -36,6 +36,7 @@ class ReptileController extends Controller
         // 부모 아이디로 링크 추가하기
         $list = $this->reptile
             ->select(
+                'reptiles.id as id',
                 DB::raw("
                 reptiles.id AS id,
                 reptiles.name AS name,
