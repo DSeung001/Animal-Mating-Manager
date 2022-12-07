@@ -3,22 +3,34 @@
         {{ __('Egg List') }}
     </x-slot>
 
-    <x-filter-table-menu action="{{route('mating.index')}}">
-        {{--        <div class="mr-4">--}}
-        {{--            @include('parts.table-search', [--}}
-        {{--                'placeholder' => '이름을 입력해주세요.',--}}
-        {{--                'name' => 'name',--}}
-        {{--                'isRequired' => false--}}
-        {{--            ])--}}
-        {{--        </div>--}}
-        <div class="mr-4">
-            @include('parts.table-select', ['list' => [
-                '10' => '10',
-                '20' => '30',
-                '40' => '40',
-                'all' => 'ALL',
-            ], 'name' => 'paginate'])
-        </div>
+    <x-filter-table-menu action="{{route('egg.index')}}">
+        @include('parts.table-date', [
+            'label' => '산란일',
+            'name' => 'spawn_at',
+        ])
+
+        @include('parts.table-select', [
+            'list' => $hatchingList,
+            'name' => 'hatching',
+            'default' => '전체',
+            'label' => '부화여부'
+       ])
+
+        @include('parts.table-select', [
+            'list' => $typeList,
+            'name' => 'type',
+            'default' => '전체',
+            'label' => '종류'
+       ])
+
+        @include('parts.table-select', ['list' => [
+            '10' => '10',
+            '20' => '30',
+            '40' => '40',
+            'all' => 'ALL'],
+            'name' => 'paginate',
+            'label' => '페이징'
+        ])
     </x-filter-table-menu>
 
     @include('parts.list', [

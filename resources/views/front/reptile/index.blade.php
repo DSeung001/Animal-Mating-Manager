@@ -4,35 +4,36 @@
     </x-slot>
 
     <x-filter-table-menu action="{{route('reptile.index')}}">
-        <div class="mr-4">
-            @include('parts.table-search', [
-                'placeholder' => '이름을 입력해주세요.',
-                'name' => 'name',
-                'isRequired' => false
-            ])
-        </div>
-        <div class="mr-4">
-            @include('parts.table-select', [
-                'list' => $typeList,
-                'name' => 'type',
-                'default' => '전체'
-           ])
-        </div>
-        <div class="mr-4">
-            @include('parts.table-search', [
-                'placeholder' => '모프를 입력해주세요.',
-                'name' => 'morph',
-                'isRequired' => false,
-            ])
-        </div>
-        <div class="mr-4">
-            @include('parts.table-select', ['list' => [
-                '10' => '10',
-                '20' => '30',
-                '40' => '40',
-                'all' => 'ALL',
-            ], 'name' => 'paginate'])
-        </div>
+
+        @include('parts.table-search', [
+            'placeholder' => '이름을 입력해주세요.',
+            'name' => 'name',
+            'isRequired' => false,
+            'label' => '이름'
+        ])
+
+        @include('parts.table-select', [
+            'list' => $typeList,
+            'name' => 'type',
+            'default' => '전체',
+            'label' => '종류'
+       ])
+
+        @include('parts.table-search', [
+            'placeholder' => '모프를 입력해주세요.',
+            'name' => 'morph',
+            'isRequired' => false,
+            'label' => '모프'
+        ])
+
+        @include('parts.table-select', ['list' => [
+            '10' => '10',
+            '20' => '30',
+            '40' => '40',
+            'all' => 'ALL'],
+            'name' => 'paginate',
+            'label' => '페이징'
+        ])
     </x-filter-table-menu>
 
     @include('parts.list', [

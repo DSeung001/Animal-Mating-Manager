@@ -13,7 +13,7 @@
                 @include('parts.select-search',[
                     'title' => "부 개체",
                     'list' => $fatherReptileList,
-                    'identity' => 'father-reptile',
+                    'identity' => 'father_id',
                     'default' => '미확인',
                     'searchListener' => 'fatherSearch'
                 ])
@@ -22,7 +22,7 @@
                 @include('parts.select-search', [
                     'title' => '모 개체',
                     'list' => $matherReptileList,
-                    'identity' => 'mather-reptile',
+                    'identity' => 'mather_id',
                     'default' => '미확인',
                     'searchListener' => 'matherSearch'
                 ])

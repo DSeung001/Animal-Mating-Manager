@@ -29,7 +29,7 @@ class ReptileController extends Controller
     public function index(Request $request)
     {
         $name = $request->input('name', '');
-        $typeId = $request->input('type', '');
+        $type = $request->input('type', null);
         $morph = $request->input('morph', '');
         $paginate = $request->input('paniate', 10);
 
@@ -56,8 +56,8 @@ class ReptileController extends Controller
             ->where('reptiles.name', 'like', "%$name%")
             ->where('reptiles.morph', 'like', "%$morph%");
 
-        if ($typeId != '') {
-            $list = $list->where('reptiles.type_id', $typeId);
+        if (isset($type)) {
+            $list = $list->where('reptiles.type_id', $type);
         }
 
         $list = $list->setPaginate($paginate);

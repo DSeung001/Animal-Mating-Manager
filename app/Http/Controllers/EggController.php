@@ -34,6 +34,12 @@ class EggController extends Controller
      */
     public function index(Request $request)
     {
+        $typeList = $this->type->getTypePluck();
+        $hatchingList = $this->egg->getHatchingPluck();
+
+        $spawnAt = $request->input('spawn_at', null);
+        $hatching = $request->input('hatching', null);
+        $type = $request->input('type', null);
         $paginate = $request->input('paniate', 10);
 
         $list = $this->egg
@@ -49,10 +55,20 @@ class EggController extends Controller
             ->leftJoin('matings', 'matings.id', '=', 'mating_id')
             ->leftJoin('reptiles AS f_reptile', 'f_reptile.id', '=', 'matings.father_id')
             ->leftJoin('reptiles AS m_reptile', 'm_reptile.id', '=', 'matings.mather_id')
-            ->where('eggs.user_id', Auth::id())
-            ->paginate($paginate);
+            ->where('eggs.user_id', Auth::id());
 
-        return view("$this->path.index", compact('list'));
+        if (isset($spawnAt)) {
+            $list = $list->where('estimated_date', $spawnAt);
+        }
+        if (isset($hatching)) {
+            $list = $list->where('is_hatching', $hatching);
+        }
+        if (isset($type)) {
+            $list = $list->where('eggs.type_id', $type);
+        }
+        $list = $list->paginate($paginate);
+
+        return view("$this->path.index", compact('list', 'typeList', 'hatchingList'));
     }
 
     /**
@@ -66,7 +82,7 @@ class EggController extends Controller
         $matherReptileList = $this->reptile->getFemaleReptilePluck();
         $fatherReptileList = $this->reptile->getMaleReptilePluck();
 
-        return view($this->path.'.create',
+        return view($this->path . '.create',
             compact('typeList', 'matherReptileList', 'fatherReptileList')
         );
     }
@@ -90,7 +106,7 @@ class EggController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -101,7 +117,7 @@ class EggController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -112,8 +128,8 @@ class EggController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -124,7 +140,7 @@ class EggController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

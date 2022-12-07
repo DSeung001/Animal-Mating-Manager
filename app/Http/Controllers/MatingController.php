@@ -34,6 +34,7 @@ class MatingController extends Controller
         $paginate = $request->input('paniate', 10);
         $fatherName = $request->input('father_name', '');
         $matherName = $request->input('mather_name', '');
+        $matingAt = $request->input('mating_at',null);
 
         $list = $this->mating
             ->select(
@@ -50,8 +51,12 @@ class MatingController extends Controller
             ->leftJoin('reptiles AS m_reptile', 'm_reptile.id', '=', 'matings.mather_id')
             ->where('f_reptile.name', 'like', "%$fatherName%")
             ->where('m_reptile.name', 'like', "%$matherName%")
-            ->where('matings.user_id', Auth::id())
-            ->paginate($paginate);
+            ->where('matings.user_id', Auth::id());
+
+        if (isset($matingAt)) {
+            $list = $list->where('mating_at', $matingAt);
+        }
+        $list = $list->paginate($paginate);
 
         return view("$this->path.index", compact("list"));
     }
