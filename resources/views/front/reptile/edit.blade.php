@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <x-slot name="header">
-        {{ __('Reptile Add') }}
+        {{ __('Reptile Modify') }}
     </x-slot>
 
 
@@ -10,20 +10,24 @@
 
     <div class="px-4 mt-8 mb-4">
         <div class="p-4 bg-white shadow m-auto max-w-[1280px]">
-            <form method="POST" action="{{route('reptile.store')}}" id="reptile-create-form">
+            <form method="POST" action="{{route('reptile.update', $reptile)}}" id="reptile-create-form">
+                @method('patch')
                 @csrf
 
                 @include('parts.input', [
                       'title'=>'개체 이름',
                       'name'=>'name',
                       'type'=>'text',
+                      'value'=>$reptile['name']
                   ])
 
                 <livewire:reptile-search-list
                     :typeList="$typeList"
                     :fatherReptileList="$fatherReptileList"
                     :matherReptileList="$matherReptileList"
-                    :matingList="[]"
+                    :typeSelected="$reptile['type_id']"
+                    :fatherSelected="$reptile['father_id']"
+                    :matherSelected="$reptile['mather_id']"
                 />
 
                 @include('parts.checkbox', [
@@ -31,23 +35,28 @@
                     'list' => ['u' => '미구분', 'm' => '수컷', 'f' => '암컷'],
                     'type' => 'radio',
                     'name' => 'gender',
-                    'changeListener' =>  'typeChange'
+                    'changeListener' =>  'typeChange',
+                    'selectedKey' => $genderKey
                 ])
 
                 @include('parts.input', [
                          'title'=>'개체 모프',
                          'name'=>'morph',
                          'type'=>'text',
-                         'placeholder'=> "ex:트익할,릴리"
+                         'placeholder'=> "ex:트익할,릴리",
+                         'value'=>$reptile['morph'],
                          ])
 
                 @include('parts.input', [
                          'title'=>'개체 생일',
                          'name'=>'birth',
                          'type'=>'date',
+                         'value' => $reptile['birth'],
                          ])
 
-                @include('parts.textarea')
+                @include('parts.textarea', [
+                        'value' => $reptile['comment']
+                        ])
 
                 @include('parts.button-submit', ["formId" => "reptile-create-form"])
             </form>

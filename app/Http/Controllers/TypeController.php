@@ -67,12 +67,8 @@ class TypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Type $type)
     {
-        $type = $this->type
-            ->select('id', 'name', 'hatch_day', 'comment')
-            ->where('id', $id)
-            ->where('user_id', Auth::id())->first();
         return view("$this->path.show", compact('type'));
     }
 
@@ -102,7 +98,7 @@ class TypeController extends Controller
             'hatch_day' => $validated['hatch_day'],
             'comment' => $request['comment']
         ]);
-        return redirect()->route('type.show', $type)->with('status', '종을 수정했습니다.');;
+        return redirect()->route('type.show', $type)->with('status', '종을 수정했습니다.');
     }
 
     /**

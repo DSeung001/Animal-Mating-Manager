@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('name',128);
             $table->integer('hatch_day');
-            $table->string('comment')->nullable();
+            $table->string('comment', 512)->nullable();
             $table->timestamps();
         });
     }

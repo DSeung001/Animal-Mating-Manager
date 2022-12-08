@@ -101,7 +101,8 @@ class ReptileController extends Controller
             'name' => $validated['name'],
             'gender' => $validated['gender'],
             'morph' => $validated['morph'],
-            'birth' => $request->input('birth')
+            'birth' => $request->input('birth'),
+            'comment' => $request->input('comment')
         ]);
 
         return redirect(route('reptile.index'))->with('status', '개체를 등록했습니다.');
@@ -110,23 +111,44 @@ class ReptileController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param Reptile $reptile
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Reptile $reptile)
     {
-        return view("$this->path.show");
+        $typeName = $this->type->where('id', $reptile['type_id'])->first()['name'];
+        $fatherName = $this->reptile->where('id', $reptile['father_id'])->first()['name'] ?? '미확인';
+        $matherName = $this->reptile->where('id', $reptile['mather_id'])->first()['name'] ?? '미확인';
+
+        return view("$this->path.show",
+            compact('reptile', 'typeName', 'fatherName', 'matherName')
+        );
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param Reptile $reptile
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Reptile $reptile)
     {
-        //
+        $userId = Auth::id();
+        $typeList = $this->type->listByUserId($userId)->pluck('name', 'id');
+        $fatherReptileList = $this->reptile
+            ->listByUserId($userId)
+            ->conditionGender('m')
+            ->where('type_id', $reptile['type_id'])
+            ->pluck('name', 'id');
+        $matherReptileList = $this->reptile
+            ->listByUserId($userId)
+            ->conditionGender('f')
+            ->where('type_id', $reptile['type_id'])
+            ->pluck('name', 'id');
+
+        $genderKey = $this->reptile->select('gender as gender_key')->where('id', $reptile->id)->first()['gender_key'];
+        return view("$this->path.edit",
+            compact('typeList', 'fatherReptileList', 'matherReptileList', 'reptile', 'genderKey'));
     }
 
     /**
@@ -136,9 +158,22 @@ class ReptileController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ReptileRequest $request, Reptile $reptile)
     {
-        //
+        $validated = $request->validated();
+
+        $reptile->update([
+            'type_id' => $validated['type_id'],
+            'father_id' => $request->input('father_id'),
+            'mather_id' => $request->input('mather_id'),
+            'name' => $validated['name'],
+            'gender' => $validated['gender'],
+            'morph' => $validated['morph'],
+            'birth' => $request->input('birth'),
+            'comment' => $request->input('comment')
+        ]);
+
+        return redirect()->route('reptile.show', $reptile)->with('status', '개체 정보를 수정했습니다.');
     }
 
     /**

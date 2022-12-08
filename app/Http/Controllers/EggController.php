@@ -110,9 +110,9 @@ class EggController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Egg $egg)
     {
-        return view("$this->path.show");
+        return view("$this->path.show", compact('egg'));
     }
 
     /**
@@ -121,9 +121,9 @@ class EggController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Egg $egg)
     {
-        //
+        return view("$this->path.edit", compact('egg'));
     }
 
     /**

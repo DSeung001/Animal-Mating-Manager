@@ -55,27 +55,27 @@
                                         </td>
                                     @endforeach
 
-                                    @if(isset($listColumn))
-                                        <td class="p-2 whitespace-nowrap">
-                                            <div class="flex items-center">
-                                                <div class="font-medium text-gray-800">
-                                                    <input type="radio" name="{{$name}}"
-                                                           value="{{$item[$listColumn]}}">
+                                        @if(isset($listColumn))
+                                            <td class="p-2 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="font-medium text-gray-800">
+                                                        <input type="radio" name="{{$name}}"
+                                                               value="{{$item[$listColumn]}}">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    @endif
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td class="p-2 whitespace-nowrap"
-                                        colspan="{{ isset($listColumn) ? count($headers) + 1 : count($headers) }}">
-                                        <div class="font-medium text-gray-800 text-center">
-                                            비어있음
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforelse
+                                            </td>
+                                        @endif
+                                    </tr>
+                                    @empty
+                                        <tr>
+                                            <td class="p-2 whitespace-nowrap"
+                                                colspan="{{ isset($listColumn) ? count($headers) + 2 : count($headers) + 1}}">
+                                                <div class="font-medium text-gray-800 text-center">
+                                                    비어있음
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforelse
 
                             </tbody>
                         </table>

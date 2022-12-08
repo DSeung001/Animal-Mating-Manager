@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        {{ __('Reptile Add') }}
+        {{ __('Type Modify') }}
     </x-slot>
 
     <div class="px-4 mt-8 mb-4">

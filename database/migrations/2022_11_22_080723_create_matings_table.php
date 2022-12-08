@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('father_id');
             $table->unsignedBigInteger('mather_id');
-            $table->string('comment')->nullable();
+            $table->string('comment', 512)->nullable();
             $table->timestamp('mating_at');
             $table->timestamps();
         });

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        {{ __('Reptile Add') }}
+        {{ __('Mating Page') }}
     </x-slot>
-    
+
 </x-app-layout>

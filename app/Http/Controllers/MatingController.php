@@ -43,7 +43,7 @@ class MatingController extends Controller
                 matings.id AS id,
                 f_reptile.name AS father_name,
                 m_reptile.name AS mather_name,
-                comment,
+                matings.comment,
                 mating_at,
                 matings.created_at AS created_at,
                 matings.updated_at AS updated_at
@@ -98,9 +98,9 @@ class MatingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Mating $mating)
     {
-        return view("$this->path.show");
+        return view("$this->path.show", compact('mating'));
     }
 
     /**
@@ -109,9 +109,9 @@ class MatingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Mating $mating)
     {
-        //
+        return view("$this->path.edit", compact('mating'));
     }
 
     /**

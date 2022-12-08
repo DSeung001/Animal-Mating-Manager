@@ -1,10 +1,11 @@
 {{--
-    $title : 제목
+    $title : 제목 | option
     $list : 데이터 리스트
     $identity : 구분자
-    $default : 기본 값
+    $default : 기본 값 | option
     $searchListener : component search listener
     $selectListener : component search listener
+    $selectedKey : 선택된 키 값 |  option
 --}}
 
 <div class="mb-2">
@@ -48,9 +49,10 @@
                 <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
                     <input name="{{$identity}}" id="select-search-{{$identity}}-default" type="radio" value=""
                            class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                           @if(isset($selectListener))
-                           wire:click="{{$selectListener}}"
+                        @if(isset($selectListener))
+                            wire:click="{{$selectListener}}"
                         @endif
+                        {{empty($selectedKey) ? 'checked="checked"' : ''}}
                     >
                     <label for="select-search-{{$identity}}-default"
                            class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300">{{$default}}</label>
@@ -62,9 +64,10 @@
                 <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
                     <input name="{{$identity}}" id="select-search-{{$identity}}-{{$key}}" type="radio" value="{{$key}}"
                            class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                           @if(isset($selectListener))
+                        @if(isset($selectListener))
                            wire:click="{{$selectListener}}"
                         @endif
+                        {{$selectedKey == $key ? 'checked="checked"' : ''}}
                     >
                     <label for="select-search-{{$identity}}-{{$key}}"
                            class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300">

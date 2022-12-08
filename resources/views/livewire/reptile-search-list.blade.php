@@ -5,7 +5,8 @@
             'list' => $typeList,
             'type' => 'radio',
             'name' => 'type_id',
-            'changeListener' => 'typeChange'
+            'changeListener' => 'typeChange',
+            'selectedKey' => $typeSelected ?? ''
         ])
 
         <div class="grid grid-cols-2">
@@ -15,7 +16,8 @@
                     'list' => $fatherReptileList,
                     'identity' => 'father_id',
                     'default' => '미확인',
-                    'searchListener' => 'fatherSearch'
+                    'searchListener' => 'fatherSearch',
+                    'selectedKey' => $fatherSelected ?? ''
                 ])
             </div>
             <div class="col-start-2 col-end-3 ml-2">
@@ -24,7 +26,8 @@
                     'list' => $matherReptileList,
                     'identity' => 'mather_id',
                     'default' => '미확인',
-                    'searchListener' => 'matherSearch'
+                    'searchListener' => 'matherSearch',
+                    'selectedKey' => $matherSelected ?? ''
                 ])
             </div>
         </div>

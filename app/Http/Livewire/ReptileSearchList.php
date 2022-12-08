@@ -14,6 +14,8 @@ class ReptileSearchList extends Component
     public $typeList, $fatherReptileList, $matherReptileList;
     // 컴포넌트 property
     public  $typeId, $fatherSearchString, $matherSearchString;
+    // 수정일 때 사용 property
+    public $typeSelected, $fatherSelected, $matherSelected;
 
     public function typeChange($typeId){
         if(isset($typeId)){
