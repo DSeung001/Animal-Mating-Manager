@@ -3,7 +3,7 @@
 --}}
 
 <div class="mr-4">
-    <label for="table-date-{{$name}}">
+    <label for="table-date-{{$name}}" class="text-sm">
         {{$label}}
     </label>
     <div class="relative">

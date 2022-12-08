@@ -6,7 +6,7 @@
 --}}
 
 <div class="mr-4">
-    <label for="table-search-{{$name}}">
+    <label for="table-search-{{$name}}" class="text-sm">
         {{$label}}
     </label>
     <div class="relative">

@@ -6,7 +6,7 @@
 
 
 <div class="mr-4">
-    <label for="table-select-{{$name}}">
+    <label for="table-select-{{$name}}" class="text-sm">
         {{$label}}
     </label>
     <select

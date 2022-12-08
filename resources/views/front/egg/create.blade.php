@@ -22,7 +22,7 @@
 
                 @include('parts.textarea')
 
-                @include('parts.submit', ["formId" => "egg-create-form"])
+                @include('parts.button-submit', ["formId" => "egg-create-form"])
             </form>
         </div>
     </div>

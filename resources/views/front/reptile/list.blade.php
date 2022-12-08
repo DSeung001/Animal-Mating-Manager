@@ -6,7 +6,7 @@
     <x-filter-table-menu action="{{route('reptile.index')}}">
 
         @include('parts.table-search', [
-            'placeholder' => '이름을 입력해주세요.',
+            'placeholder' => '이름으로 검색.',
             'name' => 'name',
             'isRequired' => false,
             'label' => '이름'
@@ -20,7 +20,7 @@
        ])
 
         @include('parts.table-search', [
-            'placeholder' => '모프를 입력해주세요.',
+            'placeholder' => '모프로 검색.',
             'name' => 'morph',
             'isRequired' => false,
             'label' => '모프'

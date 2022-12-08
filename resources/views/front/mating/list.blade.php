@@ -5,14 +5,14 @@
 
     <x-filter-table-menu action="{{route('mating.index')}}">
         @include('parts.table-search', [
-            'placeholder' => '부 개체를 입력해주세요.',
+            'placeholder' => '부 개체명으로 검색.',
             'name' => 'father_name',
             'isRequired' => false,
             'label' => '부 개체 이름'
         ])
 
         @include('parts.table-search', [
-            'placeholder' => '모 개체를 입력해주세요.',
+            'placeholder' => '모 개체명으로 검색',
             'name' => 'mather_name',
             'isRequired' => false,
             'label' => '모 개체 이름'

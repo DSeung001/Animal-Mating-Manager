@@ -40,7 +40,8 @@
 
                             @forelse($list as $item)
                                 @if(isset($showRoute))
-                                    <tr onclick="location.href='{{route($showRoute, $item->id)}}'" class="cursor-pointer hover:bg-gray-200">
+                                    <tr onclick="location.href='{{route($showRoute, $item->id)}}'"
+                                        class="cursor-pointer hover:bg-gray-200">
                                 @else
                                     <tr>
                                 @endif

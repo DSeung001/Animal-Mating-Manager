@@ -69,30 +69,40 @@ class TypeController extends Controller
      */
     public function show($id)
     {
-        return view("$this->path.show");
+        $type = $this->type
+            ->select('id', 'name', 'hatch_day', 'comment')
+            ->where('id', $id)
+            ->where('user_id', Auth::id())->first();
+        return view("$this->path.show", compact('type'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param Type $type
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Type $type)
     {
-        //
+        return view("$this->path.edit", compact('type'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param Type $type
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TypeRequest $request, Type $type)
     {
-        //
+        $validated = $request->validated();
+        $type->update([
+            'name' => $validated['name'],
+            'hatch_day' => $validated['hatch_day'],
+            'comment' => $request['comment']
+        ]);
+        return redirect()->route('type.show', $type)->with('status', '종을 수정했습니다.');;
     }
 
     /**

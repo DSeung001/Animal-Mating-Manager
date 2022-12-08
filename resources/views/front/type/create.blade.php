@@ -22,7 +22,7 @@
                     'placeholder'=> '67'
                     ])
                 @include('parts.textarea')
-                @include('parts.submit')
+                @include('parts.button-submit')
             </form>
         </div>
     </div>
