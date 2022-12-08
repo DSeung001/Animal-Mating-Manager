@@ -100,7 +100,11 @@ class MatingController extends Controller
      */
     public function show(Mating $mating)
     {
-        return view("$this->path.show", compact('mating'));
+        $typeName = $this->type->where('id', $mating['type_id'])->first()['name'];
+        $fatherName = $this->reptile->where('id', $mating['father_id'])->first()['name'] ?? '미확인';
+        $matherName = $this->reptile->where('id', $mating['mather_id'])->first()['name'] ?? '미확인';
+
+        return view("$this->path.show", compact('mating', 'typeName', 'fatherName', 'matherName'));
     }
 
     /**
@@ -111,19 +115,29 @@ class MatingController extends Controller
      */
     public function edit(Mating $mating)
     {
-        return view("$this->path.edit", compact('mating'));
+        $typeList = $this->type->getTypePluck();
+        $matherReptileList = $this->reptile->getFemaleReptilePluck();
+        $fatherReptileList = $this->reptile->getMaleReptilePluck();
+
+        return view("$this->path.edit", compact('mating', 'typeList', 'matherReptileList',  'fatherReptileList'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param Mating $mating
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MatingRequest $request, Mating $mating)
     {
-        //
+        $validated = $request->validated();
+
+        $validated['comment'] = $request->input('comment');
+        $mating->where('user_id', Auth::id())
+            ->update($validated);
+
+        return redirect()->route('mating.show', $mating)->with('status', '메이팅 정보를 수정했습니다.');
     }
 
     /**

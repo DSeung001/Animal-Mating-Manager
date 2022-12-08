@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('matings', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('type_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('father_id');
             $table->unsignedBigInteger('mather_id');

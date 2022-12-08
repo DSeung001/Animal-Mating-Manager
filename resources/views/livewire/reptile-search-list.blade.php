@@ -11,24 +11,44 @@
 
         <div class="grid grid-cols-2">
             <div class="col-start-1 col-end-2 mr-2">
-                @include('parts.select-search',[
-                    'title' => "부 개체",
-                    'list' => $fatherReptileList,
-                    'identity' => 'father_id',
-                    'default' => '미확인',
-                    'searchListener' => 'fatherSearch',
-                    'selectedKey' => $fatherSelected ?? ''
-                ])
+                @if($isDefault)
+                    @include('parts.select-search',[
+                        'title' => "부 개체",
+                        'list' => $fatherReptileList,
+                        'identity' => 'father_id',
+                        'default' => '미확인',
+                        'searchListener' => 'fatherSearch',
+                        'selectedKey' => $fatherSelected ?? ''
+                    ])
+                @else
+                    @include('parts.select-search',[
+                        'title' => "부 개체",
+                        'list' => $fatherReptileList,
+                        'identity' => 'father_id',
+                        'searchListener' => 'fatherSearch',
+                        'selectedKey' => $fatherSelected ?? ''
+                    ])
+                @endif
             </div>
             <div class="col-start-2 col-end-3 ml-2">
-                @include('parts.select-search', [
-                    'title' => '모 개체',
-                    'list' => $matherReptileList,
-                    'identity' => 'mather_id',
-                    'default' => '미확인',
-                    'searchListener' => 'matherSearch',
-                    'selectedKey' => $matherSelected ?? ''
-                ])
+                @if($isDefault)
+                    @include('parts.select-search', [
+                        'title' => '모 개체',
+                        'list' => $matherReptileList,
+                        'identity' => 'mather_id',
+                        'default' => '미확인',
+                        'searchListener' => 'matherSearch',
+                        'selectedKey' => $matherSelected ?? ''
+                    ])
+                @else
+                    @include('parts.select-search', [
+                        'title' => '모 개체',
+                        'list' => $matherReptileList,
+                        'identity' => 'mather_id',
+                        'searchListener' => 'matherSearch',
+                        'selectedKey' => $matherSelected ?? ''
+                    ])
+                @endif
             </div>
         </div>
     </div>

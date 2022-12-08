@@ -28,6 +28,7 @@
                     :typeSelected="$reptile['type_id']"
                     :fatherSelected="$reptile['father_id']"
                     :matherSelected="$reptile['mather_id']"
+                    :isDefault="true"
                 />
 
                 @include('parts.checkbox', [

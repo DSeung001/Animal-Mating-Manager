@@ -23,7 +23,7 @@
                     :typeList="$typeList"
                     :fatherReptileList="$fatherReptileList"
                     :matherReptileList="$matherReptileList"
-                    :matingList="[]"
+                    :isDefault="true"
                 />
 
                 @include('parts.checkbox', [

@@ -11,7 +11,7 @@ use Livewire\Component;
 class ReptileSearchList extends Component
 {
     // 뷰 property
-    public $typeList, $fatherReptileList, $matherReptileList;
+    public $typeList, $fatherReptileList, $matherReptileList, $isDefault = false;
     // 컴포넌트 property
     public  $typeId, $fatherSearchString, $matherSearchString;
     // 수정일 때 사용 property
