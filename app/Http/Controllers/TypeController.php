@@ -93,7 +93,9 @@ class TypeController extends Controller
     public function update(TypeRequest $request, Type $type)
     {
         $validated = $request->validated();
-        $type->update([
+        $type
+            ->where('id', $type['id'])
+            ->update([
             'name' => $validated['name'],
             'hatch_day' => $validated['hatch_day'],
             'comment' => $request['comment']

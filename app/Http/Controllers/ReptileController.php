@@ -162,7 +162,9 @@ class ReptileController extends Controller
     {
         $validated = $request->validated();
 
-        $reptile->where('user_id', Auth::id())
+        $reptile
+            ->where('id', $reptile['id'])
+            ->where('user_id', Auth::id())
             ->update([
             'type_id' => $validated['type_id'],
             'father_id' => $request->input('father_id'),

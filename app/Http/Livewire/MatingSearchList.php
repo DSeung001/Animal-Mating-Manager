@@ -14,6 +14,8 @@ class MatingSearchList extends Component
     public $typeList, $fatherReptileList, $matherReptileList, $matingList;
     // 컴포넌트 property
     public $matherId, $fatherId, $typeId, $fatherSearchString, $matherSearchString;
+    // 수정일 때 사용 property
+    public $typeSelected, $fatherSelected, $matherSelected, $matingIdSelected;
 
     public function typeChange($typeId){
         if(isset($typeId)){
@@ -63,7 +65,7 @@ class MatingSearchList extends Component
                 matings.id AS id,
                 f_reptile.name AS father_name,
                 m_reptile.name AS mather_name,
-                comment,
+                matings.comment as comment,
                 mating_at,
                 matings.created_at AS created_at,
                 matings.updated_at AS updated_at

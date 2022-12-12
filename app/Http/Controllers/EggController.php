@@ -112,7 +112,25 @@ class EggController extends Controller
      */
     public function show(Egg $egg)
     {
-        return view("$this->path.show", compact('egg'));
+        $typeName = $this->type->where('id', $egg['type_id'])->first()['name'];
+
+        $fatherName = $this->reptile
+            ->select('reptiles.name as name')
+            ->join('matings', function ($join) use ($egg) {
+                $join->on('matings.father_id', '=', 'reptiles.id')
+                    ->where('matings.id', '=', $egg['mating_id']);
+            })->first()['name'] ?? '미확인';
+
+        $matherName = $this->reptile
+            ->select('reptiles.name as name')
+            ->join('matings', function ($join) use ($egg) {
+                $join->on('matings.mather_id', '=', 'reptiles.id')
+                    ->where('matings.id', '=', $egg['mating_id']);
+            })->first()['name'] ?? '미확인';
+
+        $mating = $this->mating->where('id', $egg['mating_id'])->first();
+
+        return view("$this->path.show", compact('egg', 'typeName', 'fatherName', 'matherName', 'mating'));
     }
 
     /**
@@ -123,7 +141,29 @@ class EggController extends Controller
      */
     public function edit(Egg $egg)
     {
-        return view("$this->path.edit", compact('egg'));
+        $typeList = $this->type->getTypePluck();
+        $matherReptileList = $this->reptile->getFemaleReptilePluck();
+        $fatherReptileList = $this->reptile->getMaleReptilePluck();
+
+        $matingList = $this->mating
+            ->select(
+                'matings.id as id',
+                'matings.type_id as type_id',
+                DB::raw("
+                f_reptile.name AS father_name,
+                m_reptile.name AS mather_name"),
+                'matings.comment as comment',
+                'mating_at',
+                'matings.father_id as father_id',
+                'matings.mather_id as mather_id'
+            )
+            ->leftJoin('reptiles AS f_reptile', 'f_reptile.id', '=', 'matings.father_id')
+            ->leftJoin('reptiles AS m_reptile', 'm_reptile.id', '=', 'matings.mather_id')
+            ->where('matings.user_id', Auth::id())
+            ->where('matings.id', $egg['mating_id'])
+            ->get();
+
+        return view("$this->path.edit", compact('egg', 'typeList', 'fatherReptileList', 'matherReptileList', 'matingList'));
     }
 
     /**

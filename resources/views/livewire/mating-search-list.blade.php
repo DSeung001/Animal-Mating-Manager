@@ -5,7 +5,8 @@
             'list' => $typeList,
             'type' => 'radio',
             'name' => 'type_id',
-            'changeListener' =>  'typeChange'
+            'changeListener' => 'typeChange',
+            'selectedKey' => $typeSelected ?? ''
         ])
 
         <div class="grid grid-cols-2">
@@ -16,7 +17,8 @@
                     'identity' => 'father_id',
                     'default' => '전체',
                     'selectListener' => 'fatherSelect',
-                    'searchListener' => 'fatherSearch'
+                    'searchListener' => 'fatherSearch',
+                    'selectedKey' => $fatherSelected ?? ''
                 ])
             </div>
             <div class="col-start-2 col-end-3 ml-2">
@@ -26,7 +28,8 @@
                     'identity' => 'mather_id',
                     'default' => '전체',
                     'selectListener' => 'matherSelect',
-                    'searchListener' => 'matherSearch'
+                    'searchListener' => 'matherSearch',
+                    'selectedKey' => $matherSelected ?? ''
                 ])
             </div>
         </div>
@@ -38,7 +41,8 @@
          'headers' => ['부', '모', '설명', '메이팅일'],
          'datas' => ['father_name', 'mather_name', 'comment', 'mating_at'],
          'name' => 'mating_id',
-         'listColumn' => 'id',
+         'radioColumn' => 'id',
+         'radioSelectedId' => $matingIdSelected,
          'isWrapper' => false
      ])
 </div>

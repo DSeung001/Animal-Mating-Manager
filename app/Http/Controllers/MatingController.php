@@ -132,9 +132,10 @@ class MatingController extends Controller
     public function update(MatingRequest $request, Mating $mating)
     {
         $validated = $request->validated();
-
         $validated['comment'] = $request->input('comment');
-        $mating->where('user_id', Auth::id())
+        $mating
+            ->where('id', $mating['id'])
+            ->where('user_id', Auth::id())
             ->update($validated);
 
         return redirect()->route('mating.show', $mating)->with('status', '메이팅 정보를 수정했습니다.');

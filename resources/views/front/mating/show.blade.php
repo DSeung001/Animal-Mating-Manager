@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        {{ __('Reptile Page') }}
+        {{ __('Mating Page') }}
     </x-slot>
 
     <div class="px-4 mt-8 mb-4">
@@ -33,14 +33,17 @@
             ])
 
             @include('parts.textarea',[
-                'value' => $mating['comment'],
-                'disabled' => true,
-                'placeholder'=> ''
+            'value' => $mating['comment'],
+            'disabled' => true,
+            'placeholder'=> ''
             ])
 
             @include('parts.button-modify', [
-              'route' => route('mating.edit', $mating)
-          ])
-        </div>
+            'route' => route('mating.edit', $mating)
+            ])
+            @include('parts.button-list',[
+                'route' => route('mating.index')
+            ])
     </div>
+</div>
 </x-app-layout>

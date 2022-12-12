@@ -67,7 +67,7 @@
                         @if(isset($selectListener))
                            wire:click="{{$selectListener}}"
                         @endif
-                        {{$selectedKey == $key ? 'checked="checked"' : ''}}
+                        {{isset($selectedKey) && $selectedKey == $key ? 'checked="checked"' : ''}}
                     >
                     <label for="select-search-{{$identity}}-{{$key}}"
                            class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300">

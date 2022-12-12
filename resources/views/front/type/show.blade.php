@@ -29,6 +29,9 @@
             @include('parts.button-modify', [
                 'route' => route('type.edit', $type)
             ])
+            @include('parts.button-list',[
+                'route' => route('type.index')
+            ])
         </div>
     </div>
 

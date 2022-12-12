@@ -67,7 +67,10 @@
 
             @include('parts.button-modify', [
               'route' => route('reptile.edit', $reptile)
-          ])
+            ])
+            @include('parts.button-list',[
+                'route' => route('reptile.index')
+            ])
         </div>
     </div>
 </x-app-layout>
