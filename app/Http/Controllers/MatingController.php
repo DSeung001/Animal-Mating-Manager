@@ -125,20 +125,20 @@ class MatingController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param Mating $mating
+     * @param MatingRequest $request
+     * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function update(MatingRequest $request, Mating $mating)
+    public function update(MatingRequest $request, $id)
     {
         $validated = $request->validated();
         $validated['comment'] = $request->input('comment');
-        $mating
-            ->where('id', $mating['id'])
+        $this->mating
+            ->where('id', $this)
             ->where('user_id', Auth::id())
             ->update($validated);
 
-        return redirect()->route('mating.show', $mating)->with('status', '메이팅 정보를 수정했습니다.');
+        return redirect()->route('mating.show', $id)->with('status', '메이팅 정보를 수정했습니다.');
     }
 
     /**

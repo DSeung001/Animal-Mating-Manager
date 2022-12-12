@@ -158,12 +158,12 @@ class ReptileController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ReptileRequest $request, Reptile $reptile)
+    public function update(ReptileRequest $request, $id)
     {
         $validated = $request->validated();
 
-        $reptile
-            ->where('id', $reptile['id'])
+        $this->reptile
+            ->where('id', $id)
             ->where('user_id', Auth::id())
             ->update([
             'type_id' => $validated['type_id'],
@@ -176,7 +176,7 @@ class ReptileController extends Controller
             'comment' => $request->input('comment')
         ]);
 
-        return redirect()->route('reptile.show', $reptile)->with('status', '개체 정보를 수정했습니다.');
+        return redirect()->route('reptile.show', $id)->with('status', '개체 정보를 수정했습니다.');
     }
 
     /**

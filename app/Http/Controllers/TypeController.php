@@ -90,17 +90,17 @@ class TypeController extends Controller
      * @param Type $type
      * @return \Illuminate\Http\Response
      */
-    public function update(TypeRequest $request, Type $type)
+    public function update(TypeRequest $request, $id)
     {
         $validated = $request->validated();
-        $type
-            ->where('id', $type['id'])
+        $this->type
+            ->where('id', $id)
             ->update([
             'name' => $validated['name'],
             'hatch_day' => $validated['hatch_day'],
             'comment' => $request['comment']
         ]);
-        return redirect()->route('type.show', $type)->with('status', '종을 수정했습니다.');
+        return redirect()->route('type.show', $id)->with('status', '종을 수정했습니다.');
     }
 
     /**
