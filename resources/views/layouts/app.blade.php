@@ -15,6 +15,8 @@
 
         <!-- Styles -->
         <livewire:styles />
+
+        @stack('styles')
     </head>
     <body class="font-sans antialiased h-full">
         <x-jet-banner />
@@ -39,6 +41,7 @@
             </main>
         </div>
 
+        {{-- 추후 tailwind modals로 변경--}}
         @push('scripts')
             <script>
                 @if (session('status'))

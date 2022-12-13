@@ -1,39 +1,65 @@
 <x-app-layout>
+    @push('styles')
+        <link href='{{asset('style/fullcalendar-min.css')}}' rel='stylesheet'/>
+        <script src='{{asset('js/fullcalendar-min.js')}}'></script>
+
+        <script>
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var calendarEl = document.getElementById('calendar');
+
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialDate: '2020-09-12',
+                    editable: true,
+                    selectable: true,
+                    businessHours: true,
+                    dayMaxEvents: true, // allow "more" link when too many events
+                    events: [
+                        {
+                            title: 'Test',
+                            url: 'http://google.com/',
+                            start: '2020-09-22'
+                        },
+                        {
+                            title: 'Test',
+                            url: 'http://google.com/',
+                            start: '2020-09-28'
+                        },
+                        {
+                            title: 'Test',
+                            url: 'http://google.com/',
+                            start: '2020-09-28'
+                        }
+                    ]
+                });
+
+                calendar.render();
+            });
+
+        </script>
+        <style>
+
+            body {
+                margin: 40px 10px;
+                padding: 0;
+                font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+                font-size: 14px;
+            }
+
+            #calendar {
+                max-width: 1100px;
+                margin: 0 auto;
+            }
+
+        </style>
+        </head>
+    @endpush
+
     <x-slot name="header">
         {{ __('Dashboard') }}
     </x-slot>
 
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-10">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <ul>
-                    <li>
-                        - <a href="{{route('type.create')}}">종 등록</a>
-                        <br/>
-                        - <a href="{{route('type.index')}}">종 리스트</a>
-                    </li>
-                    <li>
-                        - <a href="{{route('reptile.create')}}">개체 등록</a>
-                        <br/>
-                        - <a href="{{route('reptile.index')}}">개체 리스트</a>
-                    </li>
-                    <li>
-                        - <a href="{{route('mating.create')}}">메이팅 등록</a>
-                        <br/>
-                        - <a href="{{route('mating.index')}}">메이팅 리스트</a>
-                    </li>
-                    <li>
-                        - <a href="{{route('egg.create')}}">알 등록</a>
-                        <br/>
-                        - <a href="{{route('egg.index')}}">알 리스트</a>
-                    </li>
-
-                    <hr/>
-                    <li>
-                        - <a href="{{url('login')}}">로그인</a>
-                        <br/>
-                        - <a href="{{url('register')}}">회원가입</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-10">
+        <div id='calendar' class="bg-white overflow-hidden shadow-xl sm:rounded-lg"></div>
+    </div>
 </x-app-layout>
