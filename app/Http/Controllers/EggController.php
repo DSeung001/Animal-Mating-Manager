@@ -169,13 +169,21 @@ class EggController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param EggRequest $request
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EggRequest $request, $id)
     {
-        //
+        $validated = $request->validated();
+        $validated['user_id'] = Auth::id();
+        $validated['comment'] = $request->input('comment');
+        $validated['is_hatching'] = $request->input('is_hatching');
+        $this->egg
+            ->where('id', $id)
+            ->update($validated);
+
+        return redirect()->route('egg.show', $id)->with('status', '알 정보를 수정했습니다.');
     }
 
     /**

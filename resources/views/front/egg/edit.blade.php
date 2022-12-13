@@ -27,11 +27,28 @@
                          'value'=>$egg['spawn_at']
                     ])
 
+                @include('parts.select', [
+                    'list' => [
+                        'w' => '대기',
+                        'y' => '해칭완료',
+                        'n' => '해칭실패',
+                    ],
+                    'name' => 'is_hatching',
+                    'label' => '해칭여부',
+                    'selected' => $egg['is_hatching']
+                ])
+
                 @include('parts.textarea', [
                     'value' => $egg['comment']
                 ])
 
-                @include('parts.button-submit', ["formId" => "reptile-create-form"])
+                @include('parts.button-submit', [
+                    "formId" => "reptile-create-form"
+                ])
+
+                @include('parts.button-cancel', [
+                    'route' => route('egg.show', $egg)
+                ])
             </form>
         </div>
     </div>

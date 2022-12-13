@@ -14,7 +14,7 @@ class Egg extends Model
     protected function isHatching(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $value == "y" ? "해칭 완료" : ($value == "n" ? "해칭 실패" : "대기")
+            get: fn($value) => $value == "y" ? "해칭완료" : ($value == "n" ? "해칭실패" : "대기")
         );
     }
 
@@ -34,8 +34,8 @@ class Egg extends Model
 
     public function getHatchingPluck(){
         return [
-            'y' => '해칭 완료',
-            'n' => '해칭 실패',
+            'y' => '해칭완료',
+            'n' => '해칭실패',
             'w' => '대기'
         ];
     }

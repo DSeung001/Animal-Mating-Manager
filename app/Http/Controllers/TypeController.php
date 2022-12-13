@@ -86,8 +86,8 @@ class TypeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param Type $type
+     * @param TypeRequest $request
+     * @param $id
      * @return \Illuminate\Http\Response
      */
     public function update(TypeRequest $request, $id)

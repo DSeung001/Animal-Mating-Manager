@@ -59,7 +59,12 @@
                         'value' => $reptile['comment']
                         ])
 
-                @include('parts.button-submit', ["formId" => "reptile-create-form"])
+                @include('parts.button-submit', [
+                    "formId" => "reptile-create-form"
+                ])
+                @include('parts.button-cancel', [
+                    'route' => route('reptile.show', $reptile)
+                ])
             </form>
         </div>
     </div>

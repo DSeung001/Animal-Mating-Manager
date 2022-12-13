@@ -29,6 +29,9 @@
                 ])
 
                 @include('parts.button-submit')
+                @include('parts.button-cancel', [
+                    'route' => route('type.show', $type)
+                ])
             </form>
         </div>
     </div>
