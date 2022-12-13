@@ -44,6 +44,9 @@
             @include('parts.button-list',[
                 'route' => route('mating.index')
             ])
+            @include('parts.button-delete',[
+                'route' => route('mating.destroy', $mating),
+            ])
     </div>
 </div>
 </x-app-layout>

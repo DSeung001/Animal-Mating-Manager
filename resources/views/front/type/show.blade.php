@@ -32,6 +32,9 @@
             @include('parts.button-list',[
                 'route' => route('type.index')
             ])
+            @include('parts.button-delete',[
+                'route' => route('type.destroy', $type),
+            ])
         </div>
     </div>
 

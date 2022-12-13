@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('mather_id')->nullable();
             $table->string('name', 128);
             $table->enum('gender', ['m','f','u'])->default('u')->comment('m: 수, f: 암, u: 미구분');
+            $table->enum('status', ['s','d','g','o','i'])->comment('s: 분양, d: 사망, g: 키움, o: 위탁 반출, i: 위탁 반입');
             $table->string('morph', 128);
             $table->timestamp('birth')->nullable();
             $table->string('comment', 512)->nullable();
@@ -38,3 +39,4 @@ return new class extends Migration
         Schema::dropIfExists('reptiles');
     }
 };
+

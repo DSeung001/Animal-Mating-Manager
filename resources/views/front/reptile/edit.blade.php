@@ -33,7 +33,7 @@
 
                 @include('parts.checkbox', [
                     'title'=>"성별 선택",
-                    'list' => ['u' => '미구분', 'm' => '수컷', 'f' => '암컷'],
+                    'list' => ['u' => '미구분', 'm' => '수', 'f' => '암'],
                     'type' => 'radio',
                     'name' => 'gender',
                     'changeListener' =>  'typeChange',

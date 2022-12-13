@@ -60,6 +60,9 @@
             @include('parts.button-list',[
                 'route' => route('egg.index')
             ])
+            @include('parts.button-delete',[
+                'route' => route('egg.destroy', $egg),
+            ])
         </div>
     </div>
 </x-app-layout>

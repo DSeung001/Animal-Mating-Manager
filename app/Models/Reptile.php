@@ -23,7 +23,14 @@ class Reptile extends Model
     protected function gender(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $value == "m" ? "수컷" : ($value == "f" ? "암컷" : "미구분")
+            get: fn($value) => $value == "m" ? "수" : ($value == "f" ? "암" : "미구분")
+        );
+    }
+
+    protected function age(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $value >= 12 ? (string)(floor($value/12))."년 ".(string)($value % 12)."개월" : (string)$value."개월"
         );
     }
 
@@ -50,7 +57,7 @@ class Reptile extends Model
     }
 
     /**
-     * 성별이 암컷인 개체 리스트(pluck: id => name)
+     * 성별이 암인 개체 리스트(pluck: id => name)
      * @return mixed
      */
     public function getFemaleReptilePluck()
@@ -63,7 +70,7 @@ class Reptile extends Model
     }
 
     /**
-     * 성별이 수컷인 개체 리스트(pluck: id => name)
+     * 성별이 수인 개체 리스트(pluck: id => name)
      * @return mixed
      */
     public function getMaleReptilePluck()

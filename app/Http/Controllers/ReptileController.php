@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReptileRequest;
+use App\Models\Mating;
 use App\Models\Reptile;
 use App\Models\Type;
 use Illuminate\Http\Request;
@@ -12,11 +13,13 @@ use Illuminate\Support\Facades\DB;
 class ReptileController extends Controller
 {
     private Reptile $reptile;
+    private Mating $mating;
     private Type $type;
 
-    public function __construct(Reptile $reptile, Type $type)
+    public function __construct(Reptile $reptile, Mating $mating, Type $type)
     {
         $this->reptile = $reptile;
+        $this->mating = $mating;
         $this->type = $type;
         parent::__construct('reptile');
     }
@@ -166,15 +169,15 @@ class ReptileController extends Controller
             ->where('id', $id)
             ->where('user_id', Auth::id())
             ->update([
-            'type_id' => $validated['type_id'],
-            'father_id' => $request->input('father_id'),
-            'mather_id' => $request->input('mather_id'),
-            'name' => $validated['name'],
-            'gender' => $validated['gender'],
-            'morph' => $validated['morph'],
-            'birth' => $request->input('birth'),
-            'comment' => $request->input('comment')
-        ]);
+                'type_id' => $validated['type_id'],
+                'father_id' => $request->input('father_id'),
+                'mather_id' => $request->input('mather_id'),
+                'name' => $validated['name'],
+                'gender' => $validated['gender'],
+                'morph' => $validated['morph'],
+                'birth' => $request->input('birth'),
+                'comment' => $request->input('comment')
+            ]);
 
         return redirect()->route('reptile.show', $id)->with('status', '개체 정보를 수정했습니다.');
     }
@@ -187,6 +190,11 @@ class ReptileController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(!empty($this->mating->where('father_id', $id)->first()) || !empty($this->mating->where('mather_id', $id)->first()) ){
+            return redirect()->route('reptile.show', $id)->with('status', '삭제할 수 없습니다, 해당 정보를 사용한 메이팅 정보가 존재합니다.');
+        } else{
+            $this->reptile->where('id', $id)->delete();
+            return redirect()->route('reptile.index')->with('status', '해당 정보를 삭제했습니다.');
+        }
     }
 }

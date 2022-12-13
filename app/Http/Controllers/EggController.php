@@ -194,6 +194,7 @@ class EggController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->egg->where('id', $id)->delete();
+        return redirect()->route('egg.index')->with('status', '해당 정보를 삭제했습니다.');
     }
 }

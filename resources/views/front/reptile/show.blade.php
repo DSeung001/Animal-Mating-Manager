@@ -71,6 +71,10 @@
             @include('parts.button-list',[
                 'route' => route('reptile.index')
             ])
+            @include('parts.button-delete',[
+                'route' => route('reptile.destroy', $reptile),
+            ])
         </div>
     </div>
+
 </x-app-layout>

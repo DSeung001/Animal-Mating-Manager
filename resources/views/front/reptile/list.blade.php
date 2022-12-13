@@ -40,8 +40,7 @@
         'showRoute' => 'reptile.show',
         'title' => '개체들',
         'headers' => ['이름', '종', '모프', '성별', '부', '모', '생일', '나이(개월)'],
-        'datas' => ['name', 'type', 'morph', 'gender', 'father_name', 'mather_name', 'birth', 'age'],
-        'decorator' => ['age' => '개월']
+        'datas' => ['name', 'type', 'morph', 'gender', 'father_name', 'mather_name', 'birth', 'age']
     ])
 
     @if(($_GET['paginate'] ?? '') != 'all' )

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TypeRequest;
+use App\Models\Reptile;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,10 +11,12 @@ use Illuminate\Support\Facades\Auth;
 class TypeController extends Controller
 {
     private Type $type;
+    private Reptile $reptile;
 
-    public function __construct(Type $type)
+    public function __construct(Type $type, Reptile $reptile)
     {
         $this->type = $type;
+        $this->reptile = $reptile;
         parent::__construct('type');
     }
 
@@ -106,11 +109,17 @@ class TypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        if (empty($this->reptile->where('type_id', $id)->first())) {
+            $this->type->where('id', $id)->delete();
+            return redirect()->route('type.index')->with('status', '해당 정보를 삭제했습니다.');
+        } else {
+            return redirect()->route('type.show', $id)
+                ->with('status', '삭제할 수 없습니다, 해당 정보를 사용한 개체 정보가 존재합니다.');
+        }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MatingRequest;
+use App\Models\Egg;
 use App\Models\Mating;
 use App\Models\Reptile;
 use App\Models\Type;
@@ -15,12 +16,14 @@ class MatingController extends Controller
     private Mating $mating;
     private Reptile $reptile;
     private Type $type;
+    private Egg $egg;
 
-    public function __construct(Mating $maitng, Reptile $reptile, Type $type)
+    public function __construct(Mating $maitng, Reptile $reptile, Type $type, Egg $egg)
     {
         $this->mating = $maitng;
         $this->reptile = $reptile;
         $this->type = $type;
+        $this->egg = $egg;
         parent::__construct('mating');
     }
 
@@ -149,6 +152,12 @@ class MatingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (empty($this->egg->where('mating_id', $id)->first())) {
+            $this->egg->where('id', $id)->delete();
+            return redirect()->route('mating.index')->with('status', '해당 정보를 삭제했습니다.');
+        } else {
+            return redirect()->route('mating.show', $id)
+                ->with('status', '삭제할 수 없습니다, 해당 정보를 사용한 메이팅 정보가 존재합니다.');
+        }
     }
 }
