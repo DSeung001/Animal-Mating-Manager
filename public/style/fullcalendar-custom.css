@@ -1,0 +1,14 @@
+.fc-day-sun a {
+    color: #ff6363;
+    text-decoration: none;
+}
+.fc-day-sat a {
+    color: #6363ff;
+    text-decoration: none;
+}
+.fc-header-toolbar.fc-toolbar{
+    font-size: 0.7em;
+}
+.fc-today-button.fc-button.fc-button-primary{
+    font-size: 1.2em;
+}
