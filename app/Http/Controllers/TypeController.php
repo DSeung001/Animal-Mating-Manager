@@ -61,7 +61,7 @@ class TypeController extends Controller
         $validated['comment'] = $request->input('comment');
         $this->type->create($validated);
 
-        return redirect(route('type.index'))->with('status', '종을 등록했습니다.');
+        return redirect(route('type.index'))->with('message', '종을 등록했습니다.');
     }
 
     /**
@@ -103,7 +103,7 @@ class TypeController extends Controller
             'hatch_day' => $validated['hatch_day'],
             'comment' => $request['comment']
         ]);
-        return redirect()->route('type.show', $id)->with('status', '종을 수정했습니다.');
+        return redirect()->route('type.show', $id)->with('message', '종을 수정했습니다.');
     }
 
     /**
@@ -116,10 +116,10 @@ class TypeController extends Controller
     {
         if (empty($this->reptile->where('type_id', $id)->first())) {
             $this->type->where('id', $id)->delete();
-            return redirect()->route('type.index')->with('status', '해당 정보를 삭제했습니다.');
+            return redirect()->route('type.index')->with('message', '해당 정보를 삭제했습니다.');
         } else {
             return redirect()->route('type.show', $id)
-                ->with('status', '삭제할 수 없습니다, 해당 정보를 사용한 개체 정보가 존재합니다.');
+                ->with('message', '삭제할 수 없습니다, 해당 정보를 사용한 개체 정보가 존재합니다.');
         }
     }
 }

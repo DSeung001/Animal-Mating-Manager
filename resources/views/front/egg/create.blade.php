@@ -3,9 +3,11 @@
         {{ __('Egg Add') }}
     </x-slot>
 
+    <x-jet-validation-errors class="mb-4"/>
+
     <div class="px-4 mt-8 mb-4">
         <div class="p-4 bg-white shadow m-auto max-w-[1280px]">
-            <form action="{{route('egg.store')}}" method="post" id="egg-create-form">
+            <form action="{{route('egg.store')}}" method="post">
                 @csrf
                 <livewire:mating-search-list
                     :typeList="$typeList"
@@ -22,9 +24,9 @@
 
                 @include('parts.textarea')
 
-                @include('parts.button-submit', ["formId" => "egg-create-form"])
+                @include('parts.button-submit')
             </form>
-        </div>
+        </div>`
     </div>
 
 </x-app-layout>

@@ -50,7 +50,7 @@
                     <input name="{{$identity}}" id="select-search-{{$identity}}-default" type="radio" value=""
                            class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                         @if(isset($selectListener))
-                            wire:click="{{$selectListener}}"
+                            wire:click="{{$selectListener}}($event.target.value)"
                         @endif
                         {{empty($selectedKey) ? 'checked="checked"' : ''}}
                     >
@@ -65,7 +65,7 @@
                     <input name="{{$identity}}" id="select-search-{{$identity}}-{{$key}}" type="radio" value="{{$key}}"
                            class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                         @if(isset($selectListener))
-                           wire:click="{{$selectListener}}"
+                           wire:click="{{$selectListener}}($event.target.value)"
                         @endif
                         {{isset($selectedKey) && $selectedKey == $key ? 'checked="checked"' : ''}}
                     >

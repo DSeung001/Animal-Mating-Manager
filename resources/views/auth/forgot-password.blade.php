@@ -5,12 +5,23 @@
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+            비밀번호를 잊어버리셨나요?,
+            이메일 주소를 알려주시면 비밀번호 재설정 링크를 보내드리겠습니다.
         </div>
 
         @if (session('status'))
             <div class="mb-4 font-medium text-sm text-green-600">
-                {{ session('status') }}
+                @if(session('status') == 'passwords.sent')
+                    성공적으로 이메일을 발송했습니다.
+                @elseif(session('status') == 'passwords.reset')
+                    성공적으로 비밀번호를 수정했습니다.
+                @elseif(session('status') == 'passwords.user')
+                    사용자에 대한 응답을 찾을 수 없습니다.
+                @elseif(session('status') == 'passwords.token')
+                    유효하지 않은 토큰입니다.
+                @elseif(session('status') == 'passwords.throttled')
+                    제한된 비밀번호 재설정 시도입니다.
+                @endif
             </div>
         @endif
 

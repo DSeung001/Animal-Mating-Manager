@@ -38,7 +38,7 @@ class ReptileSearchList extends Component
     private function setReptileList($gender, $searchString = ""){
         $list = Reptile::select('id', 'name');
 
-        if (isset($this->typeId)) {
+        if (!empty($this->typeId)) {
             $list = $list->where('type_id', $this->typeId);
         }
 

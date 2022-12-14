@@ -92,7 +92,7 @@ class MatingController extends Controller
         $validated['comment'] = $request->input('comment');
         $this->mating->create($validated);
 
-        return redirect(route('mating.index'))->with('status', '메이팅을 등록했습니다.');
+        return redirect(route('mating.index'))->with('message', '메이팅을 등록했습니다.');
     }
 
     /**
@@ -141,7 +141,7 @@ class MatingController extends Controller
             ->where('user_id', Auth::id())
             ->update($validated);
 
-        return redirect()->route('mating.show', $id)->with('status', '메이팅 정보를 수정했습니다.');
+        return redirect()->route('mating.show', $id)->with('message', '메이팅 정보를 수정했습니다.');
     }
 
     /**
@@ -154,10 +154,10 @@ class MatingController extends Controller
     {
         if (empty($this->egg->where('mating_id', $id)->first())) {
             $this->egg->where('id', $id)->delete();
-            return redirect()->route('mating.index')->with('status', '해당 정보를 삭제했습니다.');
+            return redirect()->route('mating.index')->with('message', '해당 정보를 삭제했습니다.');
         } else {
             return redirect()->route('mating.show', $id)
-                ->with('status', '삭제할 수 없습니다, 해당 정보를 사용한 메이팅 정보가 존재합니다.');
+                ->with('message', '삭제할 수 없습니다, 해당 정보를 사용한 메이팅 정보가 존재합니다.');
         }
     }
 }

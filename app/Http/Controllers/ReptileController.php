@@ -108,7 +108,7 @@ class ReptileController extends Controller
             'comment' => $request->input('comment')
         ]);
 
-        return redirect(route('reptile.index'))->with('status', '개체를 등록했습니다.');
+        return redirect(route('reptile.index'))->with('message', '개체를 등록했습니다.');
     }
 
     /**
@@ -179,7 +179,7 @@ class ReptileController extends Controller
                 'comment' => $request->input('comment')
             ]);
 
-        return redirect()->route('reptile.show', $id)->with('status', '개체 정보를 수정했습니다.');
+        return redirect()->route('reptile.show', $id)->with('message', '개체 정보를 수정했습니다.');
     }
 
     /**
@@ -191,10 +191,10 @@ class ReptileController extends Controller
     public function destroy($id)
     {
         if(!empty($this->mating->where('father_id', $id)->first()) || !empty($this->mating->where('mather_id', $id)->first()) ){
-            return redirect()->route('reptile.show', $id)->with('status', '삭제할 수 없습니다, 해당 정보를 사용한 메이팅 정보가 존재합니다.');
+            return redirect()->route('reptile.show', $id)->with('message', '삭제할 수 없습니다, 해당 정보를 사용한 메이팅 정보가 존재합니다.');
         } else{
             $this->reptile->where('id', $id)->delete();
-            return redirect()->route('reptile.index')->with('status', '해당 정보를 삭제했습니다.');
+            return redirect()->route('reptile.index')->with('message', '해당 정보를 삭제했습니다.');
         }
     }
 }

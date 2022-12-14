@@ -7,9 +7,21 @@
         <x-jet-validation-errors class="mb-4" />
 
         @if (session('status'))
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ session('status') }}
-            </div>
+            @if (session('status'))
+                <div class="mb-4 font-medium text-sm text-green-600">
+                    @if(session('status') == 'passwords.sent')
+                        성공적으로 이메일을 발송했습니다.
+                    @elseif(session('status') == 'passwords.reset')
+                        성공적으로 비밀번호를 수정했습니다.
+                    @elseif(session('status') == 'passwords.user')
+                        사용자에 대한 응답을 찾을 수 없습니다.
+                    @elseif(session('status') == 'passwords.token')
+                        유효하지 않은 토큰입니다.
+                    @elseif(session('status') == 'passwords.throttled')
+                        제한된 비밀번호 재설정 시도입니다.
+                    @endif
+                </div>
+            @endif
         @endif
 
         <form method="POST" action="{{ route('login') }}">

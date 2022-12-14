@@ -1,14 +1,13 @@
 <x-app-layout>
-    <x-jet-validation-errors class="mb-4"/>
-
     <x-slot name="header">
         {{ __('Mating Add') }}
     </x-slot>
 
+    <x-jet-validation-errors class="mb-4"/>
 
     <div class="px-4 mt-8 mb-4">
         <div class="p-4 bg-white shadow m-auto max-w-[1280px]">
-            <form id="mating-create-form" method="POST" action="{{route('mating.store')}}">
+            <form method="POST" action="{{route('mating.store')}}">
                 @csrf
 
                 <livewire:reptile-search-list

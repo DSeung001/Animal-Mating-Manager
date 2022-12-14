@@ -101,7 +101,7 @@ class EggController extends Controller
         $validated['user_id'] = Auth::id();
         $this->egg->create($validated);
 
-        return redirect(route('egg.index'))->with('status', '알을 등록했습니다.');
+        return redirect(route('egg.index'))->with('message', '알을 등록했습니다.');
     }
 
     /**
@@ -183,7 +183,7 @@ class EggController extends Controller
             ->where('id', $id)
             ->update($validated);
 
-        return redirect()->route('egg.show', $id)->with('status', '알 정보를 수정했습니다.');
+        return redirect()->route('egg.show', $id)->with('message', '알 정보를 수정했습니다.');
     }
 
     /**
@@ -195,6 +195,6 @@ class EggController extends Controller
     public function destroy($id)
     {
         $this->egg->where('id', $id)->delete();
-        return redirect()->route('egg.index')->with('status', '해당 정보를 삭제했습니다.');
+        return redirect()->route('egg.index')->with('message', '해당 정보를 삭제했습니다.');
     }
 }

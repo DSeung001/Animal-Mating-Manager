@@ -20,6 +20,7 @@ class MatingSearchList extends Component
     public function typeChange($typeId){
         if(isset($typeId)){
             $this->typeId = $typeId;
+            $this->setMatingList();
         }
         $this->fatherReptileList = $this->setReptileList('m', $this->fatherSearchString);
         $this->matherReptileList = $this->setReptileList('f', $this->matherSearchString);
@@ -74,11 +75,15 @@ class MatingSearchList extends Component
             ->leftJoin('reptiles AS m_reptile', 'matings.mather_id', '=', 'm_reptile.id')
             ->where('matings.user_id', Auth::id());
 
-        if (isset($this->fatherId)){
+        if(!empty($this->typeId)){
+            $this->matingList = $this->matingList->where('matings.type_id', $this->typeId);
+        }
+
+        if (!empty($this->fatherId)){
             $this->matingList = $this->matingList->where('matings.father_id', '=', $this->fatherId);
         }
 
-        if (isset($this->matherId)){
+        if (!empty($this->matherId)){
             $this->matingList = $this->matingList->where('matings.mather_id', '=', $this->matherId);
         }
 

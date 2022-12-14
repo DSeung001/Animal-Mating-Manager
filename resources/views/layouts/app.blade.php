@@ -41,14 +41,12 @@
             </main>
         </div>
 
-        {{-- 추후 tailwind modals로 변경--}}
-        @push('scripts')
-            <script>
-                @if (session('status'))
-                alert("{{ session('status') }}");
-                @endif
-            </script>
-        @endpush
+        {{-- 추후 변경--}}
+        <script>
+            @if (session('message'))
+                alert("{{ session('message') }}");
+            @endif
+        </script>
 
         <livewire:scripts />
 

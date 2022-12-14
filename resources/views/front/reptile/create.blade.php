@@ -10,7 +10,7 @@
 
     <div class="px-4 mt-8 mb-4">
         <div class="p-4 bg-white shadow m-auto max-w-[1280px]">
-            <form method="POST" action="{{route('reptile.store')}}" id="reptile-create-form">
+            <form method="POST" action="{{route('reptile.store')}}">
                 @csrf
 
                 @include('parts.input', [
