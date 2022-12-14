@@ -26,7 +26,7 @@
 
                 @include('parts.button-submit')
             </form>
-        </div>`
+        </div>
     </div>
 
 </x-app-layout>
