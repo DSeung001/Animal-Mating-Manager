@@ -27,6 +27,15 @@ class Reptile extends Model
         );
     }
 
+    protected function status(): Attribute
+    {
+        return Attribute::make(
+          get: fn($value) => $value == "g" ? "키우는 중"
+            : ($value == "i" ? "위탁 중" : ($value == "o" ? "위탁 보냄" :
+                  ($value == "s" ? "분양" : "사망")))
+        );
+    }
+
     protected function age(): Attribute
     {
         return Attribute::make(

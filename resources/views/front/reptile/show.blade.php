@@ -34,11 +34,11 @@
             ])
 
             @include('parts.input', [
-                 'title'=>'성별',
+                 'title'=>'성별 / 현재 상태',
                  'name'=>'morph',
                  'type'=>'text',
                  'placeholder'=> "성별",
-                 'value' => $reptile['gender'],
+                 'value' => $reptile['gender']." / ".$reptile['status'],
                  'disabled'=> true
             ])
 

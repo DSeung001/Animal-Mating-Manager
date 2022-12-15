@@ -40,6 +40,15 @@
                     'selectedKey' => $genderKey
                 ])
 
+                @include('parts.checkbox', [
+                   'title'=>"현재 상태 선택",
+                   'list' => ['g' => '키우는 중', 's' => '분양 보냄','i' => '위탁 중', 'o' => '위탁 보냄', 'd' => '사망'],
+                   'type' => 'radio',
+                   'name' => 'status',
+                   'changeListener' =>  'typeChange',
+                   'selectedKey' => $statusKey
+               ])
+
                 @include('parts.input', [
                          'title'=>'개체 모프',
                          'name'=>'morph',

@@ -46,6 +46,7 @@ class ReptileController extends Controller
                 reptiles.morph AS morph,
                 types.name AS type,
                 reptiles.gender AS gender,
+                reptiles.status AS status,
                 reptiles.father_id AS father_id,
                 reptiles.mather_id AS mather_id,
                 reptiles.birth AS birth,
@@ -103,6 +104,7 @@ class ReptileController extends Controller
             'mather_id' => $request->input('mather_id'),
             'name' => $validated['name'],
             'gender' => $validated['gender'],
+            'status' => $validated['status'],
             'morph' => $validated['morph'],
             'birth' => $request->input('birth'),
             'comment' => $request->input('comment')
@@ -149,9 +151,15 @@ class ReptileController extends Controller
             ->where('type_id', $reptile['type_id'])
             ->pluck('name', 'id');
 
-        $genderKey = $this->reptile->select('gender as gender_key')->where('id', $reptile->id)->first()['gender_key'];
+        $reptileKey= $this->reptile
+            ->select('gender as gender_key', 'status as status_key')
+            ->where('id', $reptile->id)->first();
+
+        $genderKey = $reptileKey ['gender_key'];
+        $statusKey =  $reptileKey ['status_key'];
+
         return view("$this->path.edit",
-            compact('typeList', 'fatherReptileList', 'matherReptileList', 'reptile', 'genderKey'));
+            compact('typeList', 'fatherReptileList', 'matherReptileList', 'reptile', 'genderKey', 'statusKey'));
     }
 
     /**
@@ -174,10 +182,43 @@ class ReptileController extends Controller
                 'mather_id' => $request->input('mather_id'),
                 'name' => $validated['name'],
                 'gender' => $validated['gender'],
+                'status' => $validated['status'],
                 'morph' => $validated['morph'],
                 'birth' => $request->input('birth'),
                 'comment' => $request->input('comment')
             ]);
+
+        /*
+         * 여기서 reptile 히스토리를 저장하고 그 데이터를 통해 그래프에 반영
+         * 1. 성별 수정
+         * 2. 상태 수정
+         * => 공통점 : 데이터 변경된 날 기준으로 데이터들의 증감이 일어남
+         *
+         * 1차 방법
+         * 테이블 재수정
+         * id/user_id/month/column/value/modify 이렇게?
+         * ex)
+         * 성별을 u -> m으로 수정하면 아래와 같이 데이터가 생성
+         * 1/1/2022.12/gender/m/1
+         * 2/1/2022.12/gender/u/-1
+         *
+         * 그래프에서 정보들을 다 가져오고 계산식에 적용만 하면 됨
+         *
+         * => 큰 단점 : 이 방벙은 무결성이 지켜지지 않음
+         * 단 지금과 같은 상황에서 사용가능할까?
+         * */
+
+        /*
+         * 2차 방법
+         *  기존 처럼
+         * id/user_id/reptile_id/type/number/created_at?
+         * => 이 방법의 문제는 무슨 타입에서 무슨타입으로 옮겨져는지를 알 수 없음
+         * */
+
+        /*
+         * 3차 방법
+         * reptile과 reptiel_hsitories를 조인하면 되지 않을까
+         * */
 
         return redirect()->route('reptile.show', $id)->with('message', '개체 정보를 수정했습니다.');
     }

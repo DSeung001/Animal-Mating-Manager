@@ -31,7 +31,15 @@
                     'list' => ['u' => '미구분', 'm' => '수', 'f' => '암'],
                     'type' => 'radio',
                     'name' => 'gender',
-                    'changeListener' =>  'typeChange'
+                    'selectedKey' => 'u'
+                ])
+
+                @include('parts.checkbox', [
+                    'title'=>"현재 상태",
+                    'list' => ['g' => '키우는 중', 's' => '분양 보냄','i' => '위탁 중', 'o' => '위탁 보냄'],
+                    'type' => 'radio',
+                    'name' => 'status',
+                    'selectedKey' => 'g'
                 ])
 
                 @include('parts.input', [
