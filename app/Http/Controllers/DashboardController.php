@@ -101,6 +101,10 @@ class DashboardController extends Controller
 
                 $allCount = $maleCount + $femaleCount + $undefinedCount;
 
+
+                // count나간이력도
+                // => 메인페이지에 이벤트 로그라고 추가할까
+
                 if($re > 0){
                     $allReptileList[] = $allReptileList[$re-1] + $allCount;
                     $maleReptileList[] = $maleReptileList[$re-1] + $maleCount;

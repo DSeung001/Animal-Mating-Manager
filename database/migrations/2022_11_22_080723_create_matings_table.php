@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('matings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('type_id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('father_id');
-            $table->unsignedBigInteger('mather_id');
+            $table->foreignId('type_id')->index();
+            $table->foreignId('user_id')->index();
+            $table->foreignId('father_id')->index();
+            $table->foreignId('mather_id')->index();
             $table->string('comment', 512)->nullable();
             $table->timestamp('mating_at');
             $table->timestamps();
