@@ -196,7 +196,7 @@ class ReptileController extends Controller
          *
          * 1차 방법
          * 테이블 재수정
-         * id/user_id/month/column/value/modify 이렇게?
+         * id/user_id/reptile_id/created_at/column/type/number 이렇게?
          * ex)
          * 성별을 u -> m으로 수정하면 아래와 같이 데이터가 생성
          * 1/1/2022.12/gender/m/1
@@ -209,16 +209,12 @@ class ReptileController extends Controller
          * */
 
         /*
-         * 2차 방법
-         *  기존 처럼
-         * id/user_id/reptile_id/type/number/created_at?
-         * => 이 방법의 문제는 무슨 타입에서 무슨타입으로 옮겨져는지를 알 수 없음
+         * 1. 성별 바뀐지 체크
+         *  => history
+         * 2. 상태 바뀐지 체크
+         *  => history
          * */
 
-        /*
-         * 3차 방법
-         * reptile과 reptiel_hsitories를 조인하면 되지 않을까
-         * */
 
         return redirect()->route('reptile.show', $id)->with('message', '개체 정보를 수정했습니다.');
     }
