@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ReptileRequest;
 use App\Models\Mating;
 use App\Models\Reptile;
+use App\Models\ReptileModifyHistory;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,12 +16,14 @@ class ReptileController extends Controller
     private Reptile $reptile;
     private Mating $mating;
     private Type $type;
+    private ReptileModifyHistory $reptileModifyHistory;
 
-    public function __construct(Reptile $reptile, Mating $mating, Type $type)
+    public function __construct(Reptile $reptile, Mating $mating, Type $type, ReptileModifyHistory $reptileModifyHistory)
     {
         $this->reptile = $reptile;
         $this->mating = $mating;
         $this->type = $type;
+        $this->reptileModifyHistory = $reptileModifyHistory;
         parent::__construct('reptile');
     }
 
@@ -172,49 +175,48 @@ class ReptileController extends Controller
     public function update(ReptileRequest $request, $id)
     {
         $validated = $request->validated();
+        $userId = Auth::id();
+        $oldReptile = $this->reptile->select('gender as gender_key', 'status as status_key')->where('id', $id)->first();
 
-        $this->reptile
-            ->where('id', $id)
-            ->where('user_id', Auth::id())
-            ->update([
-                'type_id' => $validated['type_id'],
-                'father_id' => $request->input('father_id'),
-                'mather_id' => $request->input('mather_id'),
-                'name' => $validated['name'],
-                'gender' => $validated['gender'],
-                'status' => $validated['status'],
-                'morph' => $validated['morph'],
-                'birth' => $request->input('birth'),
-                'comment' => $request->input('comment')
-            ]);
-
-        /*
-         * 여기서 reptile 히스토리를 저장하고 그 데이터를 통해 그래프에 반영
-         * 1. 성별 수정
-         * 2. 상태 수정
-         * => 공통점 : 데이터 변경된 날 기준으로 데이터들의 증감이 일어남
-         *
-         * 1차 방법
-         * 테이블 재수정
-         * id/user_id/reptile_id/created_at/column/type/number 이렇게?
-         * ex)
-         * 성별을 u -> m으로 수정하면 아래와 같이 데이터가 생성
-         * 1/1/2022.12/gender/m/1
-         * 2/1/2022.12/gender/u/-1
-         *
-         * 그래프에서 정보들을 다 가져오고 계산식에 적용만 하면 됨
-         *
-         * => 큰 단점 : 이 방벙은 무결성이 지켜지지 않음
-         * 단 지금과 같은 상황에서 사용가능할까?
-         * */
-
-        /*
-         * 1. 성별 바뀐지 체크
-         *  => history
-         * 2. 상태 바뀐지 체크
-         *  => history
-         * */
-
+        try{
+            DB::beginTransaction();
+            if($oldReptile['gender_key'] != $validated['gender']){
+                $this->reptileModifyHistory->create([
+                    'user_id' => $userId,
+                    'reptile_id' => $id,
+                    'column' => 'g',
+                    'plus' => $validated['gender'],
+                    'minus' => $oldReptile['gender_key'],
+                ]);
+            }
+            if($oldReptile['status_key'] != $validated['status']){
+                $this->reptileModifyHistory->create([
+                    'user_id' => $userId,
+                    'reptile_id' => $id,
+                    'column' => 's',
+                    'plus' => $validated['gender'],
+                    'minus' => $oldReptile['status_key'],
+                ]);
+            }
+            $this->reptile
+                ->where('id', $id)
+                ->where('user_id', $userId)
+                ->update([
+                    'type_id' => $validated['type_id'],
+                    'father_id' => $request->input('father_id'),
+                    'mather_id' => $request->input('mather_id'),
+                    'name' => $validated['name'],
+                    'gender' => $validated['gender'],
+                    'status' => $validated['status'],
+                    'morph' => $validated['morph'],
+                    'birth' => $request->input('birth'),
+                    'comment' => $request->input('comment')
+                ]);
+            DB::commit();
+        }catch(\Exception $e) {
+            \Log::error("reptile update error message : ".$e->getMessage());
+            DB::rollBack();
+        }
 
         return redirect()->route('reptile.show', $id)->with('message', '개체 정보를 수정했습니다.');
     }
@@ -227,9 +229,11 @@ class ReptileController extends Controller
      */
     public function destroy($id)
     {
-        if(!empty($this->mating->where('father_id', $id)->first()) || !empty($this->mating->where('mather_id', $id)->first()) ){
+        $this->reptileModifyHistory->where('reptile_id',$id)->delete();
+
+        if (!empty($this->mating->where('father_id', $id)->first()) || !empty($this->mating->where('mather_id', $id)->first())) {
             return redirect()->route('reptile.show', $id)->with('message', '삭제할 수 없습니다, 해당 정보를 사용한 메이팅 정보가 존재합니다.');
-        } else{
+        } else {
             $this->reptile->where('id', $id)->delete();
             return redirect()->route('reptile.index')->with('message', '해당 정보를 삭제했습니다.');
         }

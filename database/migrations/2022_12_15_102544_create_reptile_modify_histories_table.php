@@ -16,11 +16,11 @@ return new class extends Migration
     {
         Schema::create('reptile_modify_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->index();
-            $table->foreignId('reptile_id')->index();
-            $table->enum('column',['g','s'])->comment("g: gender, s:status");
-            $table->enum('type',['m','f','u','g','i','o','s','d'])->comment('reptile 의 모든 enum 값');
-            $table->smallInteger('number')->comment("증감 값");
+            $table->foreignId('user_id');
+            $table->foreignId('reptile_id');
+            $table->enum('column',['g','s'])->comment("g: gender, s:status")->index();
+            $table->enum('plus',['m','f','u','g','i','o','s','d'])->comment('column 증가 값')->index();
+            $table->enum('minus',['m','f','u','g','i','o','s','d'])->comment('column 감소 값')->index();
             $table->timestamp('created_at')->index()->default(DB::raw('CURRENT_TIMESTAMP'))->comment("생성일");
         });
     }

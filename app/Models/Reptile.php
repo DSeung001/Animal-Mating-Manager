@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 class Reptile extends Model
 {
     use HasFactory;
-    use HasEvents;
 
     protected $guarded = [];
 

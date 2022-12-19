@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ReptileHistory extends Model
+class ReptilePhoto extends Model
 {
     use HasFactory;
-    public $timestamps = false;
+    protected $guarded = [];
 }
