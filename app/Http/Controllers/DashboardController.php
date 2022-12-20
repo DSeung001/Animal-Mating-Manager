@@ -27,6 +27,9 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
+        $userId = Auth::id();
+
+        /* 부화 예상일 */
         $eggs = $this->egg
             ->select(
                 'eggs.id as id',
@@ -37,7 +40,7 @@ class DashboardController extends Controller
             ->leftJoin('matings', 'matings.id', '=', 'mating_id')
             ->leftJoin('reptiles AS f_reptile', 'f_reptile.id', '=', 'matings.father_id')
             ->leftJoin('reptiles AS m_reptile', 'm_reptile.id', '=', 'matings.mather_id')
-            ->where('eggs.user_id', Auth::id())
+            ->where('eggs.user_id', $userId)
             ->get()
             ->toArray();
         $eggs = array_map(function ($egg){
@@ -48,45 +51,56 @@ class DashboardController extends Controller
            ];
         }, $eggs);
 
-
-        $graphCategories = [];
-        $allReptileList = [];
+        /* 개체수 그래프*/
+        $allReptileChartCategories = [];
+        $allReptileChart = [];
 
         if($this->reptile->where('id', '!=', '0')->first() !== null){
             $maxCreatedAt = Carbon::parse($this->reptile
                 ->select(DB::raw('max(created_at) as created_at'))
-                ->where('user_id', Auth::id())
+                ->where('user_id', $userId)
                 ->first()['created_at']);
             $minCreatedAt = Carbon::parse($this->reptile
                 ->select(DB::raw('min(created_at) as created_at'))
-                ->where('user_id', Auth::id())
+                ->where('user_id', $userId)
                 ->first()['created_at']);
             $diffMonth = $minCreatedAt->diffInMonths($maxCreatedAt)+1;
 
             for($re = 0 ; $re < $diffMonth ; $re++){
-                $graphCategories[] = $minCreatedAt->format('Y.m');
+                $allReptileChartCategories[] = $minCreatedAt->format('Y.m');
 
                 $allCount = $this->reptile
                         ->select(DB::raw('count(id) as count'))
-                        ->where('user_id', Auth::id())
+                        ->where('user_id', $userId)
                         ->where('created_at', 'like', $minCreatedAt->format('Y-m')."%")
                         ->first()['count']
                     -
                     $this->blockReptileHistory
                         ->select(DB::raw('count(id) as count'))
-                        ->where('user_id', Auth::id())
+                        ->where('user_id', $userId)
                         ->where('created_at', 'like', $minCreatedAt->format('Y-m')."%")
                         ->first()['count'];
 
                 if($re > 0){
-                    $allReptileList[] = $allReptileList[$re-1] + $allCount;
+                    $allReptileChart[] = $allReptileChart[$re-1] + $allCount;
                 } else {
-                    $allReptileList[] = $allCount;
+                    $allReptileChart[] = $allCount;
                 }
                 $minCreatedAt->addMonth();
             }
         }
 
-        return view('dashboard', compact('eggs', 'graphCategories', 'allReptileList'));
+        /* 종류 분포도 */
+        $typeChart = $this->reptile
+            ->select('types.name as name', 'types.name as drilldown', DB::raw('count(types.id) as y'))
+            ->leftJoin('types', 'types.id', '=', 'type_id')
+            ->where('reptiles.user_id', $userId)
+            ->where('status', '!=', 'd')
+            ->where('status', '!=', 's')
+            ->groupBy('types.id')
+            ->get();
+
+
+        return view('dashboard', compact('eggs', 'allReptileChartCategories', 'allReptileChart', 'typeChart'));
     }
 }

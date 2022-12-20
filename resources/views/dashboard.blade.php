@@ -15,11 +15,18 @@
             <p>부화 예상일</p>
             <div id='calendar' class="mb-6"></div>
 
-            <figure class="highcharts-figure ">
-                <div id="container"></div>
-            </figure>
+            <div class="flex">
+                <div id="count-chart-container" class="w-1/2">
+
+                </div>
+                <div id="type-chart-container" class="w-1/2">
+
+                </div>
+            </div>
         </div>
     </div>
+
+
 
         @push('scripts')
             <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -27,73 +34,15 @@
             <script src="https://code.highcharts.com/modules/exporting.js"></script>
             <script src="https://code.highcharts.com/modules/export-data.js"></script>
             <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
             <script>
                 let events = {!! json_encode($eggs) !!};
-
-                document.addEventListener('DOMContentLoaded', function () {
-                    var calendarEl = document.getElementById('calendar');
-
-                    var calendar = new FullCalendar.Calendar(calendarEl, {
-                        initialDate: '{{now()}}',
-                        editable: false,
-                        selectable: false,
-                        businessHours: true,
-                        dayMaxEvents: true,
-                        displayEventTime : false,
-                        events: events,
-                        titleFormat: function (date) {
-                            year = date.date.year;
-                            month = date.date.month + 1;
-                            return year + "년 " + month + "월";
-                        },
-                        height:600
-                    });
-                    calendar.render();
-                });
-
-
-                Highcharts.chart('container', {
-                    title: {
-                        text: '현재 개체수 그래프',
-                        align: 'left'
-                    },
-                    yAxis: {
-                        title: {
-                            text: '개체수'
-                        }
-                    },
-
-                    xAxis: {
-                        categories: {!! json_encode($graphCategories) !!}
-                    },
-
-                    plotOptions: {
-                        line: {
-                            dataLabels: {
-                                enabled: true
-                            },
-                            enableMouseTracking: false
-                        }
-                    },
-                    series: [{
-                        name: '모든 개체',
-                        data: {!! json_encode($allReptileList) !!}
-                    }],
-                    responsive: {
-                        rules: [{
-                            condition: {
-                                maxWidth: 500
-                            },
-                            chartOptions: {
-                                legend: {
-                                    layout: 'horizontal',
-                                    align: 'center',
-                                    verticalAlign: 'bottom'
-                                }
-                            }
-                        }]
-                    }
-                });
+                let now = '{{now()}}';
+                let allReptileChartCategories = {!! json_encode($allReptileChartCategories) !!};
+                let allReptileChart = {!! json_encode($allReptileChart) !!};
+                let typeChart = {!! json_encode($typeChart) !!};
             </script>
+
+            <script src="{{asset('js/page/dashboard.js')}}"></script>
         @endpush
 </x-app-layout>
