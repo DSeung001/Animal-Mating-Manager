@@ -78,15 +78,6 @@
                     series: [{
                         name: '모든 개체',
                         data: {!! json_encode($allReptileList) !!}
-                    },{
-                        name: '수컷 개체',
-                        data: {!! json_encode($maleReptileList) !!}
-                    },{
-                        name: '암컷 개체',
-                        data: {!! json_encode($femaleReptileList) !!}
-                    },{
-                        name: '미구분 개체',
-                        data: {!! json_encode($undefinedReptileList) !!}
                     }],
                     responsive: {
                         rules: [{

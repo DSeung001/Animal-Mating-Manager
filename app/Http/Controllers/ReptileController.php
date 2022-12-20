@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReptileRequest;
+use App\Models\BlockReptileHistory;
 use App\Models\Mating;
 use App\Models\Reptile;
-use App\Models\ReptileModifyHistory;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,14 +16,14 @@ class ReptileController extends Controller
     private Reptile $reptile;
     private Mating $mating;
     private Type $type;
-    private ReptileModifyHistory $reptileModifyHistory;
+    private BlockReptileHistory $blockReptileHistory;
 
-    public function __construct(Reptile $reptile, Mating $mating, Type $type, ReptileModifyHistory $reptileModifyHistory)
+    public function __construct(Reptile $reptile, Mating $mating, Type $type, BlockReptileHistory $blockReptileHistory)
     {
         $this->reptile = $reptile;
         $this->mating = $mating;
         $this->type = $type;
-        $this->reptileModifyHistory = $reptileModifyHistory;
+        $this->blockReptileHistory = $blockReptileHistory;
         parent::__construct('reptile');
     }
 
@@ -176,47 +176,38 @@ class ReptileController extends Controller
     {
         $validated = $request->validated();
         $userId = Auth::id();
-        $oldReptile = $this->reptile->select('gender as gender_key', 'status as status_key')->where('id', $id)->first();
+        $oldReptile = $this->reptile->select('status as status_key')->where('id', $id)->first();
 
-        try{
-            DB::beginTransaction();
-            if($oldReptile['gender_key'] != $validated['gender']){
-                $this->reptileModifyHistory->create([
-                    'user_id' => $userId,
-                    'reptile_id' => $id,
-                    'column' => 'g',
-                    'plus' => $validated['gender'],
-                    'minus' => $oldReptile['gender_key'],
-                ]);
-            }
-            if($oldReptile['status_key'] != $validated['status']){
-                $this->reptileModifyHistory->create([
-                    'user_id' => $userId,
-                    'reptile_id' => $id,
-                    'column' => 's',
-                    'plus' => $validated['gender'],
-                    'minus' => $oldReptile['status_key'],
-                ]);
-            }
-            $this->reptile
-                ->where('id', $id)
+        if(($oldReptile['status_key'] === 'd' || $oldReptile['status_key'] === 's') &&
+            ($validated['status'] !== 'd' && $validated['status'] !== 's')){
+            $this->blockReptileHistory
                 ->where('user_id', $userId)
-                ->update([
-                    'type_id' => $validated['type_id'],
-                    'father_id' => $request->input('father_id'),
-                    'mather_id' => $request->input('mather_id'),
-                    'name' => $validated['name'],
-                    'gender' => $validated['gender'],
-                    'status' => $validated['status'],
-                    'morph' => $validated['morph'],
-                    'birth' => $request->input('birth'),
-                    'comment' => $request->input('comment')
-                ]);
-            DB::commit();
-        }catch(\Exception $e) {
-            \Log::error("reptile update error message : ".$e->getMessage());
-            DB::rollBack();
+                ->where('reptile_id', $id)
+                ->delete();
+
+        } else if(
+            ($oldReptile['status_key'] !== 'd' && $oldReptile['status_key'] !== 's') &&
+            ($validated['status'] === 'd' || $validated['status'] === 's')){
+            $this->blockReptileHistory->create([
+               'user_id' => $userId,
+               'reptile_id' => $id
+            ]);
         }
+
+        $this->reptile
+            ->where('id', $id)
+            ->where('user_id', $userId)
+            ->update([
+                'type_id' => $validated['type_id'],
+                'father_id' => $request->input('father_id'),
+                'mather_id' => $request->input('mather_id'),
+                'name' => $validated['name'],
+                'gender' => $validated['gender'],
+                'status' => $validated['status'],
+                'morph' => $validated['morph'],
+                'birth' => $request->input('birth'),
+                'comment' => $request->input('comment')
+            ]);
 
         return redirect()->route('reptile.show', $id)->with('message', '개체 정보를 수정했습니다.');
     }

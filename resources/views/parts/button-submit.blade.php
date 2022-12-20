@@ -14,7 +14,7 @@
 @push('scripts')
     <script>
         document.addEventListener('keydown', function (event) {
-            if (event.keyCode === 13) {
+            if (event.keyCode === 13 && event.target.tagName.toLowerCase() !== 'textarea') {
                 event.preventDefault();
             }
         }, true);
