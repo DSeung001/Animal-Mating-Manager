@@ -57,9 +57,10 @@
 
                 @include('parts.textarea')
 
+                @include('parts.dropzone')
+
                 @include('parts.button-submit', ["formId" => "reptile-create-form"])
             </form>
         </div>
     </div>
-
     </x-guest-layout>

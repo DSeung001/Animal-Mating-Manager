@@ -1,0 +1,11 @@
+.dropzone-container {
+    max-width: 450px;
+}
+.dropzone-container #drop-zone{
+    min-height: 100px;
+}
+#drop-zone .target-image{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
