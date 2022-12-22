@@ -15,12 +15,10 @@ class DashboardController extends Controller
 {
     private Egg $egg;
     private Reptile $reptile;
-    private Mating $mating;
     private BlockReptileHistory $blockReptileHistory;
 
-    public function __construct(Egg $egg, Mating $mating, Reptile $reptile, BlockReptileHistory $blockReptileHistory){
+    public function __construct(Egg $egg, Reptile $reptile, BlockReptileHistory $blockReptileHistory){
         $this->egg = $egg;
-        $this->mating = $mating;
         $this->reptile = $reptile;
         $this->blockReptileHistory = $blockReptileHistory;
     }

@@ -13,7 +13,7 @@
                 @csrf
 
                 @include('parts.dropzone',[
-                    'value' => isset($photo) ? $photo['path'] : null
+                    'value' => isset($image) ? $image['path'] : null
                 ])
 
                 @include('parts.input', [

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('reptile_photos', function (Blueprint $table) {
+        Schema::create('reptile_images', function (Blueprint $table) {
             $table->id();
             $table->foreignId('reptile_id')->index();
             $table->string('path');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reptile_photos');
+        Schema::dropIfExists('reptile_images');
     }
 };

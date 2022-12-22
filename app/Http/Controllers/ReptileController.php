@@ -3,31 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReptileRequest;
+use App\Http\Traits\UploadImageTrait;
 use App\Models\BlockReptileHistory;
 use App\Models\Mating;
 use App\Models\Reptile;
-use App\Models\ReptilePhoto;
+use App\Models\ReptileImage;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class ReptileController extends Controller
 {
+    use UploadImageTrait;
+
     private Reptile $reptile;
     private Mating $mating;
     private Type $type;
     private BlockReptileHistory $blockReptileHistory;
-    private ReptilePhoto $reptilePhoto;
+    private ReptileImage $reptileImage;
 
-    public function __construct(Reptile $reptile, Mating $mating, Type $type, BlockReptileHistory $blockReptileHistory, ReptilePhoto $reptilePhoto)
+    public function __construct(Reptile $reptile, Mating $mating, Type $type, BlockReptileHistory $blockReptileHistory, ReptileImage $reptileImage)
     {
         $this->reptile = $reptile;
         $this->mating = $mating;
         $this->type = $type;
         $this->blockReptileHistory = $blockReptileHistory;
-        $this->reptilePhoto = $reptilePhoto;
+        $this->reptileImage = $reptileImage;
         parent::__construct('reptile');
     }
 
@@ -103,7 +105,7 @@ class ReptileController extends Controller
     public function store(ReptileRequest $request)
     {
         $validated = $request->validated();
-        $photo = $request->file('reptile_photo', null);
+        $image = $request->file('reptile_image', null);
 
         $reptile = $this->reptile->create([
             'user_id' => Auth::id(),
@@ -118,15 +120,10 @@ class ReptileController extends Controller
             'comment' => $request->input('comment')
         ]);
 
-        if(isset($photo)){
-            $path = Storage::putFileAs(
-                "uploads/" . date('y-m-d'),
-                $photo,
-                 date("his")."_".$photo->getClientOriginalName()
-            );
-            $this->reptilePhoto->create([
+        if(isset($image)){
+            $this->reptileImage->create([
                 'reptile_id' => $reptile['id'],
-                'path' => $path
+                'path' => $this->uploadImage($image)
             ]);
         }
 
@@ -144,10 +141,10 @@ class ReptileController extends Controller
         $typeName = $this->type->where('id', $reptile['type_id'])->first()['name'];
         $fatherName = $this->reptile->where('id', $reptile['father_id'])->first()['name'] ?? '미확인';
         $matherName = $this->reptile->where('id', $reptile['mather_id'])->first()['name'] ?? '미확인';
-        $photo = $this->reptilePhoto->where('reptile_id', $reptile['id'])->first();
+        $image = $this->reptileImage->where('reptile_id', $reptile['id'])->first();
 
         return view("$this->path.show",
-            compact('reptile', 'typeName', 'fatherName', 'matherName', 'photo')
+            compact('reptile', 'typeName', 'fatherName', 'matherName', 'image')
         );
     }
 
@@ -174,13 +171,13 @@ class ReptileController extends Controller
         $reptileKey= $this->reptile
             ->select('gender as gender_key', 'status as status_key')
             ->where('id', $reptile->id)->first();
-        $photo = $this->reptilePhoto->where('reptile_id', $reptile['id'])->first();
+        $image = $this->reptileImage->where('reptile_id', $reptile['id'])->first();
 
         $genderKey = $reptileKey ['gender_key'];
         $statusKey =  $reptileKey ['status_key'];
 
         return view("$this->path.edit",
-            compact('typeList', 'fatherReptileList', 'matherReptileList', 'reptile', 'genderKey', 'statusKey', 'photo'));
+            compact('typeList', 'fatherReptileList', 'matherReptileList', 'reptile', 'genderKey', 'statusKey', 'image'));
     }
 
     /**
@@ -192,36 +189,29 @@ class ReptileController extends Controller
      */
     public function update(ReptileRequest $request, $id)
     {
-        if($request->input('modified', 'false') == 'true'){
-            $photo = $request->file('reptile_photo', null);
+        $oldReptileImage = $this->reptileImage->where('reptile_id', $id)->first();
 
-            if(isset($photo)){
-                $oldReptilePhoto = $this->reptilePhoto->where('reptile_id', $id)->first();
-                if (isset($oldReptilePhoto)) {
-                    Storage::delete($oldReptilePhoto->path);
-                    $path = Storage::putFileAs(
-                        "uploads/" . date('y-m-d'),
-                        $photo,
-                         date("his")."_".$photo->getClientOriginalName()
-                    );
-                    $this->reptilePhoto->
-                        where('reptile_id', $id)
+        if($request->input('modified', 'false') == 'true'){
+            $image = $request->file('reptile_image', null);
+            if (isset($image)) {
+                if (isset($oldReptileImage)) {
+                    $this->deleteImage($oldReptileImage->path);
+                    $this->reptileImage->
+                    where('reptile_id', $id)
                         ->update([
-                            'path' => $path
+                            'path' => $this->uploadImage($image)
                         ]);
                 } else {
-                    $path = Storage::putFileAs(
-                        "uploads/" . date('y-m-d'),
-                        $photo,
-                         date("his")."_".$photo->getClientOriginalName()
-                    );
-                    $this->reptilePhoto->create([
+                    $this->reptileImage->create([
                         'reptile_id' => $id,
-                        'path' => $path
+                        'path' => $this->uploadImage($image)
                     ]);
                 }
-            }else{
-                $this->reptilePhoto->where('reptile_id', $id)->delete();
+            } else {
+                if (isset($oldReptileImage)) {
+                    $this->deleteImage($oldReptileImage->path);
+                }
+                $this->reptileImage->where('reptile_id', $id)->delete();
             }
         }
 

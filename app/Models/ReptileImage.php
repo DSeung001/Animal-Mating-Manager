@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ReptilePhoto extends Model
+class ReptileImage extends Model
 {
     use HasFactory;
     protected $guarded = [];

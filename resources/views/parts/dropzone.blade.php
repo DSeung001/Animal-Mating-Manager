@@ -1,5 +1,5 @@
 <div class="mb-6">
-    <label for="reptile_photo" class="block text-sm font-medium text-gray-900 dark:text-white px-3 font-bold pb-3">
+    <label for="reptile_image" class="block text-sm font-medium text-gray-900 dark:text-white px-3 font-bold pb-3">
         개체 사진 업로드
     </label>
     <div class="dropzone-container max-w-2xl">
@@ -11,7 +11,7 @@
                 또는 클릭해서 업로드해주세요.
             </p>
             <img class="target-image {{isset($value) ? '' : 'hidden'}}" src="{{isset($value) ? asset($value) : ''}}" alt="">
-            <input name="reptile_photo" type="file" hidden accept="image/*">
+            <input name="reptile_image" type="file" hidden accept="image/*">
             <input class="modified" name="modified" type="hidden" value="false">
         </div>
     </div>
