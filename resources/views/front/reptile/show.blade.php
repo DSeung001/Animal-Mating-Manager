@@ -6,6 +6,15 @@
     <div class="px-4 mt-8 mb-4">
         <div class="p-4 bg-white shadow m-auto max-w-[1280px]">
 
+            @if(isset($photo))
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-900 dark:text-white px-3 font-bold pb-3">
+                    개체 사진
+                </label>
+                <img src="{{asset($photo['path'])}}" class="max-w-2xl"/>
+            </div>
+            @endif
+
             @include('parts.input', [
                 'title'=>'개체 이름',
                 'name'=>'name',

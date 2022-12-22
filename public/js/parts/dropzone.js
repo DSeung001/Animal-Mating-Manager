@@ -3,9 +3,11 @@ const dropZoneInputElement = dropZone.querySelector('input');
 const dropZoneImage = dropZone.querySelector('.target-image');
 const dropZoneXButton = document.querySelector('.x-button');
 const fileReader = new FileReader();
-let dropZoneP = dropZone.querySelector('p')
+const dropZoneP = dropZone.querySelector('.placeholder');
+const dropzoneModified = dropZone.querySelector('.modified');
 
 dropZoneInputElement.addEventListener('change', function (e) {
+    dropzoneModified.value = 'true';
     const clickFile = this.files[0];
     if (clickFile) {
         dropZoneImage.style = "display:block;";
@@ -21,7 +23,7 @@ dropZoneInputElement.addEventListener('change', function (e) {
     }
 })
 dropZone.addEventListener('click', () => {
-        dropZoneInputElement.click()
+    dropZoneInputElement.click()
 });
 dropZone.addEventListener('dragover', (e) => {
     e.preventDefault();
@@ -35,16 +37,17 @@ dropZone.addEventListener('drop', (e) => {
     fileReader.readAsDataURL(file);
     fileReader.onloadend = function () {
         e.preventDefault()
-        dropZoneP.style = 'display: none;';
+        dropZoneP.style = 'display:none;';
         let src = this.result;
         dropZoneImage.src = src;
         dropZoneImage.alt = file.name
     }
 });
 dropZoneXButton.addEventListener('click', (e)=>{
-    console.log("hi")
     dropZoneImage.src = '';
     dropZoneImage.alt = '';
+    dropZoneP.style = 'display:block;';
     dropZoneImage.style = "display:none;";
     dropZoneXButton.style = "display:none";
+    dropzoneModified.value = 'true';
 });

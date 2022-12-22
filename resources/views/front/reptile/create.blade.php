@@ -10,8 +10,10 @@
 
     <div class="px-4 mt-8 mb-4">
         <div class="p-4 bg-white shadow m-auto max-w-[1280px]">
-            <form method="POST" action="{{route('reptile.store')}}">
+            <form method="POST" action="{{route('reptile.store')}}" enctype="multipart/form-data">
                 @csrf
+
+                @include('parts.dropzone')
 
                 @include('parts.input', [
                       'title'=>'개체 이름',
@@ -56,8 +58,6 @@
                          ])
 
                 @include('parts.textarea')
-
-                @include('parts.dropzone')
 
                 @include('parts.button-submit', ["formId" => "reptile-create-form"])
             </form>

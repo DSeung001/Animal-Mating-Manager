@@ -4,15 +4,17 @@
         {{ __('Reptile Modify') }}
     </x-slot>
 
-
     <x-jet-validation-errors class="mb-4"/>
-
 
     <div class="px-4 mt-8 mb-4">
         <div class="p-4 bg-white shadow m-auto max-w-[1280px]">
-            <form method="POST" action="{{route('reptile.update', $reptile)}}" id="reptile-create-form">
+            <form method="POST" action="{{route('reptile.update', $reptile)}}" id="reptile-create-form" enctype="multipart/form-data">
                 @method('patch')
                 @csrf
+
+                @include('parts.dropzone',[
+                    'value' => isset($photo) ? $photo['path'] : null
+                ])
 
                 @include('parts.input', [
                       'title'=>'개체 이름',
@@ -71,6 +73,7 @@
                 @include('parts.button-submit', [
                     "formId" => "reptile-create-form"
                 ])
+
                 @include('parts.button-cancel', [
                     'route' => route('reptile.show', $reptile)
                 ])
