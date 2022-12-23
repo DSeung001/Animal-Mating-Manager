@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Storage;
 
 trait UploadImageTrait {
     /**
-     * @param $image 업로드 이미지
+     * @param object $image 업로드 이미지
      * @return false|string
      */
     public function uploadImage($image){

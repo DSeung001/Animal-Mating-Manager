@@ -14,7 +14,7 @@
                 @if($isDefault)
                     @include('parts.select-search',[
                         'title' => "부 개체",
-                        'list' => $fatherReptileList,
+                        'list' => $maleReptilePluck,
                         'identity' => 'father_id',
                         'default' => '미확인',
                         'searchListener' => 'fatherSearch',
@@ -23,7 +23,7 @@
                 @else
                     @include('parts.select-search',[
                         'title' => "부 개체",
-                        'list' => $fatherReptileList,
+                        'list' => $maleReptilePluck,
                         'identity' => 'father_id',
                         'searchListener' => 'fatherSearch',
                         'selectedKey' => $fatherSelected ?? ''
@@ -34,7 +34,7 @@
                 @if($isDefault)
                     @include('parts.select-search', [
                         'title' => '모 개체',
-                        'list' => $matherReptileList,
+                        'list' => $femaleReptilePluck,
                         'identity' => 'mather_id',
                         'default' => '미확인',
                         'searchListener' => 'matherSearch',
@@ -43,7 +43,7 @@
                 @else
                     @include('parts.select-search', [
                         'title' => '모 개체',
-                        'list' => $matherReptileList,
+                        'list' => $femaleReptilePluck,
                         'identity' => 'mather_id',
                         'searchListener' => 'matherSearch',
                         'selectedKey' => $matherSelected ?? ''

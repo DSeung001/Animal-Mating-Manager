@@ -7,23 +7,33 @@ use App\Models\Egg;
 use App\Models\Mating;
 use App\Models\Reptile;
 use App\Models\Type;
+use App\Repositories\EggRepositoryInterface;
+use App\Repositories\Eloquent\ReptileRepository;
+use App\Repositories\MatingRepositoryInterface;
+use App\Repositories\ReptileRepositoryInterface;
+use App\Repositories\TypeRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class MatingController extends Controller
 {
-    private Mating $mating;
-    private Reptile $reptile;
-    private Type $type;
-    private Egg $egg;
+    private TypeRepositoryInterface $typeRepository;
+    private ReptileRepositoryInterface $reptileRepository;
+    private MatingRepositoryInterface $matingRepository;
+    private EggRepositoryInterface $eggRepository;
 
-    public function __construct(Mating $maitng, Reptile $reptile, Type $type, Egg $egg)
+    public function __construct(
+        TypeRepositoryInterface    $typeRepository,
+        ReptileRepositoryInterface $reptileRepository,
+        MatingRepositoryInterface  $matingRepository,
+        EggRepositoryInterface     $eggRepository
+    )
     {
-        $this->mating = $maitng;
-        $this->reptile = $reptile;
-        $this->type = $type;
-        $this->egg = $egg;
+        $this->typeRepository = $typeRepository;
+        $this->reptileRepository = $reptileRepository;
+        $this->matingRepository = $matingRepository;
+        $this->eggRepository = $eggRepository;
         parent::__construct('mating');
     }
 
@@ -35,32 +45,15 @@ class MatingController extends Controller
     public function index(Request $request)
     {
         $paginate = $request->input('paniate', 10);
-        $fatherName = $request->input('father_name', '');
-        $matherName = $request->input('mather_name', '');
-        $matingAt = $request->input('mating_at',null);
+        $fatherName = $request->input('father_name');
+        $matherName = $request->input('mather_name');
+        $matingAt = $request->input('mating_at');
 
-        $list = $this->mating
-            ->select(
-                'matings.id as id',
-                DB::raw("
-                matings.id AS id,
-                f_reptile.name AS father_name,
-                m_reptile.name AS mather_name,
-                matings.comment,
-                mating_at,
-                matings.created_at AS created_at,
-                matings.updated_at AS updated_at
-            "))
-            ->leftJoin('reptiles AS f_reptile', 'f_reptile.id', '=', 'matings.father_id')
-            ->leftJoin('reptiles AS m_reptile', 'm_reptile.id', '=', 'matings.mather_id')
-            ->where('f_reptile.name', 'like', "%$fatherName%")
-            ->where('m_reptile.name', 'like', "%$matherName%")
-            ->where('matings.user_id', Auth::id());
-
-        if (isset($matingAt)) {
-            $list = $list->where('mating_at', $matingAt);
-        }
-        $list = $list->paginate($paginate);
+        $list = $this->matingRepository->list([
+            'f_reptile.name' => "%$fatherName%",
+            'm_reptile.name' => "%$matherName%",
+            'mating_at' => $matingAt,
+        ], $paginate);
 
         return view("$this->path.list", compact("list"));
     }
@@ -72,11 +65,11 @@ class MatingController extends Controller
      */
     public function create()
     {
-        $typeList = $this->type->getTypePluck();
-        $matherReptileList = $this->reptile->getFemaleReptilePluck();
-        $fatherReptileList = $this->reptile->getMaleReptilePluck();
+        $typeList = $this->typeRepository->getTypePluck();
+        $femaleReptilePluck = $this->reptileRepository->getFemaleReptilePluck();
+        $maleReptilePluck = $this->reptileRepository->getMaleReptilePluck();
 
-        return view($this->path.".create", compact('typeList', 'fatherReptileList', 'matherReptileList'));
+        return view($this->path.".create", compact('typeList', 'maleReptilePluck', 'femaleReptilePluck'));
     }
 
     /**
@@ -90,7 +83,7 @@ class MatingController extends Controller
         $validated = $request->validated();
         $validated['user_id'] = Auth::id();
         $validated['comment'] = $request->input('comment');
-        $this->mating->create($validated);
+        $this->matingRepository->create($validated);
 
         return redirect(route('mating.index'))->with('message', '메이팅을 등록했습니다.');
     }
@@ -103,9 +96,9 @@ class MatingController extends Controller
      */
     public function show(Mating $mating)
     {
-        $typeName = $this->type->where('id', $mating['type_id'])->first()['name'];
-        $fatherName = $this->reptile->where('id', $mating['father_id'])->first()['name'] ?? '미확인';
-        $matherName = $this->reptile->where('id', $mating['mather_id'])->first()['name'] ?? '미확인';
+        $typeName = $this->typeRepository->getOne($mating['type_id'])['name'];
+        $fatherName = $this->reptileRepository->getOne($mating['father_id'])['name'] ?? '미확인';
+        $matherName = $this->reptileRepository->getOne($mating['mather_id'])['name'] ?? '미확인';
 
         return view("$this->path.show", compact('mating', 'typeName', 'fatherName', 'matherName'));
     }
@@ -118,11 +111,11 @@ class MatingController extends Controller
      */
     public function edit(Mating $mating)
     {
-        $typeList = $this->type->getTypePluck();
-        $matherReptileList = $this->reptile->getFemaleReptilePluck();
-        $fatherReptileList = $this->reptile->getMaleReptilePluck();
+        $typeList = $this->typeRepository->getTypePluck();
+        $femaleReptilePluck = $this->reptileRepository->getFemaleReptilePluck();
+        $maleReptilePluck = $this->reptileRepository->getMaleReptilePluck();
 
-        return view("$this->path.edit", compact('mating', 'typeList', 'matherReptileList',  'fatherReptileList'));
+        return view("$this->path.edit", compact('mating', 'typeList', 'femaleReptilePluck',  'maleReptilePluck'));
     }
 
     /**
@@ -136,10 +129,7 @@ class MatingController extends Controller
     {
         $validated = $request->validated();
         $validated['comment'] = $request->input('comment');
-        $this->mating
-            ->where('id', $this)
-            ->where('user_id', Auth::id())
-            ->update($validated);
+        $this->matingRepository->update($id, $validated);
 
         return redirect()->route('mating.show', $id)->with('message', '메이팅 정보를 수정했습니다.');
     }
@@ -152,8 +142,8 @@ class MatingController extends Controller
      */
     public function destroy($id)
     {
-        if (empty($this->egg->where('mating_id', $id)->first())) {
-            $this->egg->where('id', $id)->delete();
+        if (empty($this->eggRepository->belongMating($id))) {
+            $this->eggRepository->delete($id);
             return redirect()->route('mating.index')->with('message', '해당 정보를 삭제했습니다.');
         } else {
             return redirect()->route('mating.show', $id)

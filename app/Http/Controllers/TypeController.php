@@ -3,20 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TypeRequest;
-use App\Models\Reptile;
 use App\Models\Type;
+use App\Repositories\ReptileRepositoryInterface;
+use App\Repositories\TypeRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TypeController extends Controller
 {
-    private Type $type;
-    private Reptile $reptile;
+    private TypeRepositoryInterface $typeRepository;
+    private ReptileRepositoryInterface $reptileRepository;
 
-    public function __construct(Type $type, Reptile $reptile)
+    public function __construct(
+        TypeRepositoryInterface $typeRepository,
+        ReptileRepositoryInterface $reptileRepository)
     {
-        $this->type = $type;
-        $this->reptile = $reptile;
+        $this->typeRepository = $typeRepository;
+        $this->reptileRepository = $reptileRepository;
         parent::__construct('type');
     }
 
@@ -30,11 +33,10 @@ class TypeController extends Controller
         $name = $request->input('name', '');
         $paginate = $request->input('paginate', 10);
 
-        $list = $this->type
-            ->select('id', 'name', 'hatch_day', 'created_at', 'updated_at')
-            ->where('user_id', Auth::id())
-            ->searchByName($name)
-            ->setPaginate($paginate);
+        $list = $this->typeRepository->list([
+            'name' => $name
+        ], $paginate);
+
         return view("$this->path.list", compact("list"));
     }
 
@@ -59,7 +61,7 @@ class TypeController extends Controller
         $validated = $request->validated();
         $validated['user_id'] = Auth::id();
         $validated['comment'] = $request->input('comment');
-        $this->type->create($validated);
+        $this->typeRepository->create($validated);
 
         return redirect(route('type.index'))->with('message', '종을 등록했습니다.');
     }
@@ -96,9 +98,7 @@ class TypeController extends Controller
     public function update(TypeRequest $request, $id)
     {
         $validated = $request->validated();
-        $this->type
-            ->where('id', $id)
-            ->update([
+        $this->typeRepository->update($id, [
             'name' => $validated['name'],
             'hatch_day' => $validated['hatch_day'],
             'comment' => $request['comment']
@@ -114,12 +114,13 @@ class TypeController extends Controller
      */
     public function destroy($id)
     {
-        if (empty($this->reptile->where('type_id', $id)->first())) {
-            $this->type->where('id', $id)->delete();
-            return redirect()->route('type.index')->with('message', '해당 정보를 삭제했습니다.');
-        } else {
+        if ($this->reptileRepository->belongType($id)) {
             return redirect()->route('type.show', $id)
-                ->with('message', '삭제할 수 없습니다, 해당 정보를 사용한 개체 정보가 존재합니다.');
+                ->with('message', '삭제할 수 없습니다, 해당 종에 개체가 존재합니다.');
+        } else {
+            $this->typeRepository->delete($id);
+            return redirect()->route('type.index')
+                ->with('message', '해당 정보를 삭제했습니다.');
         }
     }
 }

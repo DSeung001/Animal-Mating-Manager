@@ -11,8 +11,8 @@
 
                 <livewire:mating-search-list
                     :typeList="$typeList"
-                    :fatherReptileList="$fatherReptileList"
-                    :matherReptileList="$matherReptileList"
+                    :maleReptilePluck="$maleReptilePluck"
+                    :femaleReptilePluck="$femaleReptilePluck"
                     :matingList="$matingList"
                     :typeSelected="$matingList[0]['type_id']"
                     :fatherSelected="$matingList[0]['father_id']"

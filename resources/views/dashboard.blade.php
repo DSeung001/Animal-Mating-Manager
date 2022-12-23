@@ -36,7 +36,7 @@
             <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
             <script>
-                let events = {!! json_encode($eggs) !!};
+                let events = {!! json_encode($hatchingScheduled) !!};
                 let now = '{{now()}}';
                 let allReptileChartCategories = {!! json_encode($allReptileChartCategories) !!};
                 let allReptileChart = {!! json_encode($allReptileChart) !!};

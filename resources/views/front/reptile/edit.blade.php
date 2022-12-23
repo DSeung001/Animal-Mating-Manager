@@ -25,8 +25,8 @@
 
                 <livewire:reptile-search-list
                     :typeList="$typeList"
-                    :fatherReptileList="$fatherReptileList"
-                    :matherReptileList="$matherReptileList"
+                    :maleReptilePluck="$maleReptilePluck"
+                    :femaleReptilePluck="$femaleReptilePluck"
                     :typeSelected="$reptile['type_id']"
                     :fatherSelected="$reptile['father_id']"
                     :matherSelected="$reptile['mather_id']"

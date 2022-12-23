@@ -4,32 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ReptileRequest;
 use App\Http\Traits\UploadImageTrait;
-use App\Models\BlockReptileHistory;
-use App\Models\Mating;
 use App\Models\Reptile;
-use App\Models\ReptileImage;
-use App\Models\Type;
+use App\Repositories\BlockReptileHistoryRepositoryInterface;
+use App\Repositories\MatingRepositoryInterface;
+use App\Repositories\ReptileImageRepositoryInterface;
+use App\Repositories\ReptileRepositoryInterface;
+use App\Repositories\TypeRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class ReptileController extends Controller
 {
     use UploadImageTrait;
 
-    private Reptile $reptile;
-    private Mating $mating;
-    private Type $type;
-    private BlockReptileHistory $blockReptileHistory;
-    private ReptileImage $reptileImage;
+    private TypeRepositoryInterface $typeRepository;
+    private ReptileRepositoryInterface $reptileRepository;
+    private MatingRepositoryInterface $matingRepository;
+    private BlockReptileHistoryRepositoryInterface $blockReptileHistoryRepository;
+    private ReptileImageRepositoryInterface $reptileImageRepository;
 
-    public function __construct(Reptile $reptile, Mating $mating, Type $type, BlockReptileHistory $blockReptileHistory, ReptileImage $reptileImage)
+    public function __construct (
+        TypeRepositoryInterface                $typeRepository,
+        ReptileRepositoryInterface             $reptileRepository,
+        MatingRepositoryInterface              $matingRepository,
+        BlockReptileHistoryRepositoryInterface $blockReptileHistoryRepository,
+        ReptileImageRepositoryInterface        $reptileImageRepository
+    )
     {
-        $this->reptile = $reptile;
-        $this->mating = $mating;
-        $this->type = $type;
-        $this->blockReptileHistory = $blockReptileHistory;
-        $this->reptileImage = $reptileImage;
+        $this->typeRepository = $typeRepository;
+        $this->reptileRepository = $reptileRepository;
+        $this->matingRepository = $matingRepository;
+        $this->blockReptileHistoryRepository = $blockReptileHistoryRepository;
+        $this->reptileImageRepository = $reptileImageRepository;
         parent::__construct('reptile');
     }
 
@@ -46,29 +52,11 @@ class ReptileController extends Controller
         $paginate = $request->input('paniate', 10);
 
         // 부모 아이디로 링크 추가하기
-        $list = $this->reptile
-            ->select(
-                'reptiles.id as id',
-                DB::raw("
-                reptiles.id AS id,
-                reptiles.name AS name,
-                reptiles.morph AS morph,
-                types.name AS type,
-                reptiles.gender AS gender,
-                reptiles.status AS status,
-                reptiles.father_id AS father_id,
-                reptiles.mather_id AS mather_id,
-                reptiles.birth AS birth,
-                f_reptile.name AS father_name,
-                m_reptile.name AS mather_name,
-                TIMESTAMPDIFF(MONTH, reptiles.birth, now()) AS age
-                "))
-            ->leftJoin('reptiles AS f_reptile', 'f_reptile.id', '=', 'reptiles.father_id')
-            ->leftJoin('reptiles AS m_reptile', 'm_reptile.id', '=', 'reptiles.mather_id')
-            ->leftJoin('types', 'types.id', '=', 'reptiles.type_id')
-            ->where('reptiles.user_id', Auth::id())
-            ->where('reptiles.name', 'like', "%$name%")
-            ->where('reptiles.morph', 'like', "%$morph%");
+        $list = $this->reptileRepository
+            ->list([
+                'reptiles.name' => "%$name%",
+                'reptiles.morph' => "%$morph%"
+            ], $paginate);
 
         if (isset($type)) {
             $list = $list->where('reptiles.type_id', $type);
@@ -76,7 +64,7 @@ class ReptileController extends Controller
 
         $list = $list->setPaginate($paginate);
 
-        $typeList = $this->type->getTypePluck();
+        $typeList = $this->typeRepository->getTypePluck();
 
         return view("$this->path.list", compact("list", "typeList"));
     }
@@ -88,12 +76,11 @@ class ReptileController extends Controller
      */
     public function create()
     {
-        $userId = Auth::id();
-        $typeList = $this->type->listByUserId($userId)->pluck('name', 'id');
-        $fatherReptileList = $this->reptile->listByUserId($userId)->conditionGender('m')->pluck('name', 'id');
-        $matherReptileList = $this->reptile->listByUserId($userId)->conditionGender('f')->pluck('name', 'id');
+        $typeList = $this->typeRepository->getTypePluck();
+        $maleReptilePluck = $this->reptileRepository->getMaleReptilePluck();
+        $femaleReptilePluck = $this->reptileRepository->getFemaleReptilePluck();
 
-        return view($this->path . ".create", compact('typeList', 'fatherReptileList', 'matherReptileList'));
+        return view($this->path . ".create", compact('typeList', 'maleReptilePluck', 'femaleReptilePluck'));
     }
 
     /**
@@ -107,7 +94,7 @@ class ReptileController extends Controller
         $validated = $request->validated();
         $image = $request->file('reptile_image', null);
 
-        $reptile = $this->reptile->create([
+        $reptile = $this->reptileRepository->create([
             'user_id' => Auth::id(),
             'type_id' => $validated['type_id'],
             'father_id' => $request->input('father_id'),
@@ -120,8 +107,8 @@ class ReptileController extends Controller
             'comment' => $request->input('comment')
         ]);
 
-        if(isset($image)){
-            $this->reptileImage->create([
+        if (isset($image)) {
+            $this->reptileImageRepository->create([
                 'reptile_id' => $reptile['id'],
                 'path' => $this->uploadImage($image)
             ]);
@@ -138,10 +125,10 @@ class ReptileController extends Controller
      */
     public function show(Reptile $reptile)
     {
-        $typeName = $this->type->where('id', $reptile['type_id'])->first()['name'];
-        $fatherName = $this->reptile->where('id', $reptile['father_id'])->first()['name'] ?? '미확인';
-        $matherName = $this->reptile->where('id', $reptile['mather_id'])->first()['name'] ?? '미확인';
-        $image = $this->reptileImage->where('reptile_id', $reptile['id'])->first();
+        $typeName = $this->typeRepository->getOne($reptile['type_id'])['name'];
+        $fatherName = $this->reptileRepository->getOne($reptile['father_id'])['name'] ?? '미확인';
+        $matherName = $this->reptileRepository->getOne($reptile['mather_id'])['name'] ?? '미확인';
+        $image = $this->reptileImageRepository->getOne($reptile['id']);
 
         return view("$this->path.show",
             compact('reptile', 'typeName', 'fatherName', 'matherName', 'image')
@@ -156,28 +143,17 @@ class ReptileController extends Controller
      */
     public function edit(Reptile $reptile)
     {
-        $userId = Auth::id();
-        $typeList = $this->type->listByUserId($userId)->pluck('name', 'id');
-        $fatherReptileList = $this->reptile
-            ->listByUserId($userId)
-            ->conditionGender('m')
-            ->where('type_id', $reptile['type_id'])
-            ->pluck('name', 'id');
-        $matherReptileList = $this->reptile
-            ->listByUserId($userId)
-            ->conditionGender('f')
-            ->where('type_id', $reptile['type_id'])
-            ->pluck('name', 'id');
-        $reptileKey= $this->reptile
-            ->select('gender as gender_key', 'status as status_key')
-            ->where('id', $reptile->id)->first();
-        $image = $this->reptileImage->where('reptile_id', $reptile['id'])->first();
+        $typeList = $this->typeRepository->getTypePluck();
+        $maleReptilePluck = $this->reptileRepository->getMaleReptilePluck($reptile['type_id']);
+        $femaleReptilePluck = $this->reptileRepository->getFemaleReptilePluck($reptile['type_id']);
+        $image = $this->reptileImageRepository->getOne($reptile['id']);
 
+        $reptileKey = $this->reptileRepository->getOne($reptile['id'], 'gender as gender_key, status as status_key');
         $genderKey = $reptileKey ['gender_key'];
-        $statusKey =  $reptileKey ['status_key'];
+        $statusKey = $reptileKey ['status_key'];
 
         return view("$this->path.edit",
-            compact('typeList', 'fatherReptileList', 'matherReptileList', 'reptile', 'genderKey', 'statusKey', 'image'));
+            compact('typeList', 'maleReptilePluck', 'femaleReptilePluck', 'reptile', 'genderKey', 'statusKey', 'image'));
     }
 
     /**
@@ -189,20 +165,18 @@ class ReptileController extends Controller
      */
     public function update(ReptileRequest $request, $id)
     {
-        $oldReptileImage = $this->reptileImage->where('reptile_id', $id)->first();
+        $oldReptileImage = $this->reptileImageRepository->getOne($id);
 
-        if($request->input('modified', 'false') == 'true'){
+        if ($request->input('modified', 'false') === 'true') {
             $image = $request->file('reptile_image', null);
             if (isset($image)) {
                 if (isset($oldReptileImage)) {
                     $this->deleteImage($oldReptileImage->path);
-                    $this->reptileImage->
-                    where('reptile_id', $id)
-                        ->update([
-                            'path' => $this->uploadImage($image)
-                        ]);
+                    $this->reptileImageRepository->update($id, [
+                        'path' => $this->uploadImage($image)
+                    ]);
                 } else {
-                    $this->reptileImage->create([
+                    $this->reptileImageRepository->update($id, [
                         'reptile_id' => $id,
                         'path' => $this->uploadImage($image)
                     ]);
@@ -211,34 +185,29 @@ class ReptileController extends Controller
                 if (isset($oldReptileImage)) {
                     $this->deleteImage($oldReptileImage->path);
                 }
-                $this->reptileImage->where('reptile_id', $id)->delete();
+                $this->reptileImageRepository->delete($id);
             }
         }
 
         $validated = $request->validated();
         $userId = Auth::id();
-        $oldReptile = $this->reptile->select('status as status_key')->where('id', $id)->first();
+        $oldReptile = $this->reptileRepository->getOne($id, 'status as status_key');
 
-        if(($oldReptile['status_key'] === 'd' || $oldReptile['status_key'] === 's') &&
-            ($validated['status'] !== 'd' && $validated['status'] !== 's')){
-            $this->blockReptileHistory
-                ->where('user_id', $userId)
-                ->where('reptile_id', $id)
-                ->delete();
-
-        } else if(
+        if (($oldReptile['status_key'] === 'd' || $oldReptile['status_key'] === 's') &&
+            ($validated['status'] !== 'd' && $validated['status'] !== 's')) {
+            $this->blockReptileHistoryRepository->delete($id);
+        } else if (
             ($oldReptile['status_key'] !== 'd' && $oldReptile['status_key'] !== 's') &&
-            ($validated['status'] === 'd' || $validated['status'] === 's')){
-            $this->blockReptileHistory->create([
-               'user_id' => $userId,
-               'reptile_id' => $id
+            ($validated['status'] === 'd' || $validated['status'] === 's')
+        ) {
+            $this->blockReptileHistoryRepository->create([
+                'user_id' => $userId,
+                'reptile_id' => $id
             ]);
         }
 
-        $this->reptile
-            ->where('id', $id)
-            ->where('user_id', $userId)
-            ->update([
+        $this->reptileRepository->update($id,
+            [
                 'type_id' => $validated['type_id'],
                 'father_id' => $request->input('father_id'),
                 'mather_id' => $request->input('mather_id'),
@@ -248,7 +217,8 @@ class ReptileController extends Controller
                 'morph' => $validated['morph'],
                 'birth' => $request->input('birth'),
                 'comment' => $request->input('comment')
-            ]);
+            ]
+        );
 
         return redirect()->route('reptile.show', $id)->with('message', '개체 정보를 수정했습니다.');
     }
@@ -261,12 +231,10 @@ class ReptileController extends Controller
      */
     public function destroy($id)
     {
-        $this->reptileModifyHistory->where('reptile_id',$id)->delete();
-
-        if (!empty($this->mating->where('father_id', $id)->first()) || !empty($this->mating->where('mather_id', $id)->first())) {
-            return redirect()->route('reptile.show', $id)->with('message', '삭제할 수 없습니다, 해당 정보를 사용한 메이팅 정보가 존재합니다.');
+        if ($this->matingRepository->belongReptile($id)) {
+            return redirect()->route('reptile.show', $id)->with('message', '삭제할 수 없습니다, 해당 개체가 한 메이팅 정보가 존재합니다.');
         } else {
-            $this->reptile->where('id', $id)->delete();
+            $this->reptileRepository->delete($id);
             return redirect()->route('reptile.index')->with('message', '해당 정보를 삭제했습니다.');
         }
     }

@@ -11,7 +11,7 @@ use Livewire\Component;
 class MatingSearchList extends Component
 {
     // 뷰 property
-    public $typeList, $fatherReptileList, $matherReptileList, $matingList;
+    public $typeList, $maleReptilePluck, $femaleReptilePluck, $matingList;
     // 컴포넌트 property
     public $matherId, $fatherId, $typeId, $fatherSearchString, $matherSearchString;
     // 수정일 때 사용 property
@@ -22,18 +22,18 @@ class MatingSearchList extends Component
             $this->typeId = $typeId;
             $this->setMatingList();
         }
-        $this->fatherReptileList = $this->setReptileList('m', $this->fatherSearchString);
-        $this->matherReptileList = $this->setReptileList('f', $this->matherSearchString);
+        $this->maleReptilePluck = $this->setReptileList('m', $this->fatherSearchString);
+        $this->femaleReptilePluck = $this->setReptileList('f', $this->matherSearchString);
     }
 
     public function fatherSearch($searchString){
         $this->fatherSearchString = $searchString;
-        $this->fatherReptileList = $this->setReptileList('m', $searchString);
+        $this->maleReptilePluck = $this->setReptileList('m', $searchString);
     }
 
     public function matherSearch($searchString){
         $this->matherSearchString = $searchString;
-        $this->matherReptileList = $this->setReptileList('f', $searchString);
+        $this->femaleReptilePluck = $this->setReptileList('f', $searchString);
     }
 
     private function setReptileList($gender, $searchString = ""){

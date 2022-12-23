@@ -10,7 +10,11 @@
         ])
 
         @include('parts.table-select', [
-            'list' => $hatchingList,
+            'list' => [
+                'y' => '해칭완료',
+                'n' => '해칭실패',
+                'w' => '대기'
+            ],
             'name' => 'hatching',
             'default' => '전체',
             'label' => '부화여부'

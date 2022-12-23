@@ -12,8 +12,8 @@
 
                 <livewire:reptile-search-list
                     :typeList="$typeList"
-                    :fatherReptileList="$fatherReptileList"
-                    :matherReptileList="$matherReptileList"
+                    :maleReptilePluck="$maleReptilePluck"
+                    :femaleReptilePluck="$femaleReptilePluck"
                 />
 
                 @include('parts.input', [

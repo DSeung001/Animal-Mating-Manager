@@ -13,7 +13,7 @@
             <div class="col-start-1 col-end-2 mr-2">
                 @include('parts.select-search',[
                     'title' => "부 개체",
-                    'list' => $fatherReptileList,
+                    'list' => $maleReptilePluck,
                     'identity' => 'father_id',
                     'default' => '전체',
                     'selectListener' => 'fatherSelect',
@@ -24,7 +24,7 @@
             <div class="col-start-2 col-end-3 ml-2">
                 @include('parts.select-search', [
                     'title' => '모 개체',
-                    'list' => $matherReptileList,
+                    'list' => $femaleReptilePluck,
                     'identity' => 'mather_id',
                     'default' => '전체',
                     'selectListener' => 'matherSelect',
