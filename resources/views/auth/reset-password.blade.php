@@ -28,7 +28,7 @@
 
             <div class="flex items-center justify-end mt-4">
                 <x-jet-button>
-                    {{ __('Reset Password') }}
+                    {{ __('비밀번호 초기화') }}
                 </x-jet-button>
             </div>
         </form>

@@ -5,12 +5,12 @@
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
-            {{ __('Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
+            계속하기 전에 이메일로 보내드린 링크를 클릭하여 이메일 주소를 확인해 주시겠습니까? 이메일을 받지 못하셨다면 기꺼이 다른 이메일을 보내드리겠습니다.
         </div>
 
         @if (session('status') == 'verification-link-sent')
             <div class="mb-4 font-medium text-sm text-green-600">
-                {{ __('A new verification link has been sent to the email address you provided in your profile settings.') }}
+                프로필 설정에서 제공한 이메일 주소로 새 확인 링크가 전송되었습니다.
             </div>
         @endif
 
@@ -20,7 +20,7 @@
 
                 <div>
                     <x-jet-button type="submit">
-                        {{ __('Resend Verification Email') }}
+                        확인 이메일을 다시 보냈습니다
                     </x-jet-button>
                 </div>
             </form>
@@ -30,13 +30,14 @@
                     href="{{ route('profile.show') }}"
                     class="underline text-sm text-gray-600 hover:text-gray-900"
                 >
-                    {{ __('Edit Profile') }}</a>
+                    프로필 수정
+                </a>
 
                 <form method="POST" action="{{ route('logout') }}" class="inline">
                     @csrf
 
                     <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900 ml-2">
-                        {{ __('Log Out') }}
+                        {{ __('로그아웃') }}
                     </button>
                 </form>
             </div>

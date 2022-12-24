@@ -1,10 +1,10 @@
 <x-jet-form-section submit="updatePassword">
     <x-slot name="title">
-        {{ __('Update Password') }}
+        비밀번호 업데이트
     </x-slot>
 
     <x-slot name="description">
-        {{ __('Ensure your account is using a long, random password to stay secure.') }}
+        계정의 비밀번호를 확인합니다.
     </x-slot>
 
     <x-slot name="form">
@@ -29,11 +29,11 @@
 
     <x-slot name="actions">
         <x-jet-action-message class="mr-3" on="saved">
-            {{ __('Saved.') }}
+            저장되었습니다.
         </x-jet-action-message>
 
         <x-jet-button>
-            {{ __('Save') }}
+            저장
         </x-jet-button>
     </x-slot>
 </x-jet-form-section>

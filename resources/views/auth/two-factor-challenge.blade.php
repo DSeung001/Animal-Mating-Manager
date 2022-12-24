@@ -6,11 +6,11 @@
 
         <div x-data="{ recovery: false }">
             <div class="mb-4 text-sm text-gray-600" x-show="! recovery">
-                {{ __('Please confirm access to your account by entering the authentication code provided by your authenticator application.') }}
+                인증자 앱에서 제공한 인증 코드를 입력하여 계정에 대한 액세스를 확인하십시오.
             </div>
 
             <div class="mb-4 text-sm text-gray-600" x-show="recovery">
-                {{ __('Please confirm access to your account by entering one of your emergency recovery codes.') }}
+                비상 복구 코드 중 하나를 입력하여 계정에 대한 액세스를 확인하십시오.
             </div>
 
             <x-jet-validation-errors class="mb-4" />
@@ -35,7 +35,7 @@
                                         recovery = true;
                                         $nextTick(() => { $refs.recovery_code.focus() })
                                     ">
-                        {{ __('Use a recovery code') }}
+                        복구 코드 사용
                     </button>
 
                     <button type="button" class="text-sm text-gray-600 hover:text-gray-900 underline cursor-pointer"
@@ -44,11 +44,11 @@
                                         recovery = false;
                                         $nextTick(() => { $refs.code.focus() })
                                     ">
-                        {{ __('Use an authentication code') }}
+                        인증 코드 사용
                     </button>
 
                     <x-jet-button class="ml-4">
-                        {{ __('Log in') }}
+                        로그인
                     </x-jet-button>
                 </div>
             </form>

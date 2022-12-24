@@ -11,7 +11,7 @@
                 </svg>
                 <span class="sr-only">Info</span>
                 <div>
-                    <span class="font-medium">아래 요구사항을 확인해주세요.</span>
+                    <span class="font-medium">아래 요구사항을 확인하십시오.</span>
                     <ul class="mt-1.5 ml-4 text-blue-700 list-disc list-inside">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>

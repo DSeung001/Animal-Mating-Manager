@@ -23,14 +23,14 @@ class ReptileRequest extends FormRequest
     public function messages()
     {
         return [
-            "type_id.required" => "종을 선택해주세요.",
-            "name.required" => "개체 이름을 입력해주세요.",
+            "type_id.required" => "종을 선택하십시오.",
+            "name.required" => "개체 이름을 입력하십시오.",
             "name.max" => "개체 이름은 최대 128자까지 입력 가능합니다.",
-            "gender.required" => "개체 성별를 선택해주세요.",
+            "gender.required" => "개체 성별를 선택하십시오.",
             "gender.required_with" => "유효하지 않은 성별 입력입니다.",
-            "status.required" => "개체의 현재 상태를 선택해주세요.",
+            "status.required" => "개체의 현재 상태를 선택하십시오.",
             "status.required_with" => "유효하지 않은 상태re 입력입니다.",
-            "morph.required" => "개체 모프를 입력해주세요.",
+            "morph.required" => "개체 모프를 입력하십시오.",
             "morph.max" => "개체 모프는 최대 128자까지 입력 가능합니다.",
         ];
     }

@@ -22,9 +22,9 @@ class EggRequest extends FormRequest
     public function messages()
     {
         return [
-            "type_id.required" => "종을 선택해주세요.",
-            "mating_id.required" => "메이팅을 선택해주세요.",
-            "spawn_at.required" => "산란일을 선택해주세요."
+            "type_id.required" => "종을 선택하십시오.",
+            "mating_id.required" => "메이팅을 선택하십시오.",
+            "spawn_at.required" => "산란일을 선택하십시오."
         ];
     }
 }
