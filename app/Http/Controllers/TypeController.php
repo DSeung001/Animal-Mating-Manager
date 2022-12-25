@@ -30,7 +30,7 @@ class TypeController extends Controller
      */
     public function index(Request $request)
     {
-        $name = $request->input('name', '');
+        $name = $request->input('name', null);
         $paginate = $request->input('paginate', 10);
 
         $list = $this->typeRepository->list([

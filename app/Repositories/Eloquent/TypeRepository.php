@@ -20,8 +20,8 @@ class TypeRepository extends BaseRepository implements TypeRepositoryInterface
             ->where('user_id', Auth::id());
 
         foreach ($condition as $key => $value) {
-            if(isset($value)){
-                $list = $list->where($key, $value);
+            if (isset($value)) {
+                $list = $list->where($key, 'like', "%".$value."%");
             }
         }
 

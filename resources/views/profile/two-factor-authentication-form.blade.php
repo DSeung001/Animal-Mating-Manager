@@ -66,6 +66,10 @@
                     <p class="font-semibold">
                         복구 코드를 암호 관리자에 저장합니다. 이중 보안인증을 설치한 디바이스를 손실할 경우 계정에 대한 액세스를 복구하는 데 사용할 수 있습니다.
                     </p>
+                    <br/>
+                    <p class="font-semibold">
+                        아래 출력된 복구 코드 중 하나를 입력하면 됩니다.
+                    </p>
                 </div>
 
                 <div class="grid gap-1 max-w-xl mt-4 px-4 py-4 font-mono text-sm bg-gray-100 rounded-lg">
@@ -80,7 +84,7 @@
             @if (! $this->enabled)
                 <x-jet-confirms-password wire:then="enableTwoFactorAuthentication">
                     <x-jet-button type="button" wire:loading.attr="disabled">
-                        사용가능
+                        사용하기
                     </x-jet-button>
                 </x-jet-confirms-password>
             @else

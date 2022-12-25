@@ -46,25 +46,20 @@ class ReptileController extends Controller
      */
     public function index(Request $request)
     {
-        $name = $request->input('name', '');
+        $typeList = $this->typeRepository->getTypePluck();
+
+        $paginate = $request->input('paginate', 10);
+        $name = $request->input('name', null);
         $type = $request->input('type', null);
-        $morph = $request->input('morph', '');
-        $paginate = $request->input('paniate', 10);
+        $morph = $request->input('morph', null);
 
         // 부모 아이디로 링크 추가하기
         $list = $this->reptileRepository
             ->list([
                 'reptiles.name' => "%$name%",
-                'reptiles.morph' => "%$morph%"
+                'reptiles.morph' => "%$morph%",
+                'reptiles.type_id' => $type
             ], $paginate);
-
-        if (isset($type)) {
-            $list = $list->where('reptiles.type_id', $type);
-        }
-
-        $list = $list->setPaginate($paginate);
-
-        $typeList = $this->typeRepository->getTypePluck();
 
         return view("$this->path.list", compact("list", "typeList"));
     }

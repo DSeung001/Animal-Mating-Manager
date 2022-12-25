@@ -66,7 +66,6 @@ class MatingSearchList extends Component
                 matings.id AS id,
                 f_reptile.name AS father_name,
                 m_reptile.name AS mather_name,
-                matings.comment as comment,
                 mating_at,
                 matings.created_at AS created_at,
                 matings.updated_at AS updated_at

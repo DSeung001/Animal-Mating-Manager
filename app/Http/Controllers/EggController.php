@@ -45,10 +45,10 @@ class EggController extends Controller
     {
         $typeList = $this->typeRepository->getTypePluck();
 
+        $paginate = $request->input('paginate', 10);
         $spawnAt = $request->input('spawn_at', null);
         $hatching = $request->input('hatching', null);
         $type = $request->input('type', null);
-        $paginate = $request->input('paniate', 10);
 
         $list = $this->eggRepository->list([
                 'spawn_at' => $spawnAt,

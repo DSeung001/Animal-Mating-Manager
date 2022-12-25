@@ -16,7 +16,7 @@ class ReptileRepository extends BaseRepository implements ReptileRepositoryInter
 
     public function list($condition = [], $pagination = 10)
     {
-        $list = $this->reptile
+        $list = $this->model
             ->select(
                 'reptiles.id as id',
                 DB::raw("
@@ -40,6 +40,9 @@ class ReptileRepository extends BaseRepository implements ReptileRepositoryInter
 
         foreach ($condition as $key => $value) {
             if (isset($value)) {
+                if($key == 'reptiles.type_id'){
+                    $list = $list->where($key, $value);
+                }
                 $list = $list->where($key, 'like', $value);
             }
         }

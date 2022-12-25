@@ -6,7 +6,7 @@
 
         <div x-data="{ recovery: false }">
             <div class="mb-4 text-sm text-gray-600" x-show="! recovery">
-                인증자 앱에서 제공한 인증 코드를 입력하여 계정에 대한 액세스를 확인하십시오.
+                인증앱에서 제공한 인증 코드를 입력하여 계정에 대한 액세스를 확인하십시오.
             </div>
 
             <div class="mb-4 text-sm text-gray-600" x-show="recovery">

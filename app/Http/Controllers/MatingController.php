@@ -44,10 +44,10 @@ class MatingController extends Controller
      */
     public function index(Request $request)
     {
-        $paginate = $request->input('paniate', 10);
-        $fatherName = $request->input('father_name');
-        $matherName = $request->input('mather_name');
-        $matingAt = $request->input('mating_at');
+        $paginate = $request->input('paginate', 10);
+        $fatherName = $request->input('father_name', null);
+        $matherName = $request->input('mather_name', null);
+        $matingAt = $request->input('mating_at', null);
 
         $list = $this->matingRepository->list([
             'f_reptile.name' => "%$fatherName%",

@@ -38,8 +38,8 @@
     @include('parts.list', [
          'list' => $matingList,
          'title' => '메이팅 이력',
-         'headers' => ['부', '모', '설명', '메이팅일'],
-         'datas' => ['father_name', 'mather_name', 'comment', 'mating_at'],
+         'headers' => ['부', '모', '메이팅일'],
+         'datas' => ['father_name', 'mather_name', 'mating_at'],
          'name' => 'mating_id',
          'radioColumn' => 'id',
          'radioSelectedId' => $matingIdSelected,
