@@ -49,27 +49,7 @@ class EggRepository extends BaseRepository implements EggRepositoryInterface
 
     public function belongMating($matingId)
     {
-        return $this->model->where('mating_id', $id)->first() !== null;
-    }
-
-    public function getFatherNameByMatingId($matingId)
-    {
-        $this->model->select('reptiles.name as name')
-            ->where('user_id', Auth::id())
-            ->join('matings', function ($join) use ($matingId) {
-                $join->on('matings.father_id', '=', 'reptiles.id')
-                    ->where('matings.id', '=', $matingId);
-            })->first();
-    }
-
-    public function getMatherNameByMatingId($matingId)
-    {
-        $this->model->select('reptiles.name as name')
-            ->where('user_id', Auth::id())
-            ->join('matings', function ($join) use ($matingId) {
-                $join->on('matings.,mather_id', '=', 'reptiles.id')
-                    ->where('matings.id', '=', $matingId);
-            })->first();
+        return $this->model->where('mating_id', $matingId)->first() !== null;
     }
 
     public function getHatchingScheduled()

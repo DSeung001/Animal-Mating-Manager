@@ -12,21 +12,6 @@ interface EggRepositoryInterface extends BaseRepositoryInterface{
     public function belongMating($matingId);
 
     /**
-     * 메이팅 아이디로 부개체 가져오기
-     * @param $matingId
-     * @return mixed
-     */
-    public function getFatherNameByMatingId($matingId);
-
-
-    /**
-     * 메이팅 아이디로 모개체 가져오기
-     * @param $matingId
-     * @return mixed
-     */
-    public function getMatherNameByMatingId($matingId);
-
-    /**
      * 부화 예정일 리스트 가져오기
      * @return mixed
      */

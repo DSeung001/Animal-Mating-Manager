@@ -97,12 +97,13 @@ class EggController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Egg $egg)
+    public function show($id)
     {
-        $typeName = $this->typeRepository->getOne($egg['type_id'])['name'];
-        $fatherName = $this->reptileRepository->getFatherName($egg['mating_id'])['name'] ?? '미확인';
-        $matherName = $this->reptileRepository->getMatherName($egg['mating_id'])['name'] ?? '미확인';
+        $egg = $this->eggRepository->getOne($id);
         $mating = $this->matingRepository->getOne($egg['mating_id']);
+        $typeName = $this->typeRepository->getOne($egg['type_id'])['name'];
+        $matherName = $this->reptileRepository->getOne($mating['mather_id'])['name'] ?? '미확인';
+        $fatherName = $this->reptileRepository->getOne($mating['father_id'])['name'] ?? '미확인';
 
         return view("$this->path.show", compact('egg', 'typeName', 'fatherName', 'matherName', 'mating'));
     }
