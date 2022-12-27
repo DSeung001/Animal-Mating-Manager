@@ -87,7 +87,7 @@ class ReptileController extends Controller
     public function store(ReptileRequest $request)
     {
         $validated = $request->validated();
-        $image = $request->file('reptile_image', null);
+        $image = $validated['reptile_image'];
 
         $reptile = $this->reptileRepository->create([
             'user_id' => Auth::id(),
@@ -160,10 +160,11 @@ class ReptileController extends Controller
      */
     public function update(ReptileRequest $request, $id)
     {
+        $validated = $request->validated();
         $oldReptileImage = $this->reptileImageRepository->getOne($id);
 
         if ($request->input('modified', 'false') === 'true') {
-            $image = $request->file('reptile_image', null);
+            $image = $validated['reptile_image'];
             if (isset($image)) {
                 if (isset($oldReptileImage)) {
                     $this->deleteImage($oldReptileImage->path);
@@ -184,7 +185,6 @@ class ReptileController extends Controller
             }
         }
 
-        $validated = $request->validated();
         $userId = Auth::id();
         $oldReptile = $this->reptileRepository->getOne($id, 'status as status_key');
 

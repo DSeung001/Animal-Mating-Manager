@@ -1,7 +1,12 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <x-jet-authentication-card-logo />
+            <x-jet-authentication-card-logo/>
+            <p class="text-center">
+                <b>RMMW</b>은 개체와 알을 관리하는 데 도움을 주고자 만들어진 사이트입니다.
+                <br/>
+                아직 베타버전이므로 많은 관심 부탁드립니다.
+            </p>
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />

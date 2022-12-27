@@ -11,7 +11,7 @@
                 또는 클릭해서 업로드하십시오.
             </p>
             <img class="target-image {{isset($value) ? '' : 'hidden'}}" src="{{isset($value) ? asset($value) : ''}}" alt="">
-            <input name="reptile_image" type="file" hidden accept="image/*">
+            <input name="reptile_image" type="file" hidden accept="image/png, image/jpg, image/jpeg, image/gif, image/svg">
             <input class="modified" name="modified" type="hidden" value="false">
         </div>
     </div>

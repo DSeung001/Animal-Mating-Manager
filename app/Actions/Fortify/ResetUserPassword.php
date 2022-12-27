@@ -19,9 +19,19 @@ class ResetUserPassword implements ResetsUserPasswords
      */
     public function reset($user, array $input)
     {
-        Validator::make($input, [
+        $rules = [
             'password' => $this->passwordRules(),
-        ])->validate();
+        ];
+
+        $messages = [
+            'password.required' => '비밀번호를 입력하십시오.',
+            'password.string' => '비밀번호의 형식이 옳지 않습니다.',
+            'password.max' => '비밀번호는 최대 64자입니다.',
+            'password.min' => '비밀번호는 최소 8자입니다.',
+            'password.confirmed' => '확인 비밀번호가 다릅니다.'
+        ];
+
+        Validator::make($input, $rules, $messages)->validate();
 
         $user->forceFill([
             'password' => Hash::make($input['password']),
