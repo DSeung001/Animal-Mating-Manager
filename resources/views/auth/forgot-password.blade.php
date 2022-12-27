@@ -37,7 +37,7 @@
 
             <div class="flex items-center justify-end mt-4">
                 <x-jet-button>
-                    {{ __('이메일로 비밀번호 초기화 링크 보내기') }}
+                    {{ __('이메일 보내기') }}
                 </x-jet-button>
             </div>
         </form>
