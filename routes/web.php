@@ -33,4 +33,8 @@ Route::middleware([
     Route::resource('mating', MatingController::class);
     Route::resource('reptile', ReptileController::class);
     Route::resource('type', TypeController::class);
+
+    Route::get('privacy-policy', function () {
+        return view('front.privacy-policy');
+    })->name('privacy-policy');
 });
