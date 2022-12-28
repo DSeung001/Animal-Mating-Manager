@@ -126,7 +126,7 @@ class ReptileRepository extends BaseRepository implements ReptileRepositoryInter
             ->where('reptiles.user_id', Auth::id())
             ->where('status', '!=', 'd')
             ->where('status', '!=', 's')
-            ->groupBy('types.id')
+            ->groupBy('types.name')
             ->get();
     }
 }
