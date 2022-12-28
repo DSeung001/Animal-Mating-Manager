@@ -26,7 +26,7 @@
 
             @include('parts.input', [
                'title'=>'메이팅 일시',
-               'name'=>'birth',
+               'name'=>'mating_at',
                'type'=>'date',
                'value' => $mating['mating_at'],
                'disabled'=> true
