@@ -18,7 +18,7 @@
 
         @stack('styles')
     </head>
-    <body class="font-sans antialiased h-full">
+    <body class="font-sans antialiased min-h-screen">
         <x-jet-banner />
 
         <div class="min-h-screen bg-gray-100">
