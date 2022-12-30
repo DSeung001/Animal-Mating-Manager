@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MatingController;
 use App\Http\Controllers\ReptileController;
+use App\Http\Controllers\TodoController;
 use App\Http\Controllers\TypeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EggController;
@@ -27,7 +28,12 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
+    Route::get('/', function () {
+       return redirect(url("todo"));
+    })->name('home');
+
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/todo', [TodoController::class, 'todo'])->name('todo');
 
     Route::resource('egg', EggController::class);
     Route::resource('mating', MatingController::class);

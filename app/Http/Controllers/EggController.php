@@ -4,16 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EggRequest;
 use App\Models\Egg;
-use App\Models\Mating;
-use App\Models\Reptile;
-use App\Models\Type;
 use App\Repositories\EggRepositoryInterface;
 use App\Repositories\MatingRepositoryInterface;
 use App\Repositories\ReptileRepositoryInterface;
 use App\Repositories\TypeRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class EggController extends Controller
 {
@@ -33,7 +30,6 @@ class EggController extends Controller
         $this->reptileRepository = $reptileRepository;
         $this->matingRepository = $matingRepository;
         $this->eggRepository = $eggRepository;
-        parent::__construct('egg');
     }
 
     /**
@@ -56,7 +52,7 @@ class EggController extends Controller
                 'eggs.type_id' => $type
             ], $paginate);
 
-        return view("$this->path.list", compact('list', 'typeList'));
+        return view("front.egg.list", compact('list', 'typeList'));
     }
 
     /**
@@ -70,7 +66,7 @@ class EggController extends Controller
         $femaleReptilePluck = $this->reptileRepository->getFemaleReptilePluck();
         $maleReptilePluck = $this->reptileRepository->getMaleReptilePluck();
 
-        return view($this->path . '.create',
+        return view("front.egg.create",
             compact('typeList', 'femaleReptilePluck', 'maleReptilePluck')
         );
     }
@@ -105,7 +101,7 @@ class EggController extends Controller
         $matherName = $this->reptileRepository->getOne($mating['mather_id'])['name'] ?? '미확인';
         $fatherName = $this->reptileRepository->getOne($mating['father_id'])['name'] ?? '미확인';
 
-        return view("$this->path.show", compact('egg', 'typeName', 'fatherName', 'matherName', 'mating'));
+        return view("front.egg.show", compact('egg', 'typeName', 'fatherName', 'matherName', 'mating'));
     }
 
     /**
@@ -124,7 +120,7 @@ class EggController extends Controller
             'matings.id' => $egg['mating_id']
         ], 'all');
 
-        return view("$this->path.edit", compact('egg', 'typeList', 'maleReptilePluck', 'femaleReptilePluck', 'matingList'));
+        return view("front.egg.edit", compact('egg', 'typeList', 'maleReptilePluck', 'femaleReptilePluck', 'matingList'));
     }
 
     /**

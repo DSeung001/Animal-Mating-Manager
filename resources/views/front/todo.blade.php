@@ -1,0 +1,12 @@
+<x-app-layout>
+    <x-slot name="header">
+        Todo
+    </x-slot>
+
+    <div class="px-4 mt-8 mb-4">
+        <div class="p-4 bg-white shadow m-auto max-w-[1280px]">
+
+        </div>
+    </div>
+
+</x-app-layout>

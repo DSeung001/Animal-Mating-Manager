@@ -11,6 +11,7 @@ use App\Repositories\ReptileImageRepositoryInterface;
 use App\Repositories\ReptileRepositoryInterface;
 use App\Repositories\TypeRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class ReptileController extends Controller
@@ -36,7 +37,6 @@ class ReptileController extends Controller
         $this->matingRepository = $matingRepository;
         $this->blockReptileHistoryRepository = $blockReptileHistoryRepository;
         $this->reptileImageRepository = $reptileImageRepository;
-        parent::__construct('reptile');
     }
 
     /**
@@ -61,7 +61,7 @@ class ReptileController extends Controller
                 'reptiles.type_id' => $type
             ], $paginate);
 
-        return view("$this->path.list", compact("list", "typeList"));
+        return view("front.reptile.list", compact("list", "typeList"));
     }
 
     /**
@@ -75,7 +75,7 @@ class ReptileController extends Controller
         $maleReptilePluck = $this->reptileRepository->getMaleReptilePluck();
         $femaleReptilePluck = $this->reptileRepository->getFemaleReptilePluck();
 
-        return view($this->path . ".create", compact('typeList', 'maleReptilePluck', 'femaleReptilePluck'));
+        return view("front.reptile.create", compact('typeList', 'maleReptilePluck', 'femaleReptilePluck'));
     }
 
     /**
@@ -124,7 +124,7 @@ class ReptileController extends Controller
         $matherName = $this->reptileRepository->getOne($reptile['mather_id'])['name'] ?? '미확인';
         $image = $this->reptileImageRepository->getOne($reptile['id']);
 
-        return view("$this->path.show",
+        return view("front.reptile.show",
             compact('reptile', 'typeName', 'fatherName', 'matherName', 'image')
         );
     }
@@ -146,7 +146,7 @@ class ReptileController extends Controller
         $genderKey = $reptileKey ['gender_key'];
         $statusKey = $reptileKey ['status_key'];
 
-        return view("$this->path.edit",
+        return view("front.reptile.edit",
             compact('typeList', 'maleReptilePluck', 'femaleReptilePluck', 'reptile', 'genderKey', 'statusKey', 'image'));
     }
 

@@ -3,18 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MatingRequest;
-use App\Models\Egg;
 use App\Models\Mating;
-use App\Models\Reptile;
-use App\Models\Type;
 use App\Repositories\EggRepositoryInterface;
-use App\Repositories\Eloquent\ReptileRepository;
 use App\Repositories\MatingRepositoryInterface;
 use App\Repositories\ReptileRepositoryInterface;
 use App\Repositories\TypeRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class MatingController extends Controller
 {
@@ -34,7 +30,6 @@ class MatingController extends Controller
         $this->reptileRepository = $reptileRepository;
         $this->matingRepository = $matingRepository;
         $this->eggRepository = $eggRepository;
-        parent::__construct('mating');
     }
 
     /**
@@ -55,7 +50,7 @@ class MatingController extends Controller
             'mating_at' => $matingAt,
         ], $paginate);
 
-        return view("$this->path.list", compact("list"));
+        return view("front.mating.list", compact("list"));
     }
 
     /**
@@ -69,7 +64,7 @@ class MatingController extends Controller
         $femaleReptilePluck = $this->reptileRepository->getFemaleReptilePluck();
         $maleReptilePluck = $this->reptileRepository->getMaleReptilePluck();
 
-        return view($this->path.".create", compact('typeList', 'maleReptilePluck', 'femaleReptilePluck'));
+        return view("front.mating.create", compact('typeList', 'maleReptilePluck', 'femaleReptilePluck'));
     }
 
     /**
@@ -100,7 +95,7 @@ class MatingController extends Controller
         $fatherName = $this->reptileRepository->getOne($mating['father_id'])['name'] ?? '미확인';
         $matherName = $this->reptileRepository->getOne($mating['mather_id'])['name'] ?? '미확인';
 
-        return view("$this->path.show", compact('mating', 'typeName', 'fatherName', 'matherName'));
+        return view("front.mating.show", compact('mating', 'typeName', 'fatherName', 'matherName'));
     }
 
     /**
@@ -115,7 +110,7 @@ class MatingController extends Controller
         $femaleReptilePluck = $this->reptileRepository->getFemaleReptilePluck();
         $maleReptilePluck = $this->reptileRepository->getMaleReptilePluck();
 
-        return view("$this->path.edit", compact('mating', 'typeList', 'femaleReptilePluck',  'maleReptilePluck'));
+        return view("front.mating.edit", compact('mating', 'typeList', 'femaleReptilePluck',  'maleReptilePluck'));
     }
 
     /**

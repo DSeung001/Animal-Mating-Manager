@@ -60,6 +60,6 @@ class DashboardController extends Controller
             }
         }
 
-        return view('dashboard', compact('hatchingScheduled', 'allReptileChartCategories', 'allReptileChart', 'typeChart'));
+        return view('front.dashboard', compact('hatchingScheduled', 'allReptileChartCategories', 'allReptileChart', 'typeChart'));
     }
 }

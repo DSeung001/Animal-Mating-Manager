@@ -7,6 +7,7 @@ use App\Models\Type;
 use App\Repositories\ReptileRepositoryInterface;
 use App\Repositories\TypeRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class TypeController extends Controller
@@ -20,7 +21,6 @@ class TypeController extends Controller
     {
         $this->typeRepository = $typeRepository;
         $this->reptileRepository = $reptileRepository;
-        parent::__construct('type');
     }
 
     /**
@@ -37,7 +37,7 @@ class TypeController extends Controller
             'name' => $name
         ], $paginate);
 
-        return view("$this->path.list", compact("list"));
+        return view("front.type.list", compact("list"));
     }
 
     /**
@@ -47,7 +47,7 @@ class TypeController extends Controller
      */
     public function create()
     {
-        return view("$this->path.create");
+        return view("front.type.create");
     }
 
     /**
@@ -74,7 +74,7 @@ class TypeController extends Controller
      */
     public function show(Type $type)
     {
-        return view("$this->path.show", compact('type'));
+        return view("front.type.show", compact('type'));
     }
 
     /**
@@ -85,7 +85,7 @@ class TypeController extends Controller
      */
     public function edit(Type $type)
     {
-        return view("$this->path.edit", compact('type'));
+        return view("front.type.edit", compact('type'));
     }
 
     /**
