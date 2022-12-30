@@ -33,7 +33,7 @@ Route::middleware([
     })->name('home');
 
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-    Route::get('/todo', [TodoController::class, 'todo'])->name('todo');
+    Route::resource('todo', TodoController::class);
 
     Route::resource('egg', EggController::class);
     Route::resource('mating', MatingController::class);
