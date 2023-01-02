@@ -16,6 +16,7 @@ class MatingRequest extends FormRequest
             "father_id" => "required",
             "mather_id" => "required",
             "mating_at" => "required|date",
+            "comment" => "max:512",
         ];
     }
 
@@ -27,6 +28,7 @@ class MatingRequest extends FormRequest
             "mather_id.required" => "모 개체를 선택하십시오.",
             "mating_at.required" => "메이팅일을 선택하십시오.",
             "mating_at.date" => "메이팅일이 유효 타입이 아닙니다.",
+            "comment.max" => "설명은 최대 512자입니다."
         ];
     }
 }

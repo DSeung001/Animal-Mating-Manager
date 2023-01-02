@@ -1,4 +1,4 @@
-<footer class="lg:mt-10 sticky top-[100vh]">
+<footer class="lg:mt-10 sticky top-[100vh] mt-5">
     <hr class="border-gray-200 sm:mx-auto dark:border-gray-700" />
     <div class="pb-4 rounded-lg shadow md:px-6 dark:bg-gray-900 pt-5 bg-white">
         <div class="max-w-7xl mx-auto sm:flex sm:items-center sm:justify-between ">

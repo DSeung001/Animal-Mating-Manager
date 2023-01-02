@@ -24,7 +24,7 @@
                 </a>
             </div>
 
-            @include('parts.todo-item')
+            @include('parts.todo-item', ['index' => 1])
 
         </div>
     </div>

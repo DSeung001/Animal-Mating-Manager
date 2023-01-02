@@ -12,18 +12,21 @@ class ReptileRequest extends FormRequest
     public function rules()
     {
         return [
+            "reptile_image" => "nullable|max:5120|mimes:jpg,png,jpeg,gif,svg",
             "type_id" => "required",
             "name" => "required|max:128",
             "gender" => "required|required_with:m,f,u",
             'status' => "required|required_with:g,i,o,s,d",
             "morph" => "required|max:128",
-            "reptile_image" => "nullable|max:5120|mimes:jpg,png,jpeg,gif,svg"
+            "comment" => "max:512",
         ];
     }
 
     public function messages()
     {
         return [
+            "reptile_image.max" => "이미지 사이즈는 최대 5MB 입니다.",
+            "reptile_image.mimes" => "허용하지 않는 이미지 확장자입니다.",
             "type_id.required" => "종을 선택하십시오.",
             "name.required" => "개체 이름을 입력하십시오.",
             "name.max" => "개체 이름은 최대 128자까지 입력 가능합니다.",
@@ -33,8 +36,7 @@ class ReptileRequest extends FormRequest
             "status.required_with" => "유효하지 않은 상태re 입력입니다.",
             "morph.required" => "개체 모프를 입력하십시오.",
             "morph.max" => "개체 모프는 최대 128자까지 입력 가능합니다.",
-            "reptile_image.max" => "이미지 사이즈는 최대 5MB 입니다.",
-            "reptile_image.mimes" => "허용하지 않는 이미지 확장자입니다."
+            "comment.max" => "설명은 최대 512자입니다.",
         ];
     }
 }

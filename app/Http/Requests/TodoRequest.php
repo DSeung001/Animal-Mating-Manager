@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
-class TypeRequest extends FormRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class TodoRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -13,8 +15,8 @@ class TypeRequest extends FormRequest
     {
         return [
             "name" => "required|max:128",
-            "hatch_day" => "required",
-            "comment" => "max:512",
+            "cycle" => "required|number",
+            "started_at" => "required",
         ];
     }
 
@@ -23,8 +25,9 @@ class TypeRequest extends FormRequest
         return [
             "name.required" => "종 명칭을 입력하십시오.",
             "name.max" => "128자 이내로 입력하십시오.",
-            "hatch_day" => "해칭 소요 기간을 입력하십시오",
-            "comment.max" => "설명은 최대 512자입니다."
+            "cycle.required" => "주기를 입력해주세요.",
+            "cycle.number" => "주기 형식이 숫자가 아닙니다.",
+            "started_at" => "시작일을 입력하십시오.",
         ];
     }
 }
