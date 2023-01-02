@@ -94,7 +94,7 @@ class TodoController extends Controller
     {
         $validated = $request->validated();
         $this->todoRepository->update($id, $validated);
-        return redirect()->route('todo.index', $id)->with('message', '할 일을 수정했습니다.');
+        return redirect()->route('todo.index')->with('message', '할 일을 수정했습니다.');
     }
 
     /**
@@ -105,6 +105,6 @@ class TodoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return redirect()->route('todo.index')->with('message', '할 일을 삭제할 예정입니다.');
     }
 }

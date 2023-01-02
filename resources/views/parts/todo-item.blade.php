@@ -15,7 +15,7 @@
                 <span class="px-2 font-semibold">
                     |
                 </span>
-                <span data-target="{{route('todo.destroy', $todo)}}">
+                <span data-modal-toggle="popup-delete-confirm" class="cursor-pointer" onclick="todoFormActionChange('{{route('todo.destroy', $todo)}}')">
                     <image src="{{asset('images/post_delete_black.svg')}}" class="w-5 h-5 inline-block"/>
                     일정 삭제하기
                 </span>
