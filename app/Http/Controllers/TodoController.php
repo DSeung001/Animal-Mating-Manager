@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TodoRequest;
 use App\Models\Todo;
 use App\Repositories\TodoRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -26,12 +27,13 @@ class TodoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-
-        $list = $this->todoRepository->list(date('Y-m-d'));
-        \Log::info($list);
-        return view('front.todo.index', compact('list'));
+        $now = $request->input('date', date('Y-m-d'));
+        $prevDay = route('todo.index', ['date' => Carbon::createFromDate($now)->subDay()->format('Y-m-d')]);
+        $nextDay = route('todo.index', ['date' => Carbon::createFromDate($now)->addDay()->format('Y-m-d')]);
+        $list = $this->todoRepository->list($now);
+        return view('front.todo.index', compact('list', 'now', 'prevDay', 'nextDay'));
     }
 
     /**
@@ -47,7 +49,7 @@ class TodoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(TodoRequest $request)
@@ -62,7 +64,7 @@ class TodoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -73,7 +75,7 @@ class TodoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Todo $todo
+     * @param Todo $todo
      * @return \Illuminate\Http\Response
      */
     public function edit(Todo $todo)
@@ -84,19 +86,21 @@ class TodoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TodoRequest $request, $id)
     {
-        //
+        $validated = $request->validated();
+        $this->todoRepository->update($id, $validated);
+        return redirect()->route('todo.index', $id)->with('message', '할 일을 수정했습니다.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

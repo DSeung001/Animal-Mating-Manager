@@ -39,7 +39,7 @@
             ])
 
             @include('parts.button-modify', [
-            'route' => route('mating.edit', $mating)
+                'route' => route('mating.edit', $mating)
             ])
             @include('parts.button-list',[
                 'route' => route('mating.index')

@@ -7,11 +7,11 @@
         <div class="px-4 m-auto max-w-[1280px]">
             <div class="ml-3 text-right">
                 <div class="text-2xl text-center font-bold">
-                    <a href="#">
+                    <a href="{{$prevDay}}">
                         <image src="{{asset('images/todo_left_arrow.svg')}}" class="inline-block"/>
                     </a>
-                    {{date('Y년 m월 d일')}}
-                    <a href="#">
+                    {{$now}}
+                    <a href="{{$nextDay}}">
                         <image src="{{asset('images/todo_right_arrow.svg')}}" class="inline-block"/>
                     </a>
                 </div>
@@ -24,8 +24,8 @@
                 </a>
             </div>
 
-            @foreach($list as $item)
-                @include('parts.todo-item', ['item' => $item])
+            @foreach($list as $todo)
+                @include('parts.todo-item', ['todo' => $todo])
             @endforeach
         </div>
     </div>
