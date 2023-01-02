@@ -11,10 +11,12 @@ use App\Repositories\Eloquent\EggRepository;
 use App\Repositories\Eloquent\MatingRepository;
 use App\Repositories\Eloquent\ReptileImageRepository;
 use App\Repositories\Eloquent\ReptileRepository;
+use App\Repositories\Eloquent\TodoRepository;
 use App\Repositories\Eloquent\TypeRepository;
 use App\Repositories\MatingRepositoryInterface;
 use App\Repositories\ReptileImageRepositoryInterface;
 use App\Repositories\ReptileRepositoryInterface;
+use App\Repositories\TodoRepositoryInterface;
 use App\Repositories\TypeRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
@@ -44,6 +46,7 @@ class RepositoryProvider extends ServiceProvider
         $this->app->singleton(MatingRepositoryInterface::class, MatingRepository::class);
         $this->app->singleton(BlockReptileHistoryRepositoryInterface::class, BlockReptileHistoryRepository::class);
         $this->app->singleton(ReptileImageRepositoryInterface::class, ReptileImageRepository::class);
+        $this->app->singleton(TodoRepositoryInterface::class, TodoRepository::class);
     }
 
     /**

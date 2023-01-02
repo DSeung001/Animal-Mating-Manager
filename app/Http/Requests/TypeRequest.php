@@ -13,7 +13,7 @@ class TypeRequest extends FormRequest
     {
         return [
             "name" => "required|max:128",
-            "hatch_day" => "required",
+            "hatch_day" => "required|integer",
             "comment" => "max:512",
         ];
     }
@@ -23,7 +23,8 @@ class TypeRequest extends FormRequest
         return [
             "name.required" => "종 명칭을 입력하십시오.",
             "name.max" => "128자 이내로 입력하십시오.",
-            "hatch_day" => "해칭 소요 기간을 입력하십시오",
+            "hatch_day.required" => "해칭 소요 기간을 입력하십시오",
+            "hatch_day.integer" => "해칭 소요 기간의 형식이 숫자가 아닙니다.",
             "comment.max" => "설명은 최대 512자입니다."
         ];
     }

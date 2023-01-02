@@ -24,8 +24,9 @@
                 </a>
             </div>
 
-            @include('parts.todo-item', ['index' => 1])
-
+            @foreach($list as $item)
+                @include('parts.todo-item', ['item' => $item])
+            @endforeach
         </div>
     </div>
 

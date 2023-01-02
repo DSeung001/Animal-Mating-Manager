@@ -15,8 +15,9 @@ class TodoRequest extends FormRequest
     {
         return [
             "name" => "required|max:128",
-            "cycle" => "required|number",
+            "cycle" => "required|integer",
             "started_at" => "required",
+            "comment" => "max:512"
         ];
     }
 
@@ -26,8 +27,9 @@ class TodoRequest extends FormRequest
             "name.required" => "종 명칭을 입력하십시오.",
             "name.max" => "128자 이내로 입력하십시오.",
             "cycle.required" => "주기를 입력해주세요.",
-            "cycle.number" => "주기 형식이 숫자가 아닙니다.",
+            "cycle.integer" => "주기 형식이 숫자가 아닙니다.",
             "started_at" => "시작일을 입력하십시오.",
+            "comment.max" => "설명은 최대 512자입니다."
         ];
     }
 }

@@ -60,7 +60,6 @@ class TypeController extends Controller
     {
         $validated = $request->validated();
         $validated['user_id'] = Auth::id();
-        $validated['comment'] = $request->input('comment');
         $this->typeRepository->create($validated);
 
         return redirect(route('type.index'))->with('message', '종을 등록했습니다.');
@@ -101,7 +100,7 @@ class TypeController extends Controller
         $this->typeRepository->update($id, [
             'name' => $validated['name'],
             'hatch_day' => $validated['hatch_day'],
-            'comment' => $request['comment']
+            'comment' => $validated['comment']
         ]);
         return redirect()->route('type.show', $id)->with('message', '종을 수정했습니다.');
     }

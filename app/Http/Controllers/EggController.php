@@ -80,7 +80,6 @@ class EggController extends Controller
     public function store(EggRequest $request)
     {
         $validated = $request->validated();
-        $validated['comment'] = $request->input('comment');
         $validated['user_id'] = Auth::id();
         $this->eggRepository->create($validated);
 
@@ -134,7 +133,6 @@ class EggController extends Controller
     {
         $validated = $request->validated();
         $validated['user_id'] = Auth::id();
-        $validated['comment'] = $request->input('comment');
         $validated['is_hatching'] = $request->input('is_hatching');
         $this->eggRepository->update($id, $validated);
 

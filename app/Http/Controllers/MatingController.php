@@ -77,7 +77,6 @@ class MatingController extends Controller
     {
         $validated = $request->validated();
         $validated['user_id'] = Auth::id();
-        $validated['comment'] = $request->input('comment');
         $this->matingRepository->create($validated);
 
         return redirect(route('mating.index'))->with('message', '메이팅을 등록했습니다.');
@@ -123,7 +122,6 @@ class MatingController extends Controller
     public function update(MatingRequest $request, $id)
     {
         $validated = $request->validated();
-        $validated['comment'] = $request->input('comment');
         $this->matingRepository->update($id, $validated);
 
         return redirect()->route('mating.show', $id)->with('message', '메이팅 정보를 수정했습니다.');
