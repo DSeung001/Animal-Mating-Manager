@@ -23,11 +23,10 @@ class TodoRepository extends BaseRepository implements TodoRepositoryInterface
                 "name",
                 "cycle",
                 "started_at",
-                "comment",
-                DB::raw("DATEDIFF('$date', started_at ) as date_diff")
+                "comment"
             )
             ->where('started_at', '<=', $date)
-            ->havingRaw('date_diff % todos.cycle = 0')
+            ->whereRaw(DB::raw("DATEDIFF('$date', started_at ) % todos.cycle = 0"))
             ->get();
     }
 }

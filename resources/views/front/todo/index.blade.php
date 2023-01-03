@@ -24,25 +24,38 @@
                 </a>
             </div>
 
-            @foreach($list as $todo)
+            @forelse($list as $todo)
                 @include('parts.todo-item', ['todo' => $todo])
-            @endforeach
+            @empty
+                <div class="mt-5">
+                    <div class="p-2.5 text-sm hadow-lg rounded-sm border border-gray-200 bg-white shadow text-gray-800">
+                        <div class="p-4">
+                            <div class="pb-3">
+                                <p class="text-lg font-semibold block pb-2">오늘 할 일은 없습니다!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            @endforelse
         </div>
     </div>
 
     @push('modals')
-        <form action="{{route('todo.destroy', $todo)}}" method="post">
-            @csrf
-            @method('delete')
-            @include('parts.modal-delete')
-        </form>
+        @if(isset($todo))
+            <form action="{{route('todo.destroy', $todo)}}" method="post">
+                @csrf
+                @method('delete')
+                @include('parts.modal-delete')
+            </form>
+        @endif
     @endpush
 
     @push('scripts')
         <script>
             function todoFormActionChange(route) {
                 document.getElementById("popup-delete-confirm").getElementsByTagName("form").action = route
-                console.log(document.getElementById("popup-delete-confirm").getElementsByTagName("form").action );
+                console.log(document.getElementById("popup-delete-confirm").getElementsByTagName("form").action);
             }
         </script>
     @endpush
