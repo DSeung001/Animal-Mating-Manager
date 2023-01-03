@@ -105,6 +105,7 @@ class TodoController extends Controller
      */
     public function destroy($id)
     {
-        return redirect()->route('todo.index')->with('message', '할 일을 삭제할 예정입니다.');
+        $this->todoRepository->delete($id);
+        return redirect()->route('todo.index')->with('message', '할 일을 삭제했습니다.');
     }
 }
