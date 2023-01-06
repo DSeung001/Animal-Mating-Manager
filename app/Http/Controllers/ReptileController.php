@@ -98,7 +98,7 @@ class ReptileController extends Controller
             'status' => $validated['status'],
             'morph' => $validated['morph'],
             'birth' => $request->input('birth'),
-            'comment' => $validated('comment')
+            'comment' => $validated['comment']
         ]);
 
         if (isset($validated['reptile_image'])) {
