@@ -14,12 +14,13 @@ class MatingSearchList extends Component
     public $typeList, $maleReptilePluck, $femaleReptilePluck, $matingList;
     // 컴포넌트 property
     public $matherId, $fatherId, $typeId, $fatherSearchString, $matherSearchString;
-    // 수정일 때 사용 property
+    // 추가 property
     public $typeSelected, $fatherSelected, $matherSelected, $matingIdSelected;
 
     public function typeChange($typeId){
         if(isset($typeId)){
             $this->typeId = $typeId;
+            $this->typeSelected = $typeId;
             $this->setMatingList();
         }
         $this->maleReptilePluck = $this->setReptileList('m', $this->fatherSearchString);
@@ -51,11 +52,13 @@ class MatingSearchList extends Component
 
     public function fatherSelect($id = null){
         $this->fatherId = $id;
+        $this->fatherSelected = $id;
         $this->setMatingList();
     }
 
     public function matherSelect($id = null){
         $this->matherId = $id;
+        $this->matherSelected = $id;
         $this->setMatingList();
     }
 

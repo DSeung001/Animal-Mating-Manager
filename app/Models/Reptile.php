@@ -58,30 +58,4 @@ class Reptile extends Model
     {
         return $query->where("name", "like", "%$searchString%");
     }
-
-    /**
-     * 성별이 암인 개체 리스트(pluck: id => name)
-     * @return mixed
-     */
-    public function getFemaleReptilePluck()
-    {
-        return $this
-            ->select('id', 'name')
-            ->listByUserId(Auth::id())
-            ->conditionGender('f')
-            ->pluck('name', 'id');
-    }
-
-    /**
-     * 성별이 수인 개체 리스트(pluck: id => name)
-     * @return mixed
-     */
-    public function getMaleReptilePluck()
-    {
-        return $this
-            ->select('id', 'name')
-            ->listByUserId(Auth::id())
-            ->conditionGender('m')
-            ->pluck('name', 'id');
-    }
 }

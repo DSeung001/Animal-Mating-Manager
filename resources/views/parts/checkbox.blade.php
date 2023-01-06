@@ -25,7 +25,7 @@
                 @endif
 
                 @if(isset($changeListener))
-                   wire:change="{{$changeListener}}($event.target.value)"
+                   wire:change="{{$changeListener}}({{$key}})"
                 @endif
             >
             <label for="inline-checkbox-{{$key}}"

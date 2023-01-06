@@ -2,10 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Mating;
 use App\Models\Reptile;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class ReptileSearchList extends Component
@@ -14,12 +12,13 @@ class ReptileSearchList extends Component
     public $typeList, $maleReptilePluck, $femaleReptilePluck, $isDefault = false;
     // 컴포넌트 property
     public  $typeId, $fatherSearchString, $matherSearchString;
-    // 수정일 때 사용 property
+    // 추가 property
     public $typeSelected, $fatherSelected, $matherSelected;
 
     public function typeChange($typeId){
         if(isset($typeId)){
             $this->typeId = $typeId;
+            $this->typeSelected = $typeId;
         }
         $this->maleReptilePluck = $this->setReptileList('m', $this->fatherSearchString);
         $this->femaleReptilePluck = $this->setReptileList('f', $this->matherSearchString);
