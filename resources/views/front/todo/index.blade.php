@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        Todo
+        오늘 할일
     </x-slot>
 
     <div class="px-4 mt-8 mb-4">
@@ -17,7 +17,7 @@
                 </div>
                 <a href="{{route("todo.create")}}">
                     <button type="button"
-                            class="p-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            class="p-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-3">
                         <image src="{{asset('images/post_write.svg')}}" class="w-5 h-5 inline-block"/>
                         일정 추가하기
                     </button>

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        {{ __('Egg Page') }}
+        알 상세
     </x-slot>
 
     <div class="px-4 mt-8 mb-4">

@@ -7,7 +7,7 @@
     @endpush
 
     <x-slot name="header">
-        {{ __('Dashboard') }}
+        대시보드
     </x-slot>
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-10 max-w-[1280px]">

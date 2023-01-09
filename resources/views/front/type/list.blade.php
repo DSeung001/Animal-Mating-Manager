@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        {{ __('Type List') }}
+        종류 목록
     </x-slot>
 
     <x-filter-table-menu action="{{route('type.index')}}">

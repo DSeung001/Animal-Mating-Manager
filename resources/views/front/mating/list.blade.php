@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        {{ __('Mating List') }}
+        메이팅 목록
     </x-slot>
 
     <x-filter-table-menu action="{{route('mating.index')}}">

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        {{ __('Egg List') }}
+        알 목록
     </x-slot>
 
     <x-filter-table-menu action="{{route('egg.index')}}">

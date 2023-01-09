@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        {{ __('Reptile Add') }}
+        개체 목록
     </x-slot>
 
     <x-filter-table-menu action="{{route('reptile.index')}}">

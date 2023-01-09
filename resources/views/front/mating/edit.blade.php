@@ -2,7 +2,7 @@
     <x-jet-validation-errors class="mb-4"/>
 
     <x-slot name="header">
-        {{ __('Mating Modify') }}
+        메이팅 수정
     </x-slot>
 
     <div class="px-4 mt-8 mb-4">

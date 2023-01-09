@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        {{ __('Type Add') }}
+        종류 추가
     </x-slot>
 
     <x-jet-validation-errors class="mb-4" />

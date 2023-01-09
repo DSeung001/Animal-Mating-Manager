@@ -17,15 +17,15 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <a class="align-middle flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 border-b border-gray-100 md:w-auto hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700" href="{{route('todo.index')}}">
-                        Todo
+                        오늘 할일
                     </a>
                     <a class="align-middle flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 border-b border-gray-100 md:w-auto hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700" href="{{route('dashboard')}}">
-                        Dashboard
+                        대시보드
                     </a>
-                    @include('parts.menu-dropdown', ['title' => 'Type', 'identity' => 'type', 'menu' => ['Type Add' => route('type.create'), 'Type List' => route('type.index')]])
-                    @include('parts.menu-dropdown', ['title' => 'Reptile', 'identity' => 'reptile', 'menu' => ['Reptile Add' => route('reptile.create'), 'Reptile List' => route('reptile.index')]])
-                    @include('parts.menu-dropdown', ['title' => 'Mating', 'identity' => 'mating', 'menu' => ['Mating Add' => route('mating.create'), 'Mating List' => route('mating.index')]])
-                    @include('parts.menu-dropdown', ['title' => 'Egg', 'identity' => 'Egg', 'menu' => ['Egg Add' => route('egg.create'), 'Egg List' => route('egg.index')]])
+                    @include('parts.menu-dropdown', ['title' => '종류', 'identity' => 'type', 'menu' => ['종류 추가' => route('type.create'), '종류 목록' => route('type.index')]])
+                    @include('parts.menu-dropdown', ['title' => '개체', 'identity' => 'reptile', 'menu' => ['개체 추가' => route('reptile.create'), '개체 목록' => route('reptile.index')]])
+                    @include('parts.menu-dropdown', ['title' => '메이팅', 'identity' => 'mating', 'menu' => ['메이팅 추가' => route('mating.create'), '메이팅 목록' => route('mating.index')]])
+                    @include('parts.menu-dropdown', ['title' => '알', 'identity' => 'Egg', 'menu' => ['알 추가' => route('egg.create'), '알 목록' => route('egg.index')]])
                 </div>
             </div>
 
@@ -149,34 +149,34 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-jet-responsive-nav-link href="{{ route('todo.index') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Todo') }}
+                오늘 할일
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+                대시보드
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('type.create') }}" :active="request()->routeIs('type.create')">
-                - Type Add
+                - 종류 추가
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('type.index') }}" :active="request()->routeIs('type.index')">
-                - Type List
+                - 종류 목록
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('reptile.create') }}" :active="request()->routeIs('reptile.create')">
-                - Reptile Add
+                - 개체 추가
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('reptile.index') }}" :active="request()->routeIs('reptile.index')">
-                - Reptile List
+                - 개체 목록
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('mating.create') }}" :active="request()->routeIs('mating.create')">
-                - Mating Add
+                - 메이팅 추가
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('mating.index') }}" :active="request()->routeIs('mating.index')">
-                - Mating List
+                - 메이팅 목록
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('egg.create') }}" :active="request()->routeIs('egg.create')">
-                - Egg Add
+                - 알 추가
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('egg.index') }}" :active="request()->routeIs('egg.index')">
-                - Egg List
+                - 알 목록
             </x-jet-responsive-nav-link>
 
         </div>

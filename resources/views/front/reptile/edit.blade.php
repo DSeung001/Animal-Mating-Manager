@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <x-slot name="header">
-        {{ __('Reptile Modify') }}
+        개체 수정
     </x-slot>
 
     <x-jet-validation-errors class="mb-4"/>

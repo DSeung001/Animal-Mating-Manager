@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <x-slot name="header">
-        {{ __('Reptile Add') }}
+        개체 추가
     </x-slot>
 
 

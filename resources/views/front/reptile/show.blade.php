@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        {{ __('Reptile Page') }}
+        개체 상세
     </x-slot>
 
     <div class="px-4 mt-8 mb-4">
