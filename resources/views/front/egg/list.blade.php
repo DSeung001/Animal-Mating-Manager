@@ -9,16 +9,18 @@
             'name' => 'spawn_at',
         ])
 
-        @include('parts.table-select', [
-            'list' => [
-                'y' => '해칭완료',
-                'n' => '해칭실패',
-                'w' => '대기'
-            ],
-            'name' => 'hatching',
-            'default' => '전체',
-            'label' => '부화여부'
-       ])
+        <div class="mobile-none">
+            @include('parts.table-select', [
+                'list' => [
+                    'y' => '해칭완료',
+                    'n' => '해칭실패',
+                    'w' => '대기'
+                ],
+                'name' => 'hatching',
+                'default' => '전체',
+                'label' => '부화여부'
+           ])
+        </div>
 
         @include('parts.table-select', [
             'list' => $typeList,
@@ -27,14 +29,16 @@
             'label' => '종류'
        ])
 
-        @include('parts.table-select', ['list' => [
-            '10' => '10',
-            '20' => '30',
-            '40' => '40',
-            'all' => 'ALL'],
-            'name' => 'paginate',
-            'label' => '페이징'
-        ])
+        <div class="mobile-none">
+            @include('parts.table-select', ['list' => [
+                '10' => '10',
+                '20' => '30',
+                '40' => '40',
+                'all' => 'ALL'],
+                'name' => 'paginate',
+                'label' => '페이징'
+            ])
+        </div>
     </x-filter-table-menu>
 
     @include('parts.list', [

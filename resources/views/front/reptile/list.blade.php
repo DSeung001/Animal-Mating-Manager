@@ -6,7 +6,7 @@
     <x-filter-table-menu action="{{route('reptile.index')}}">
 
         @include('parts.table-search', [
-            'placeholder' => '이름으로 검색.',
+            'placeholder' => '이름 검색.',
             'name' => 'name',
             'isRequired' => false,
             'label' => '이름'
@@ -19,21 +19,25 @@
             'label' => '종류'
        ])
 
-        @include('parts.table-search', [
+        <div class="mobile-none">
+            @include('parts.table-search', [
             'placeholder' => '모프로 검색.',
             'name' => 'morph',
             'isRequired' => false,
             'label' => '모프'
         ])
+        </div>
 
-        @include('parts.table-select', ['list' => [
-            '10' => '10',
-            '20' => '30',
-            '40' => '40',
-            'all' => 'ALL'],
-            'name' => 'paginate',
-            'label' => '페이징'
-        ])
+        <div class="mobile-none">
+            @include('parts.table-select', ['list' => [
+                '10' => '10',
+                '20' => '30',
+                '40' => '40',
+                'all' => 'ALL'],
+                'name' => 'paginate',
+                'label' => '페이징'
+            ])
+        </div>
     </x-filter-table-menu>
 
     @include('parts.list', [

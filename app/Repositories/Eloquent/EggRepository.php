@@ -32,6 +32,7 @@ class EggRepository extends BaseRepository implements EggRepositoryInterface
             ->leftJoin('matings', 'matings.id', '=', 'mating_id')
             ->leftJoin('reptiles AS f_reptile', 'f_reptile.id', '=', 'matings.father_id')
             ->leftJoin('reptiles AS m_reptile', 'm_reptile.id', '=', 'matings.mather_id')
+            ->orderByRaw('FIELD (is_hatching, \'w\',\'y\', \'n\') DESC')
             ->where('eggs.user_id', Auth::id());
 
         foreach ($condition as $key => $value) {

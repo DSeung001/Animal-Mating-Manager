@@ -1,0 +1,13 @@
+@media (max-width: 640px) {
+    .mobile-none{
+        display: none
+    }
+}
+
+@media (max-width: 780px) {
+    .tablet-header-font{
+        font-size: 0.8rem;
+        margin-left: 0px;
+        padding:0px;
+    }
+}

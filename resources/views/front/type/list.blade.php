@@ -5,13 +5,14 @@
 
     <x-filter-table-menu action="{{route('type.index')}}">
         @include('parts.table-search', [
-            'placeholder' => '이름으로 검색',
+            'placeholder' => '이름 검색',
             'name' => 'name',
             'isRequired' => false,
             'label' => '이름'
         ])
 
-        @include('parts.table-select', ['list' => [
+        <div class="mobile-none">
+            @include('parts.table-select', ['list' => [
             '10' => '10',
             '20' => '30',
             '40' => '40',
@@ -19,6 +20,8 @@
             'name' => 'paginate',
             'label' => '페이징'
         ])
+        </div>
+
     </x-filter-table-menu>
 
 

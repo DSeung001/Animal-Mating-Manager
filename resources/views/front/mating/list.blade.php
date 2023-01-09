@@ -5,32 +5,36 @@
 
     <x-filter-table-menu action="{{route('mating.index')}}">
         @include('parts.table-search', [
-            'placeholder' => '부 개체명으로 검색.',
+            'placeholder' => '부 개체명 검색.',
             'name' => 'father_name',
             'isRequired' => false,
             'label' => '부 개체 이름'
         ])
 
         @include('parts.table-search', [
-            'placeholder' => '모 개체명으로 검색',
+            'placeholder' => '모 개체명 검색',
             'name' => 'mather_name',
             'isRequired' => false,
             'label' => '모 개체 이름'
         ])
 
-        @include('parts.table-date', [
-            'label' => '메이팅일',
-            'name' => 'mating_at',
-        ])
+        <div class="mobile-none">
+            @include('parts.table-date', [
+                'label' => '메이팅일',
+                'name' => 'mating_at',
+            ])
+        </div>
 
-        @include('parts.table-select', ['list' => [
-            '10' => '10',
-            '20' => '30',
-            '40' => '40',
-            'all' => 'ALL'],
-            'name' => 'paginate',
-            'label' => '페이징'
-        ])
+        <div class="mobile-none">
+            @include('parts.table-select', ['list' => [
+                '10' => '10',
+                '20' => '30',
+                '40' => '40',
+                'all' => 'ALL'],
+                'name' => 'paginate',
+                'label' => '페이징'
+            ])
+        </div>
     </x-filter-table-menu>
 
     @include('parts.list', [
