@@ -36,6 +36,7 @@ class ReptileRepository extends BaseRepository implements ReptileRepositoryInter
             ->leftJoin('reptiles AS f_reptile', 'f_reptile.id', '=', 'reptiles.father_id')
             ->leftJoin('reptiles AS m_reptile', 'm_reptile.id', '=', 'reptiles.mather_id')
             ->leftJoin('types', 'types.id', '=', 'reptiles.type_id')
+            ->orderBy("reptiles.created_at", "DESC")
             ->where('reptiles.user_id', Auth::id());
 
         foreach ($condition as $key => $value) {

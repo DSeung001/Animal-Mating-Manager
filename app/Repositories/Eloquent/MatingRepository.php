@@ -27,6 +27,7 @@ class MatingRepository extends BaseRepository implements MatingRepositoryInterfa
         )
             ->leftJoin('reptiles AS f_reptile', 'f_reptile.id', '=', 'matings.father_id')
             ->leftJoin('reptiles AS m_reptile', 'm_reptile.id', '=', 'matings.mather_id')
+            ->orderBy("matings.created_at", "DESC")
             ->where('matings.user_id', Auth::id());
 
         foreach ($condition as $key => $value) {

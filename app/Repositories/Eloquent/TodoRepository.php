@@ -28,6 +28,7 @@ class TodoRepository extends BaseRepository implements TodoRepositoryInterface
             )
             ->where('user_id', Auth::id())
             ->where('started_at', '<=', $date)
+            ->orderBy("created_at", "DESC")
             ->whereRaw(DB::raw("DATEDIFF('$date', started_at ) % todos.cycle = 0"))
             ->get();
     }

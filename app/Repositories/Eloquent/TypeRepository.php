@@ -17,6 +17,7 @@ class TypeRepository extends BaseRepository implements TypeRepositoryInterface
     {
         $list = $this->model
             ->select('id', 'name', 'hatch_day', 'created_at', 'updated_at')
+            ->orderBy("created_at", "DESC")
             ->where('user_id', Auth::id());
 
         foreach ($condition as $key => $value) {
