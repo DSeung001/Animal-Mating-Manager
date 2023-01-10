@@ -32,9 +32,9 @@ class EggRepository extends BaseRepository implements EggRepositoryInterface
             ->leftJoin('matings', 'matings.id', '=', 'mating_id')
             ->leftJoin('reptiles AS f_reptile', 'f_reptile.id', '=', 'matings.father_id')
             ->leftJoin('reptiles AS m_reptile', 'm_reptile.id', '=', 'matings.mather_id')
+            ->where('eggs.user_id', Auth::id())
             ->orderBy("eggs.created_at", "DESC")
-            ->orderByRaw('FIELD (is_hatching, \'w\',\'y\', \'n\') DESC')
-            ->where('eggs.user_id', Auth::id());
+            ->orderByRaw('FIELD (is_hatching, \'w\',\'y\', \'n\') DESC');
 
         foreach ($condition as $key => $value) {
             if (isset($value)) {
@@ -67,6 +67,7 @@ class EggRepository extends BaseRepository implements EggRepositoryInterface
             ->leftJoin('reptiles AS f_reptile', 'f_reptile.id', '=', 'matings.father_id')
             ->leftJoin('reptiles AS m_reptile', 'm_reptile.id', '=', 'matings.mather_id')
             ->where('eggs.user_id', Auth::id())
+            ->where('eggs.is_hatching', 'w')
             ->get()
             ->toArray();
 
