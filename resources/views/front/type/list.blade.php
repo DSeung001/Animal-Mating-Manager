@@ -27,7 +27,7 @@
 
     @include('parts.list', [
         'showRoute' => 'type.show',
-        'title' => '종들',
+        'title' => "종들($listLength)",
         'headers' => ['이름', '해칭기간', '작성일', '수정일'],
         'datas' => ['name', 'hatch_day', 'created_at', 'updated_at'],
         'decorator' => ['hatch_day' => '일']

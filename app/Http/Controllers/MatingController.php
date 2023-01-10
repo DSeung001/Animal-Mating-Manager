@@ -50,7 +50,9 @@ class MatingController extends Controller
             'mating_at' => $matingAt,
         ], $paginate);
 
-        return view("front.mating.list", compact("list"));
+        $listLength = count($list);
+
+        return view("front.mating.list", compact("list", 'listLength'));
     }
 
     /**

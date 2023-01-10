@@ -37,7 +37,9 @@ class TypeController extends Controller
             'name' => $name
         ], $paginate);
 
-        return view("front.type.list", compact("list"));
+        $listLength = count($list);
+
+        return view("front.type.list", compact("list", "listLength"));
     }
 
     /**

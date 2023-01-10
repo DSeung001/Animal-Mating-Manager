@@ -52,7 +52,9 @@ class EggController extends Controller
                 'eggs.type_id' => $type
             ], $paginate);
 
-        return view("front.egg.list", compact('list', 'typeList'));
+        $listLength = count($list);
+
+        return view("front.egg.list", compact('list', 'typeList', 'listLength'));
     }
 
     /**

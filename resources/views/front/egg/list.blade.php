@@ -44,7 +44,7 @@
     @include('parts.list', [
         'showRoute' => 'egg.show',
         'list' => $list,
-        'title' => '알',
+        'title' => "알($listLength)",
         'headers' => ['산란일', '예상 부화일', '부화여부', '종', '부', '모'],
         'datas' => ['spawn_at', 'estimated_date', 'is_hatching', 'type_name', 'father_name', 'mather_name'],
     ])

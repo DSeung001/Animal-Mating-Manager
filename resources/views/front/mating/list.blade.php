@@ -39,7 +39,7 @@
 
     @include('parts.list', [
         'showRoute' => 'mating.show',
-        'title' => '메이팅 이력',
+        'title' => "메이팅($listLength)",
         'headers' => ['부', '모', '메이팅일', '작성일', '수정일'],
         'datas' => ['father_name', 'mather_name', 'mating_at', 'created_at', 'updated_at'],
      ])

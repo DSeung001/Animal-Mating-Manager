@@ -61,7 +61,9 @@ class ReptileController extends Controller
                 'reptiles.type_id' => $type
             ], $paginate);
 
-        return view("front.reptile.list", compact("list", "typeList"));
+        $listLength = count($list);
+
+        return view("front.reptile.list", compact("list", "typeList", "listLength"));
     }
 
     /**
