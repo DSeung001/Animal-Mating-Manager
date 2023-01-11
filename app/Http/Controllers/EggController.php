@@ -46,13 +46,14 @@ class EggController extends Controller
         $hatching = $request->input('hatching', null);
         $type = $request->input('type', null);
 
-        $list = $this->eggRepository->list([
+        $items = $this->eggRepository->list([
                 'spawn_at' => $spawnAt,
                 'is_hatching' => $hatching,
                 'eggs.type_id' => $type
             ], $paginate);
 
-        $listLength = count($list);
+        $listLength = $items['length'];
+        $list = $items['list'];
 
         return view("front.egg.list", compact('list', 'typeList', 'listLength'));
     }

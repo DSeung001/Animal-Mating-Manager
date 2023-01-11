@@ -40,11 +40,16 @@ class MatingRepository extends BaseRepository implements MatingRepositoryInterfa
             }
         }
 
+        $items = [
+            'length' => $list->count()
+        ];
+
         if ($pagination == 'all') {
-            return $list->get();
+            $items['list'] = $list->get();
         } else {
-            return $list->paginate($pagination);
+            $items['list'] = $list->paginate($pagination);
         }
+        return $items;
     }
 
     public function belongReptile($id)

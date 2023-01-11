@@ -44,13 +44,14 @@ class MatingController extends Controller
         $matherName = $request->input('mather_name', null);
         $matingAt = $request->input('mating_at', null);
 
-        $list = $this->matingRepository->list([
+        $items = $this->matingRepository->list([
             'f_reptile.name' => "%$fatherName%",
             'm_reptile.name' => "%$matherName%",
             'mating_at' => $matingAt,
         ], $paginate);
 
-        $listLength = count($list);
+        $listLength = $items['length'];
+        $list = $items['list'];
 
         return view("front.mating.list", compact("list", 'listLength'));
     }

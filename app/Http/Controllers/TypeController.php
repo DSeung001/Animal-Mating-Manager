@@ -33,11 +33,12 @@ class TypeController extends Controller
         $name = $request->input('name', null);
         $paginate = $request->input('paginate', 10);
 
-        $list = $this->typeRepository->list([
+        $items = $this->typeRepository->list([
             'name' => $name
         ], $paginate);
 
-        $listLength = count($list);
+        $listLength = $items['length'];
+        $list = $items['list'];
 
         return view("front.type.list", compact("list", "listLength"));
     }

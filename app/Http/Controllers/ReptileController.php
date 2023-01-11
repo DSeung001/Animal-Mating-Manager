@@ -54,14 +54,15 @@ class ReptileController extends Controller
         $morph = $request->input('morph', null);
 
         // 부모 아이디로 링크 추가하기
-        $list = $this->reptileRepository
+        $items = $this->reptileRepository
             ->list([
                 'reptiles.name' => "%$name%",
                 'reptiles.morph' => "%$morph%",
                 'reptiles.type_id' => $type
             ], $paginate);
 
-        $listLength = count($list);
+        $listLength = $items['length'];
+        $list = $items['list'];
 
         return view("front.reptile.list", compact("list", "typeList", "listLength"));
     }

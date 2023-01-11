@@ -2,6 +2,11 @@
 namespace App\Repositories;
 
 interface MatingRepositoryInterface extends BaseRepositoryInterface{
+    /**
+     * @param $condition 조건
+     * @param $pagination 페이지네이션
+     * @return mixed ['count', 'length']
+     */
     public function list($condition = [], $pagination = 10);
 
     /**
