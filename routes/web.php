@@ -7,6 +7,7 @@ use App\Http\Controllers\TodoController;
 use App\Http\Controllers\TypeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EggController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +20,7 @@ use App\Http\Controllers\EggController;
 |
 */
 
-Route::get('/', function () {
-    return redirect(url("login"));
-});
+
 
 Route::middleware([
     'auth:sanctum',
@@ -44,3 +43,5 @@ Route::middleware([
         return view('front.privacy-policy');
     })->name('privacy-policy');
 });
+
+Route::get('/', [HomeController::class, 'index']);

@@ -25,6 +25,11 @@
 
             gtag('config', 'G-ES784GV65G');
         </script>
+
+{{--
+    이제 여기다가 타이틀 추가해야함
+    검색엔진에 잘 걸리게
+ --}}
     </head>
     <body>
         <div class="font-sans text-gray-900 antialiased">
