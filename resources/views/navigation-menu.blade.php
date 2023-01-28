@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('home') }}">
+                    <a href="{{ url('/todo') }}">
                         <b>
                             <h2 class="text-lg">
                                 {{env('APP_NAME')}}
