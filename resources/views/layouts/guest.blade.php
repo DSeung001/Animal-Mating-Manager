@@ -4,6 +4,16 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="format-detection" content="telephone=no" />
+        <meta property="og:description" content="RMMW은 파충류 메이팅 관리 웹으로 키우실 때 많은 도움을 받으실 수 있습니다." />
+        <meta property="og:title" content="RMMW, 파충류 관리" />
+        <meta name="twitter:site" content="@RMMW" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="og:locale" content="ko_KR" />
+        <meta property="og:type" content="product" />
+        <meta property="og:url" content="http://rmmw.kr/"/>
+        <meta property="og:site_name" content="RMMW" />
+        <meta name="description" content="RMMW은 파충류 메이팅 관리 웹으로 키우실 때 많은 도움을 받으실 수 있습니다."/>
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -25,11 +35,6 @@
 
             gtag('config', 'G-ES784GV65G');
         </script>
-
-{{--
-    이제 여기다가 타이틀 추가해야함
-    검색엔진에 잘 걸리게
- --}}
     </head>
     <body>
         <div class="font-sans text-gray-900 antialiased">

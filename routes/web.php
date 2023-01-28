@@ -44,4 +44,4 @@ Route::middleware([
     })->name('privacy-policy');
 });
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'introduction']);
