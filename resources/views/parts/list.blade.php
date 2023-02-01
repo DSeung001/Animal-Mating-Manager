@@ -46,11 +46,11 @@
                                 @else
                                     <tr>
                                 @endif
-                                    @foreach($datas as $value)
+                                    @foreach($datas as $key)
                                         <td class="p-2 whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <div class="font-medium text-gray-800">
-                                                    {{$item[$value]}}{{$decorator[$value] ?? ''}}
+                                                    {{$item[$key]}}{{$decorator[$key] ?? ''}}
                                                 </div>
                                             </div>
                                         </td>

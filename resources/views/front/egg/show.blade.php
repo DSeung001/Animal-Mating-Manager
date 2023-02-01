@@ -26,7 +26,7 @@
 
             @include('parts.input', [
                'title'=>'메이팅일',
-               'name'=>'birth',
+               'name'=>'mating_at',
                'type'=>'date',
                'value' => $mating['mating_at'],
                'disabled'=> true
@@ -34,7 +34,7 @@
 
             @include('parts.input', [
                'title'=>'산란일',
-               'name'=>'birth',
+               'name'=>'spawn_at',
                'type'=>'date',
                'value' => $egg['spawn_at'],
                'disabled'=> true

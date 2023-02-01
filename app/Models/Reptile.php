@@ -17,7 +17,7 @@ class Reptile extends Model
     protected function birth(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => date('Y-m-d', strtotime($value))
+            get: fn($value) => $value === NULL ? "" :  date('Y-m-d', strtotime($value))
         );
     }
 
@@ -40,7 +40,11 @@ class Reptile extends Model
     protected function age(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $value >= 12 ? (string)(floor($value/12))."년 ".(string)($value % 12)."개월" : (string)$value."개월"
+            get: fn($value) => $value === NULL ? "" : (
+                $value >= 12 ?
+                    (string)(floor($value/12))."년 ".(string)($value % 12)."개월"
+                    : (string)$value."개월"
+            )
         );
     }
 

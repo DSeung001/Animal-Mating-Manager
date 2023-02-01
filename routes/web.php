@@ -20,8 +20,6 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

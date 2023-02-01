@@ -55,6 +55,7 @@
                          'title'=>'개체 생일',
                          'name'=>'birth',
                          'type'=>'date',
+                         'isRequired'=> false
                          ])
 
                 @include('parts.textarea')
