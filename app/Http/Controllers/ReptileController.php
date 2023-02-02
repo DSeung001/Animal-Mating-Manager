@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LargeCreateRequest;
 use App\Http\Requests\ReptileRequest;
 use App\Http\Traits\UploadImageTrait;
 use App\Models\Reptile;
@@ -234,5 +235,18 @@ class ReptileController extends Controller
             $this->reptileRepository->delete($id);
             return redirect()->route('reptile.index')->with('message', '해당 정보를 삭제했습니다.');
         }
+    }
+
+    public function largeCreate(){
+        $typeList = $this->typeRepository->getTypePluck();
+
+        return view("front.reptile.large-create", compact('typeList'));
+    }
+
+    public function largeStore(LargeCreateRequest $request){
+        $validated = $request->validated();
+        $this->reptileRepository->largeCreate($validated);
+
+        return redirect(route('reptile.index'))->with('message', '개체들을 등록했습니다.');
     }
 }

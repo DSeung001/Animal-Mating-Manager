@@ -59,4 +59,12 @@ interface ReptileRepositoryInterface extends BaseRepositoryInterface{
      * @return mixed
      */
     public function getTypeChartList();
+
+
+    /**
+     * 대용량 간편 저장
+     * @param $validated 유효성 검사한 데이터
+     * @return mixed
+     */
+    public function largeCreate($validated);
 }

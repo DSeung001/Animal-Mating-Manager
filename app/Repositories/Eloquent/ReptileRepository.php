@@ -135,4 +135,21 @@ class ReptileRepository extends BaseRepository implements ReptileRepositoryInter
             ->groupBy('types.name')
             ->get();
     }
+
+    public function largeCreate($validated)
+    {
+        $typeId = $validated['type_id'];
+        $names = $validated['name'];
+        $morphs = $validated['morph'];
+        $userId = Auth::id();
+
+        foreach($names as $key => $name){
+            $this->model->create([
+                'user_id' => $userId,
+                'type_id' => $typeId,
+                'name' => $name,
+                'morph' => $morphs[$key]
+            ]);
+        }
+    }
 }

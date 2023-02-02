@@ -42,9 +42,7 @@
                     'value' => $egg['comment']
                 ])
 
-                @include('parts.button-submit', [
-                    "formId" => "reptile-create-form"
-                ])
+                @include('parts.button-submit')
 
                 @include('parts.button-cancel', [
                     'route' => route('egg.show', $egg)

@@ -22,10 +22,18 @@
                     <a class="align-middle flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 border-b border-gray-100 md:w-auto hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700 tablet-header-font" href="{{route('dashboard')}}">
                         대시보드
                     </a>
-                    @include('parts.menu-dropdown', ['title' => '종류', 'identity' => 'type', 'menu' => ['종류 추가' => route('type.create'), '종류 목록' => route('type.index')]])
-                    @include('parts.menu-dropdown', ['title' => '개체', 'identity' => 'reptile', 'menu' => ['개체 추가' => route('reptile.create'), '개체 목록' => route('reptile.index')]])
-                    @include('parts.menu-dropdown', ['title' => '메이팅', 'identity' => 'mating', 'menu' => ['메이팅 추가' => route('mating.create'), '메이팅 목록' => route('mating.index')]])
-                    @include('parts.menu-dropdown', ['title' => '알', 'identity' => 'Egg', 'menu' => ['알 추가' => route('egg.create'), '알 목록' => route('egg.index')]])
+                    @include('parts.menu-dropdown',
+                            ['title' => '종류', 'identity' => 'type',
+                            'menu' => ['종류 추가' => route('type.create'), '종류 목록' => route('type.index')]])
+                    @include('parts.menu-dropdown',
+                            ['title' => '개체', 'identity' => 'reptile',
+                            'menu' => ['개체 추가' => route('reptile.create'), '개체 목록' => route('reptile.index'), '개체 간편 추가' => route('reptile.large.create')]])
+                    @include('parts.menu-dropdown',
+                            ['title' => '메이팅', 'identity' => 'mating',
+                            'menu' => ['메이팅 추가' => route('mating.create'), '메이팅 목록' => route('mating.index')]])
+                    @include('parts.menu-dropdown',
+                            ['title' => '알', 'identity' => 'Egg',
+                            'menu' => ['알 추가' => route('egg.create'), '알 목록' => route('egg.index')]])
                 </div>
             </div>
 
@@ -162,6 +170,9 @@
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('reptile.create') }}" :active="request()->routeIs('reptile.create')">
                 - 개체 추가
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('reptile.large.create') }}" :active="request()->routeIs('reptile.large.create')">
+                - 대용량 추가
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('reptile.index') }}" :active="request()->routeIs('reptile.index')">
                 - 개체 목록

@@ -24,7 +24,7 @@
 
                 @include('parts.textarea')
 
-                @include('parts.button-submit', ["formId" => "reptile-create-form"])
+                @include('parts.button-submit')
             </form>
         </div>
     </div>

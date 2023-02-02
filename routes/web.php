@@ -34,6 +34,10 @@ Route::middleware([
 
     Route::resource('egg', EggController::class);
     Route::resource('mating', MatingController::class);
+    Route::get('/reptile/large-create', [ReptileController::class, 'largeCreate'] )
+        ->name('reptile.large.create');
+    Route::post('/reptile/large-store', [ReptileController::class, 'largeStore'] )
+        ->name('reptile.large-store');
     Route::resource('reptile', ReptileController::class);
     Route::resource('type', TypeController::class);
 
