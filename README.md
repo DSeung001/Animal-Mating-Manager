@@ -2,9 +2,8 @@
 ### reptile-mating-manager-web
 도마뱀 메이팅 관리 웹
 
-### URL
-- 소개 페이지 및 사용해보기 
-  http://rmmw.kr
+### 기능
+- 개체 등록, 메이팅 등록, 알 등록, 예상 부화일. 현재 개체 분포도 등등
 
 ### 참고 리소스 
 - tailwind component : https://tailwindcomponents.com/component/customers-table
